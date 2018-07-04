@@ -28,6 +28,9 @@
     <Filter Include="Source Files\FrameWork\Others">
       <UniqueIdentifier>{983abed7-56c2-4e80-9e05-1df06de02eb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\FrameWork\Drawable">
+      <UniqueIdentifier>{e8e5cd52-a336-48bb-91d0-ad7f57582a91}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -62,6 +65,15 @@
     </ClCompile>
     <ClCompile Include="others\Global.cpp">
       <Filter>Source Files\FrameWork\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="drawable\Sprite.cpp">
+      <Filter>Source Files\FrameWork\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="drawable\Texture.cpp">
+      <Filter>Source Files\FrameWork\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="drawable\TextureRegion.cpp">
+      <Filter>Source Files\FrameWork\Drawable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

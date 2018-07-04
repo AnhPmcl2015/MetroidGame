@@ -130,6 +130,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DeviceManager.cpp" />
+    <ClCompile Include="drawable\Sprite.cpp" />
+    <ClCompile Include="drawable\Texture.cpp" />
+    <ClCompile Include="drawable\TextureRegion.cpp" />
     <ClCompile Include="DXGraphics.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Input.cpp" />
