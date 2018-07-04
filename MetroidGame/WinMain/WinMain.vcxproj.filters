@@ -19,6 +19,15 @@
     <Filter Include="Source Files\FrameWork">
       <UniqueIdentifier>{2af07c6e-8845-4dd3-9c1c-f110be95e3cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\FrameWork\Others">
+      <UniqueIdentifier>{78f2910b-cbbb-433d-a9fa-091070d6a23f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FrameWork\Drawable">
+      <UniqueIdentifier>{0d19cd1c-c704-4313-a9e9-76cf1abbe752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FrameWork\Others">
+      <UniqueIdentifier>{983abed7-56c2-4e80-9e05-1df06de02eb5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -45,6 +54,15 @@
     <ClCompile Include="DeviceManager.cpp">
       <Filter>Source Files\FrameWork</Filter>
     </ClCompile>
+    <ClCompile Include="math\Vector2.cpp">
+      <Filter>Source Files\FrameWork\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="others\Utility.cpp">
+      <Filter>Source Files\FrameWork\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="others\Global.cpp">
+      <Filter>Source Files\FrameWork\Others</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -70,6 +88,27 @@
     </ClInclude>
     <ClInclude Include="DeviceManager.h">
       <Filter>Header Files\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vector2.h">
+      <Filter>Header Files\FrameWork\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="others\Global.h">
+      <Filter>Header Files\FrameWork\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\FrameWork\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="others\Utility.h">
+      <Filter>Header Files\FrameWork\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="drawable\Sprite.h">
+      <Filter>Header Files\FrameWork\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="drawable\Texture.h">
+      <Filter>Header Files\FrameWork\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="drawable\TextureRegion.h">
+      <Filter>Header Files\FrameWork\Drawable</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,10 +1,10 @@
 ﻿#ifndef TEXTURE_H
 #define TEXTURE_H
 
-#include "GameObject.h"
-#include "./others/Global.h"
-#include "math/Vector2.h"
-#include "..\others\Utility.h"
+#include "../GameObject.h"
+#include "../others/Global.h"
+#include "../math/Vector2.h"
+#include "../others/Utility.h"
 
 //Just like a image
 class Texture : public GameObject

@@ -134,17 +134,27 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="math\Vector2.cpp" />
     <ClCompile Include="Metroid.cpp" />
+    <ClCompile Include="others\Global.cpp" />
+    <ClCompile Include="others\Utility.cpp" />
     <ClCompile Include="trace.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h" />
     <ClInclude Include="DeviceManager.h" />
+    <ClInclude Include="drawable\Sprite.h" />
+    <ClInclude Include="drawable\Texture.h" />
+    <ClInclude Include="drawable\TextureRegion.h" />
     <ClInclude Include="DXGraphics.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="math\Vector2.h" />
     <ClInclude Include="Metroid.h" />
+    <ClInclude Include="others\Global.h" />
+    <ClInclude Include="others\Utility.h" />
     <ClInclude Include="trace.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>

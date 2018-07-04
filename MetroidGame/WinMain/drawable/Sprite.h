@@ -1,10 +1,10 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include "math/Vector2.h"
+#include "../math/Vector2.h"
 #include "Texture.h"
 #include "TextureRegion.h"
-#include "GameObject.h"
+#include "../GameObject.h"
 
 
 //Texture + Texture Region
