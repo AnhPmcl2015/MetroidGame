@@ -1,7 +1,7 @@
 ﻿#include "Metroid.h"
 #include <time.h>
 #include "trace.h"
-#include "utils.h"
+#include "others\Utility.h"
 
 void Metroid::_InitBackground()
 {
