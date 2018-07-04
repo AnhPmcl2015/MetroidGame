@@ -9,6 +9,12 @@
 #define TIME_FREEZING 5000
 #define TIME_IN_GAME 7000
 
+#define TITLE L"Metroid Game"
+
+#define FULLSCREENMODE 0
+
+#define FRAME_RATE 80
+
 //================ SCREEN RESOLUTION ================
 #define GAME_SCREEN_RESOLUTION_640_480_24   0
 #define GAME_SCREEN_RESOLUTION_800_600_24   1
