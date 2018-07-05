@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -129,33 +129,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DeviceManager.cpp" />
-    <ClCompile Include="drawable\Sprite.cpp" />
-    <ClCompile Include="drawable\Texture.cpp" />
-    <ClCompile Include="drawable\TextureRegion.cpp" />
-    <ClCompile Include="DXGraphics.cpp" />
+    <ClCompile Include="drawable\BackGround.cpp" />
+    <ClCompile Include="drawable\GameSprite.cpp" />
+    <ClCompile Include="drawable\SpriteManager.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="input\KeyBoard.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="math\Vector2.cpp" />
     <ClCompile Include="Metroid.cpp" />
-    <ClCompile Include="others\Global.cpp" />
+    <ClCompile Include="others\Coordinate.cpp" />
+    <ClCompile Include="others\GameObject.cpp" />
+    <ClCompile Include="others\GraphicDevice.cpp" />
     <ClCompile Include="others\Utility.cpp" />
     <ClCompile Include="trace.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Define.h" />
-    <ClInclude Include="DeviceManager.h" />
-    <ClInclude Include="drawable\Sprite.h" />
-    <ClInclude Include="drawable\Texture.h" />
-    <ClInclude Include="drawable\TextureRegion.h" />
-    <ClInclude Include="DXGraphics.h" />
+    <ClInclude Include="drawable\BackGround.h" />
+    <ClInclude Include="drawable\GameSprite.h" />
+    <ClInclude Include="drawable\SpriteManager.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Input.h" />
+    <ClInclude Include="input\KeyBoard.h" />
     <ClInclude Include="math\Vector2.h" />
     <ClInclude Include="Metroid.h" />
-    <ClInclude Include="others\Global.h" />
+    <ClInclude Include="others\Coordinate.h" />
+    <ClInclude Include="others\DataSet.h" />
+    <ClInclude Include="others\GameObject.h" />
+    <ClInclude Include="others\GraphicDevice.h" />
     <ClInclude Include="others\Utility.h" />
     <ClInclude Include="trace.h" />
   </ItemGroup>

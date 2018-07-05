@@ -1,48 +1,74 @@
-﻿#pragma once
-#ifndef _GAME_H_
-#define _GAME_H_
-#include <windows.h>
-#include <DxErr.h>
-#include "Input.h"
-#include "DeviceManager.h"
-#include "DXGraphics.h"
+#ifndef GAME_H
+#define GAME_H
+
+#include"./others/GraphicDevice.h"
+#include<dinput.h>
+#include "./others/GameObject.h"
+//#include"Player.h"
+#include "./input/KeyBoard.h"
+//#include"Camera.h"
+//#include"BackGround.h"
+//#include"Map.h"
+//#include"CollisionManager.h"
+//#include"QuadTree.h"
+//#include"MonsterManager.h"
+//#include"DoorManager.h"
+//#include"Sound.h"
+
+#define KEYBOARD_BUFFER_SIZE 1024
 
 class Game
 {
-	protected:
-		DWORD _DeltaTime;		// Time between the last frame and current frame
-		Input * _input;
-		static Graphics * _dxgraphics;
-		DeviceManager * _device;
+public:
+	Game();
+	~Game();
 
-		// Render a single frame
-		void _RenderFrame();
+	bool Initialize(HWND hWnd, HINSTANCE hInstance, int width, int height);
+	void Run(float gameTime);
+	void Update(float gameTime);
+	void Draw(float gameTime);
 
-		//
-		//====================== VIRTUAL METHOD ===========================
-		//
-		virtual void Update(float Delta);
-		// Đã bỏ delta time cho phương thức Render
-		virtual void RenderFrame(LPDIRECT3DDEVICE9 d3ddv);
-		virtual void LoadResources(LPDIRECT3DDEVICE9 d3ddv);
-		virtual void ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta);
+	void DrawMap();
+	void ProcessController(HWND hWnd);
+	void ProcessInput();
 
-		virtual void OnKeyDown(int KeyCode);
-		virtual void OnKeyUp(int KeyCode);
-		//======================= END VIRTUAL METHOD ======================
+	void SceneChange(int index);
 
-	public:
-		//Doi tuong Direct Sound
-		//static SoundManager *gameSound;
-		Game();
-		Game(HINSTANCE hInstance, LPWSTR Name, int Mode, int IsFullscreen, int FrameRate);
-		~Game();
+private:
+	GraphicsDevice *gDevice;
 
-		// Initialize the game with set parameters
-		void GameInit();
+	int _width;
+	int _height;
+	bool Auto = false;
+	bool AutoPlayer = false;
+	float _gameTime;
 
-		// Run game
-		void GameRun();
+	/*Player* player;*/
+
+	//KeyBoard* keyBoard;
+
+	/*Camera* camera;
+
+	Map* map;
+
+	CollisionManager* collisionManager;*/
+
+	SpriteManager* spriteManager;
+/*
+	QuadTree* quadTree;
+
+	MonsterManager* monsterManager;
+
+	DoorManager* doorManager;
+
+	Sound* sound;
+
+	BackGround* scene;*/
+	bool Intro;
+	bool SelectScene;
+	bool SelectScene1;
+	bool SelectScene2;
+	bool PLayScene;
 };
 
-#endif
+#endif GAME_H
