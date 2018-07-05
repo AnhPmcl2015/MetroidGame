@@ -120,4 +120,23 @@
       <Filter>Header Files\FrameWork\Drawable</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\brick16x16.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\player16x32.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\room1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="..\..\room2.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="..\..\room3.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

@@ -29,9 +29,9 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wPrama, LPARAM lPara
 #define CLASSNAME L"GameScene"
 #define TILE L"Metroid1984 Remaster"
 
-Game *game;
+//Game *game;
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPCWSTR lpCmdLine, int nCmdShow)
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	HWND hWnd;
 	if (GenerationWindow(hInstance, nCmdShow, CLASSNAME, TILE, WINDOW_WIDTH, WINDOW_HEIGHT, hWnd))
@@ -42,7 +42,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPCWSTR lpCmdLi
 		DWORD frame_start = GetTickCount();
 		DWORD tick_per_frame = 1000 / 20;                 //18fps 
 
-		game = new Game();
+		/*game = new Game();
 		if (game->Initialize(hWnd, hInstance, WINDOW_WIDTH, WINDOW_HEIGHT))
 		{
 			while (!done)
@@ -70,7 +70,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPCWSTR lpCmdLi
 
 			delete game;
 			return msg.wParam;
-		}
+		}*/
 	}
 	return 0;
 }
