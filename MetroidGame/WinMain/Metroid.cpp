@@ -41,7 +41,7 @@
 ////update các object trong game
 //void Metroid::UpdateFrame(float Delta)
 //{
-//}
+//}Map
 //
 ////render từng screen mode (room1, room2,... hay gameover)
 //void Metroid::Render(LPDIRECT3DDEVICE9 d3ddv)

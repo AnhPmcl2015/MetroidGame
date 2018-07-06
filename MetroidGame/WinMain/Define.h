@@ -24,3 +24,10 @@
 #define GAME_SCREEN_RESOLUTION_800_600_32   11
 #define GAME_SCREEN_RESOLUTION_1024_768_32  12
 //================ END RESOLUTION ====================
+
+//================ ROOM ID ============================
+#define ROOM_1 1
+#define ROOM_2 2
+#define ROOM_3 3
+
+//================ END ROOM ID ========================
