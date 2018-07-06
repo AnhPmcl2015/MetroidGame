@@ -37,6 +37,12 @@
     <Filter Include="Source Files\FrameWork\Input">
       <UniqueIdentifier>{5de330bc-40b7-4a55-a4c2-42ab38f03246}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\FrameWork\Map">
+      <UniqueIdentifier>{53c929c4-e975-488a-b95c-0d76c5bf0a1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FrameWork\Map">
+      <UniqueIdentifier>{8fc61aee-dff5-44f4-85c2-1a76bd436a61}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -74,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="drawable\BackGround.cpp">
       <Filter>Source Files\FrameWork\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\FrameWork\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,5 +128,27 @@
     <ClInclude Include="drawable\BackGround.h">
       <Filter>Header Files\FrameWork\Drawable</Filter>
     </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files\FrameWork\Map</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\brick16x16.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\player16x32.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\room1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="..\..\room2.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="..\..\room3.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

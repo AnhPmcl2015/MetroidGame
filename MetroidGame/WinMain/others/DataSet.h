@@ -24,7 +24,6 @@
 #define BRICK_FILE L"a2.png"
 #define INTRO_FILE L"Intro.png"
 #define MATRIX_FILE "halfofmap_left4.txt"
-#define ROOM_1 "room1.txt"
 
 ////Coordinates in sprite
 

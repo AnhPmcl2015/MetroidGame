@@ -1,6 +1,8 @@
 #pragma once
 //#include"../Others/GameObject.h"
 //#include"../Others/Coordinate.h"
+#include "Coordinate.h"
+#include "GameObject.h"
 #include "Define.h"
 #include<vector>
 #include<iostream>
@@ -19,10 +21,10 @@ public:
 			float y,
 			float rotation,
 			float speed,
-			float maxSpeed,
+			float maxSpeed;
 			//CollisionManager* collisionManager,
-			SpriteManager* spritemanager,
-			GraphicsDevice* gDevice
+			//SpriteManager* spritemanager,
+			//GraphicsDevice* gDevice
 			//,Sound* sound
 	}
 
@@ -31,18 +33,21 @@ public:
 	}
 
 	bool Initialize(LPDIRECT3DDEVICE9 device);
-	void Update(int roomID);
 	void Draw(float gameTime);
+
+	void Update();
+	void Update(int _roomID);
 
 	bool IsInitialize = false;
 
 	void setLimitation(int x, int y, int width, int height);
 
-	bool loadMap();
+	bool loadMap(string filePath);
 
 protected:
-	std::string filepath;
+	std::string filePath;
 	vector<string> stringMap;
 	vector<Coordinate*> Positions;
-	GameSprite* painter;
+	int roomID;
+	//GameSprite* painter;
 };

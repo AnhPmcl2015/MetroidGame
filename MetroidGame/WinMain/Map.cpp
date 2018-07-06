@@ -1,7 +1,8 @@
-﻿#pragma once
+#pragma once
 #include "Map.h"
-bool Map::loadMap(string filepath) {
-	ifstream file_txt(filepath);
+
+bool Map::loadMap(string filePath) {
+	ifstream file_txt(filePath);
 	string str;
 	while (getline(file_txt, str)) {
 		stringMap.push_back(str);
@@ -18,12 +19,16 @@ bool Map::Initialize(LPDIRECT3DDEVICE9 device)
 
 void Map::Draw(float gameTime)
 {
-	//định nghĩa sprite để vẽ tại đây
+	//declare a Sprite named painter for Draw
 	//painter = new Sprite(); 
+	
+	//problem here
 	int x = initX - position.x;
-	int y = initY - position.y 
+	int y = initY - position.y;
+	//end problem here
+
 	char brick;
-	if (painter->initialize()) // kiểm tra nếu khởi tạo thành công sprite vẽ 
+	if (painter->initialize(/*parameter ???*/)) // checking if initialized successfully
 	{
 		for (string line : stringMap) {
 			for (int j = 0; j < line.size(); j++) {
@@ -35,7 +40,7 @@ void Map::Draw(float gameTime)
 					brick->Draw(0, 0, 16, 16, D3DXVECTOR3(j * 16 + position.x, i * 16 + position.y, 0));
 					break;
 				}
-				case '2'
+				case '2':
 				{
 					brick->Draw(0, 16, 16, 16, D3DXVECTOR3(j * 16 + position.x, i * 16 + position.y, 0));
 					break;
@@ -311,16 +316,31 @@ void Map::Draw(float gameTime)
 				}
 			}
 		}
-		
+
 
 	}
-} 
+}
 
-void Map::Update(int roomID) {
+void Map::Update() {
+	roomID++;
 	switch (roomID) {
 	case ROOM_1: {
 		break;
-		}
+	}
+	case ROOM_2: {
+		break;
+	}
+	case ROOM_3: {
+		break;
+	}
+	}
+}
+
+void Map::Update(int _roomID) {
+	switch (_roomID) {
+	case ROOM_1: {
+		break;
+	}
 	case ROOM_2: {
 		break;
 	}
