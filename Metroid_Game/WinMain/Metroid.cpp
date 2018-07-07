@@ -9,10 +9,12 @@ void Metroid::_InitBackground()
 
 void Metroid::_InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 {
+	world->InitSprites(d3ddv);
 }
 
 void Metroid::_InitPositions()
 {
+	world->samus->InitPostition();
 }
 
 Metroid::Metroid(HINSTANCE hInstance, LPWSTR Name, int Mode, int IsFullScreen, int FrameRate) 
@@ -31,16 +33,30 @@ Metroid::~Metroid()
 
 void Metroid::LoadResources(LPDIRECT3DDEVICE9 d3ddv)
 {
+	//---------Khởi tạo spriteHandler---------------
+	if (d3ddv == NULL) return;
+
+	//Create sprite handler
+	HRESULT result = D3DXCreateSprite(d3ddv, &spriteHandler);
+	if (result != D3D_OK) return;
+	//-----------------------
+
+	world = new World(spriteHandler, this);
+	srand((unsigned)time(NULL));
+	_InitSprites(d3ddv);
+	_InitPositions();
 }
 
 //Kiểm tra screen Mode (bắt đầu, room1, room2,... hay gameover)
 void Metroid::Update(float Delta)
 {
+	Game::Update(Delta);
 }
 
 //update các object trong game
 void Metroid::UpdateFrame(float Delta)
 {
+	world->Update(Delta);
 }
 
 //render từng screen mode (room1, room2,... hay gameover)
@@ -57,6 +73,7 @@ void Metroid::RenderStartScreen(LPDIRECT3DDEVICE9 d3ddv)
 //render từng object trong game
 void Metroid::RenderFrame(LPDIRECT3DDEVICE9 d3ddv)
 {
+	world->Render();
 }
 
 void Metroid::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta)

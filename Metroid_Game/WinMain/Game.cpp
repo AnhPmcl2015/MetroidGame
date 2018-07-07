@@ -19,12 +19,16 @@ Game::Game(HINSTANCE hInstance, LPWSTR Name, int Mode, int IsFullscreen, int Fra
 Game::~Game()
 {
 	//Game::gameSound->shutdownDirectSound();
+	delete (camera);
 }
 
 void Game::GameInit()
 {
 	//Game::gameSound->LoadSound(_hWnd);
 	_dxgraphics->_InitWindow();
+	int width = _dxgraphics->getScreenWidth();
+	int height = _dxgraphics->getScreenHeight();
+	camera = new Camera(width, height, 0, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));
 	_input->_InitKeyboard(_dxgraphics->gethInstance(), _dxgraphics->getWnd());
 	_device->_InitDirectX(*_dxgraphics);
 	LoadResources(_device->getdevice());
@@ -81,9 +85,13 @@ void Game::_RenderFrame()
 	if (result == D3D_OK)
 	{
 		// Clear back buffer with BLACK
-		_device->getdevice()->ColorFill(_device->getBuffer(), NULL, D3DCOLOR_XRGB(0xAA, 0xAA, 0xAA));
+		//_device->getdevice()->ColorFill(_device->getBuffer(), NULL, D3DCOLOR_XRGB(0, 0, 0));
 
 		_device->clearScreen();
+		if (camera)
+		{
+			camera->SetTransform(_device);
+		}
 		RenderFrame(_device->getdevice());
 		_device->getdevice()->EndScene();
 	}
@@ -93,6 +101,7 @@ void Game::_RenderFrame()
 
 void Game::Update(float Delta)
 {
+	camera->Update();
 }
 
 void Game::RenderFrame(LPDIRECT3DDEVICE9 d3ddv)

@@ -6,10 +6,12 @@
 #include "Input.h"
 #include "DeviceManager.h"
 #include "DXGraphics.h"
+#include "Camera.h"
 
 class Game
 {
 	protected:
+		Camera * camera;
 		DWORD _DeltaTime;		// Time between the last frame and current frame
 		Input * _input;
 		static Graphics * _dxgraphics;

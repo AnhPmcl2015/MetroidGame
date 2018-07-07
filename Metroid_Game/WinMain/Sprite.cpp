@@ -1,4 +1,4 @@
-#include "Sprite.h"
+﻿#include "Sprite.h"
 
 /*
 	Khoi tao Sprite 
@@ -8,19 +8,63 @@
 		startIndexOfSprite: vi tri index cua sprite dang xet trong texture
 		count: dem so luong sprite (trong truong hop xet chuyen dong nhan vat)
 
-	Ex: Sprite *playerJump = new Sprite(L'Player_32x16.png", WIDTH_SPRITE_PLAYER, HEIGHT_SPRITE_PLAYER, 1, 4, d3ddev);
+	Ex: Sprite *playerJump = new Sprite(L'Player_32x16.png", WIDTH_SAMUS_STAND, HEIGHT_SAMUS_STAND, 1, 4, d3ddev);
 		Sprite di chuyen qua phai co 4 sprite => count = 4;
 		vi tri sprite di chuyen qua phai la dau tien => startIndexOfSprite = 1;
 */
-Sprite::Sprite(LPCWSTR textureFilePath, int width, int heigth, int startIndexOfSprite, int count, LPDIRECT3DDEVICE9 d3ddev) {
 
-	
+// Load Texture
+LPDIRECT3DTEXTURE9 loadTexture(LPDIRECT3DDEVICE9 d3ddev, D3DCOLOR transColor, LPWSTR fileName) {
+	HRESULT result;
+	LPDIRECT3DTEXTURE9 _texture = NULL;
+
+	// Doc thong tin file anh de tao texture
+	D3DXIMAGE_INFO infoOfTexture;
+
+	result = D3DXGetImageInfoFromFile(fileName, &infoOfTexture);
+	if (result != D3D_OK)
+	{
+		trace(L"[ERROR] Failed to get information from image file '%s'", fileName);
+		return NULL;
+	}
+
+	result = D3DXCreateTextureFromFileEx(
+		d3ddev,
+		fileName,
+		infoOfTexture.Width,
+		infoOfTexture.Height,
+		1,
+		D3DUSAGE_DYNAMIC,
+		D3DFMT_UNKNOWN,
+		D3DPOOL_DEFAULT,
+		D3DX_DEFAULT,
+		D3DX_DEFAULT,
+		transColor,
+		&infoOfTexture,
+		NULL,
+		&_texture);
+
+	if (result != D3D_OK)
+		return NULL;
+	return _texture;
+}
+
+Sprite::Sprite(LPD3DXSPRITE SpriteHandler, LPWSTR textureFilePath, int width, int height, int startIndexOfSprite, int count)
+{
+	sprite = SpriteHandler;
+	this->textureFilePath = textureFilePath;
 	// Gan he mau trong suot
 	transColor = D3DCOLOR_ARGB(255, 255, 255, 255);
 	this->currentIndexOfSprite = startIndexOfSprite;
+
+	this->width = width;
+	this->height = height;
+
+	LPDIRECT3DDEVICE9 d3ddv;
+	SpriteHandler->GetDevice(&d3ddv);
 	
-	this->texture = loadTexture(d3ddev, transColor, textureFilePath);
-	if (this->texture == NULL)
+	texture = loadTexture(d3ddv, transColor, this->textureFilePath);
+	if (texture == NULL)
 		return;
 }
 
@@ -52,40 +96,58 @@ void Sprite::drawSprite(int x, int y, int width, int height, D3DXVECTOR3 positio
 	rect.right = x + width;
 	rect.bottom = y + height;
 
+	D3DXVECTOR3 pos(0,0,0);
+
 	this->sprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
-	this->sprite->Draw(this->texture, &rect, NULL, &position, this->transColor);
+
+	// Texture being used is 38 by 17:
+	D3DXVECTOR2 spriteCentre = D3DXVECTOR2(17.0f, 38.0f);
+
+
+	// Screen position of the sprite
+	D3DXVECTOR2 trans = D3DXVECTOR2(position.x, position.y);
+
+	// Build our matrix to rotate, scale and position our sprite
+	D3DXMATRIX mat;
+
+	D3DXVECTOR2 scaling(2.0f, -2.0f);
+
+	// out, scaling centre, scaling rotation, scaling, rotation centre, rotation, translation
+	D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &spriteCentre, NULL, &trans);
+
+	/*D3DXMATRIX matScale;
+	D3DXMatrixScaling(&matScale, 2, -2, 1);
+	D3DXMATRIX matTranslate;
+	D3DXMatrixTranslation(&matTranslate, position.x, position.y, position.z);
+	D3DXMATRIX matTransform;
+	D3DXMatrixMultiply(&matTransform, &matScale, &matTranslate);*/
+
+	this->sprite->SetTransform(&mat);
+	this->sprite->Draw(this->texture, &rect, NULL, &pos, this->transColor);
 	this->sprite->End();
 }
 
+void Sprite::Reset()
+{
+	currentIndexOfSprite = 0;
+}
 
-// Load Texture
-LPDIRECT3DTEXTURE9 loadTexture(LPDIRECT3DDEVICE9 d3ddev, D3DCOLOR transColor, LPCWSTR fileName) {
-	HRESULT result;
-	LPDIRECT3DTEXTURE9 _texture = NULL;
+void Sprite::setWidth(int value)
+{
+	width = value;
+}
 
-	// Doc thong tin file anh de tao texture
-	D3DXIMAGE_INFO infoOfTexture;
+int Sprite::getWidth()
+{
+	return width;
+}
 
-	result = D3DXGetImageInfoFromFile(fileName, &infoOfTexture);
-	if (result != D3D_OK)
-		return NULL;
-	
-	result = D3DXCreateTextureFromFileEx(d3ddev,
-		fileName,
-		infoOfTexture.Width,
-		infoOfTexture.Height,
-		1,
-		D3DPOOL_DEFAULT,
-		D3DFMT_UNKNOWN,
-		D3DPOOL_DEFAULT,
-		D3DX_DEFAULT,
-		D3DX_DEFAULT,
-		transColor,
-		&infoOfTexture,
-		NULL,
-		&_texture);
+void Sprite::setHeight(int value)
+{
+	height = value;
+}
 
-	if (result != D3D_OK)
-		return NULL;
-	return _texture;
+int Sprite::getHeight()
+{
+	return height;
 }

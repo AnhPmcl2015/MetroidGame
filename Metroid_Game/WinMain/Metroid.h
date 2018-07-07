@@ -4,6 +4,7 @@
 
 #include "Define.h"
 #include "Game.h"
+#include "World.h"
 
 class Metroid : public Game
 {
@@ -11,7 +12,7 @@ protected:
 	LPDIRECT3DSURFACE9 startscreen;
 
 	LPD3DXSPRITE spriteHandler;
-
+	World * world;
 private:
 	void _InitBackground();
 	void _InitSprites(LPDIRECT3DDEVICE9 d3ddv);

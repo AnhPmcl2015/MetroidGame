@@ -11,7 +11,7 @@ private:
 	HWND _hWnd;				// Handle of the Game Window
 	BYTE  _KeyStates[256];			// DirectInput keyboard state buffer
 
-									// Buffered keyboard data
+	// Buffered keyboard data
 	DIDEVICEOBJECTDATA _KeyEvents[KEYBOARD_BUFFER_SIZE];
 public:
 	Input();
