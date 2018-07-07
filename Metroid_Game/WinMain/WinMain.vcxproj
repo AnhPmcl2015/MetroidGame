@@ -129,6 +129,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Metroid.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="trace.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
@@ -140,10 +141,12 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Metroid.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="trace.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="brick_16x16.png" />
     <Image Include="Player_32x16.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -22,7 +22,7 @@ private:
 	int startIndexOfSprite;			  // Vi tri bat dau ve sprite			
 	int count;						  // So luong sprite trong texture
 public:
-	Sprite(LPCWSTR, int, int, int, int, LPDIRECT3DDEVICE9);
+	Sprite(LPDIRECT3DTEXTURE9, int, int, int, int, LPDIRECT3DDEVICE9);
 	~Sprite();
 	void updateSprite();
 

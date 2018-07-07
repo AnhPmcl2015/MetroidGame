@@ -6,6 +6,8 @@
 #include "Input.h"
 #include "DeviceManager.h"
 #include "DXGraphics.h"
+#include "Texture.h"
+#include "Sprite.h"
 
 class Game
 {
@@ -23,13 +25,18 @@ class Game
 		//
 		virtual void Update(float Delta);
 		// Đã bỏ delta time cho phương thức Render
-		virtual void RenderFrame(LPDIRECT3DDEVICE9 d3ddv);
-		virtual void LoadResources(LPDIRECT3DDEVICE9 d3ddv);
-		virtual void ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta);
+		virtual void RenderFrame(DeviceManager*);
+		virtual void LoadResources(DeviceManager*);
+		virtual void ProcessInput(DeviceManager*, float Delta);
 
 		virtual void OnKeyDown(int KeyCode);
 		virtual void OnKeyUp(int KeyCode);
 		//======================= END VIRTUAL METHOD ======================
+
+		//======================= Start texture ======================
+		LPDIRECT3DTEXTURE9 playerTexture;
+		LPDIRECT3DTEXTURE9 brickTexture;
+		//======================= End Texture ========================
 
 	public:
 		//Doi tuong Direct Sound
@@ -43,6 +50,11 @@ class Game
 
 		// Run game
 		void GameRun();
+
+		void setPlayerTexture(LPDIRECT3DTEXTURE9);
+		LPDIRECT3DTEXTURE9 getPlayerTexture();
+		void setBrickTexture(LPDIRECT3DTEXTURE9);
+		LPDIRECT3DTEXTURE9 getBrickTexture();
 };
 
 #endif

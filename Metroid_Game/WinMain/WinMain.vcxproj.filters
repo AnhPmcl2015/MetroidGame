@@ -54,6 +54,9 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>Source Files\Sprite</Filter>
     </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\Sprite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -83,9 +86,15 @@
     <ClInclude Include="Sprite.h">
       <Filter>Header Files\Sprite</Filter>
     </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\Sprite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Player_32x16.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="brick_16x16.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
