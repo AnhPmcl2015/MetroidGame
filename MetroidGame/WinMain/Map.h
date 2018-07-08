@@ -50,4 +50,13 @@ protected:
 	vector<Coordinate*> Positions;
 	int roomID;
 	//GameSprite* painter;
+
+	//Start coordinate of the camera
+	int camera_X;
+	int camera_Y;
+
+	//TODO: 
+	int widthLimitation;
+	int heightLimitation;
+
 };

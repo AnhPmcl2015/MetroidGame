@@ -30,5 +30,10 @@
 #define ROOM_1 1
 #define ROOM_2 2
 #define ROOM_3 3
-
 //================ END ROOM ID ========================
+
+
+//================ ROOM LIMITATION (TILES COUNT)============================
+#define TILE_ROOM_LIMITATION_X 17
+#define TILE_ROOM_LIMITATION_Y 16
+//================ END ROOM LIMITATION ============================
