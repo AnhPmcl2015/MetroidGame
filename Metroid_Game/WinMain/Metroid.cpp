@@ -51,6 +51,7 @@ void Metroid::LoadResources(LPDIRECT3DDEVICE9 d3ddv)
 void Metroid::Update(float Delta)
 {
 	Game::Update(Delta);
+	UpdateFrame(Delta);
 }
 
 //update các object trong game
@@ -78,6 +79,17 @@ void Metroid::RenderFrame(LPDIRECT3DDEVICE9 d3ddv)
 
 void Metroid::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta)
 {
+	if (_input->IsKeyDown(DIK_RIGHT))
+	{
+		world->samus->setVelocityXLast(world->samus->getVelocityX());
+		world->samus->setVelocityX(SAMUS_SPEED);
+		world->samus->SetState(RUNNING_RIGHT);
+	}
+	else if (_input->IsKeyDown(DIK_LEFT)) {
+		world->samus->setVelocityXLast(world->samus->getVelocityX());
+		world->samus->setVelocityX(-SAMUS_SPEED);
+		world->samus->SetState(RUNNING_LEFT);
+	}
 }
 
 void Metroid::OnKeyDown(int KeyCode)

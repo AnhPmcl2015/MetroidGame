@@ -7,13 +7,43 @@
 #include "World.h"
 
 enum SAMUS_STATE {
-	APPEARANCE
+	STAND_LEFT,
+	STAND_RIGHT,
+	RUNNING_LEFT,
+	RUNNING_RIGHT,
+	STAND_SHOOT_UP_LEFT,
+	STAND_SHOOT_UP_RIGHT,
+	MORPH_LEFT,
+	MORPH_RIGHT,
+	RUN_SHOOTING_LEFT,
+	RUN_SHOOTING_RIGHT,
+	JUMP_LEFT,
+	JUMP_RIGHT,
+	TRANSFORM_BALL_LEFT,
+	TRANSFORM_BALL_RIGHT,
+	JUMP_SHOOT_UP_LEFT,
+	JUMP_SHOOT_UP_RIGHT,
 };
 
 class Samus : public GameObject
 {
 protected:
-	Sprite * appearing;
+	Sprite * standRight;
+	Sprite * standLeft;
+	Sprite * runRight;
+	Sprite * runLeft;
+	Sprite * standShootL;
+	Sprite * standShootR;
+	Sprite * morphLeft;
+	Sprite * morphRight;
+	Sprite * runShootL;
+	Sprite * runShootR;
+	Sprite * jumpLeft;
+	Sprite * jumpRight;
+	Sprite * ballLeft;
+	Sprite * ballRight;
+	Sprite * jumpShootL;
+	Sprite * jumpShootR;
 
 	SAMUS_STATE state;
 public:

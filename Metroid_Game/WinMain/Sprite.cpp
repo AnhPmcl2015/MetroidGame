@@ -51,6 +51,7 @@ LPDIRECT3DTEXTURE9 loadTexture(LPDIRECT3DDEVICE9 d3ddev, D3DCOLOR transColor, LP
 
 Sprite::Sprite(LPD3DXSPRITE SpriteHandler, LPWSTR textureFilePath, int width, int height, int startIndexOfSprite, int count)
 {
+	this->count = count;
 	sprite = SpriteHandler;
 	this->textureFilePath = textureFilePath;
 	// Gan he mau trong suot
@@ -74,7 +75,9 @@ Sprite::~Sprite() {
 
 // Cap nhat vi tri cua sprite tiep theo
 void Sprite::updateSprite() {
-	this->currentIndexOfSprite += 1;
+	this->currentIndexOfSprite = (this->currentIndexOfSprite + 1) % count;
+	
+
 	if (this->currentIndexOfSprite >= (this->startIndexOfSprite + this->count))
 		this->currentIndexOfSprite = startIndexOfSprite;
 }
@@ -87,6 +90,8 @@ void Sprite::updateSprite() {
 	position: Vi tri xua hien tren man hinh theo 3 truc (x, y, z)
 */
 void Sprite::drawSprite(int x, int y, int width, int height, D3DXVECTOR3 position) {
+	this->x = x;
+	this->y = y;
 	if (this->sprite == NULL || this->texture == NULL)
 		return;
 
@@ -97,12 +102,13 @@ void Sprite::drawSprite(int x, int y, int width, int height, D3DXVECTOR3 positio
 	rect.bottom = y + height;
 
 	D3DXVECTOR3 pos(0,0,0);
+	//pos.x = position.x;
+	//pos.y = position.y;
 
 	this->sprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
 
 	// Texture being used is 38 by 17:
 	D3DXVECTOR2 spriteCentre = D3DXVECTOR2(17.0f, 38.0f);
-
 
 	// Screen position of the sprite
 	D3DXVECTOR2 trans = D3DXVECTOR2(position.x, position.y);
@@ -122,8 +128,9 @@ void Sprite::drawSprite(int x, int y, int width, int height, D3DXVECTOR3 positio
 	D3DXMATRIX matTransform;
 	D3DXMatrixMultiply(&matTransform, &matScale, &matTranslate);*/
 
-	this->sprite->SetTransform(&mat);
+	
 	this->sprite->Draw(this->texture, &rect, NULL, &pos, this->transColor);
+	this->sprite->SetTransform(&mat);
 	this->sprite->End();
 }
 
