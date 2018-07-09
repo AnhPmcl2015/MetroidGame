@@ -57,6 +57,7 @@ void Metroid::Update(float Delta)
 //update các object trong game
 void Metroid::UpdateFrame(float Delta)
 {
+	
 	world->Update(Delta);
 }
 
@@ -89,6 +90,14 @@ void Metroid::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta)
 		world->samus->setVelocityXLast(world->samus->getVelocityX());
 		world->samus->setVelocityX(-SAMUS_SPEED);
 		world->samus->SetState(RUNNING_LEFT);
+	}
+	else
+	{		
+		if (world->samus->getVelocityXLast() > 0)
+			world->samus->SetState(STAND_RIGHT);
+		if (world->samus->getVelocityXLast() < 0)
+			world->samus->SetState(STAND_LEFT);
+		world->samus->setVelocityX(0);
 	}
 }
 

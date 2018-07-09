@@ -10,7 +10,6 @@ class Metroid : public Game
 {
 protected:
 	LPDIRECT3DSURFACE9 startscreen;
-
 	LPD3DXSPRITE spriteHandler;
 	World * world;
 private:

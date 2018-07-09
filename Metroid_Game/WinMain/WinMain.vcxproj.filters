@@ -31,6 +31,9 @@
     <Filter Include="Source Files\Character">
       <UniqueIdentifier>{329837e4-1eeb-4724-ad8d-cc7d2a5f0180}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\sprites">
+      <UniqueIdentifier>{03761cfd-dc1f-47ed-a4bd-51beb8305266}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -115,8 +118,22 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Player_32x16.png">
-      <Filter>Resource Files</Filter>
+    <Image Include="sprites\Player_32x16.png">
+      <Filter>Resource Files\sprites</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="sprites\STAND_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\STAND_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\LEFTING.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\RIGHTING.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-#ifndef CAMERA_H
+﻿#ifndef CAMERA_H
 #define CAMERA_H
 
 #include <DirectXMath.h>
@@ -21,9 +21,9 @@ public:
 private:
 	float angle;
 	DirectX::XMFLOAT3 scaleFactors;
-	D3DXMATRIX orthographicMatrix;
-	D3DXMATRIX identityMatrix;
-	D3DXMATRIX viewMatrix;
+	D3DXMATRIX orthographicMatrix;	//ma trận tầm nhìn
+	D3DXMATRIX identityMatrix;	//ma trận vật
+	D3DXMATRIX viewMatrix;	//ma trận trong world
 
 	int width;
 	int height;

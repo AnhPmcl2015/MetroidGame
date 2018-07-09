@@ -159,7 +159,13 @@
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Player_32x16.png" />
+    <Image Include="sprites\Player_32x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="sprites\LEFTING.txt" />
+    <Text Include="sprites\RIGHTING.txt" />
+    <Text Include="sprites\STAND_LEFT.txt" />
+    <Text Include="sprites\STAND_RIGHT.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

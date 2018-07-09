@@ -21,17 +21,11 @@ void Camera::Update()
 {
 	int cameraX = width/2, cameraY = height/2;
 
-	this->viewMatrix = D3DXMATRIX(
-		scaleFactors.x * cos(angle), scaleFactors.x * sin(angle), 0, 0,
-		-scaleFactors.y * sin(angle), scaleFactors.y * cos(angle), 0, 0,
-		0, 0, scaleFactors.z, 0,
-		-cameraX * scaleFactors.x * cos(angle) + cameraY * scaleFactors.y * sin(angle), 
-		-cameraX * scaleFactors.y * sin(angle) - cameraY * scaleFactors.y * cos(angle), 0, 1
-		/*1/cameraX, 0, 0, 0,
-		0, 1/cameraY, 0, 0,
-		0, 0, 1/(), 0, 0,
-		0, 0, , 1*/
-	);
+	D3DXVECTOR3 eye(200, 200, -1);
+	D3DXVECTOR3 direction(0, 0, 1);
+	D3DXVECTOR3 up(0, 1, 0);	//r
+
+	D3DXMatrixLookAtLH(&viewMatrix, &eye, &(eye + direction), &up);
 }
 
 void Camera::SetTransform(DeviceManager* device) const

@@ -16,6 +16,7 @@ public:
 	float pos_y;		// y position of object
 	float lastPosX;
 	float lastPosY;
+	float friction = FRICTION;	//ma sát
 
 	/*float width;
 	float height;*/
