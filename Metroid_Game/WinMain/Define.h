@@ -10,7 +10,7 @@
 #define TIME_IN_GAME 7000
 
 //================ SCREEN RESOLUTION ================
-#define GAME_SCREEN_RESOLUTION_640_480_24   0
+#define GAME_SCREEN_RESOLUTION_512_416_24   0
 #define GAME_SCREEN_RESOLUTION_800_600_24   1
 #define GAME_SCREEN_RESOLUTION_1024_768_24  2
 
@@ -20,8 +20,28 @@
 //================ END RESOLUTION ====================
 
 
-//================ Start Sprite ================
+//================= OBJECT TYPE ================
+enum OBJECT_TYPE
+{
+	SAMUS = 1,
+	ENEMY = 2,
+	BRICK = 3,
+};
+//================= END OBJECT TYPE ============
+
+
+//================ SPRITE SAMUS ================
+#define WIDTH_SAMUS_STAND 17
+#define HEIGHT_SAMUS_STAND 38
+//================= END SPRITE SAMUS ============
+
+//================ SPRITE BRICK ================
 #define WIDTH_SPRITE_BRICK 16
 #define HEIGHT_SPRITE_BRICK 16
-#define WIDTH_SPRITE_PLAYER 16
-#define HEIGHT_SPRITE_PLAYER 32
+//================= END SPRITE BRICK ============
+
+
+//================ ROOM LIMITATION (TILES COUNT)============================
+#define X_LIMITATION 16
+#define Y_LIMITATION 15
+//================ END ROOM LIMITATION ============================

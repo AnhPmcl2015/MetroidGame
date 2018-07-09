@@ -12,13 +12,15 @@
 		Sprite di chuyen qua phai co 4 sprite => count = 4;
 		vi tri sprite di chuyen qua phai la dau tien => startIndexOfSprite = 1;
 */
-Sprite::Sprite(LPDIRECT3DTEXTURE9 texture, int width, int heigth, int startIndexOfSprite, int count, LPDIRECT3DDEVICE9 d3ddev) {
+Sprite::Sprite(LPD3DXSPRITE sprite, LPDIRECT3DTEXTURE9 texture, int width, int heigth, int startIndexOfSprite, int count) {
 
 	
 	// Gan he mau trong suot
 	transColor = D3DCOLOR_ARGB(255, 255, 255, 255);
 	this->currentIndexOfSprite = startIndexOfSprite;
-	
+	this->sprite = sprite;
+	if (this->sprite == NULL)
+		return;
 	this->texture = texture;
 	if (this->texture == NULL)
 		return;

@@ -27,7 +27,7 @@ void Game::GameInit()
 	_dxgraphics->_InitWindow();
 	_input->_InitKeyboard(_dxgraphics->gethInstance(), _dxgraphics->getWnd());
 	_device->_InitDirectX(*_dxgraphics);
-	LoadResources(_device);
+	LoadResources(_device->getdevice());
 }
 
 void Game::GameRun()
@@ -70,7 +70,7 @@ void Game::GameRun()
 
 		_input->_ProcessKeyBoard();
 
-		ProcessInput(_device, _DeltaTime);
+		ProcessInput(_device->getdevice(), _DeltaTime);
 
 	}
 }
@@ -84,7 +84,7 @@ void Game::_RenderFrame()
 		_device->getdevice()->ColorFill(_device->getBuffer(), NULL, D3DCOLOR_XRGB(0xAA, 0xAA, 0xAA));
 
 		_device->clearScreen();
-		RenderFrame(_device);
+		RenderFrame(_device->getdevice());
 		_device->getdevice()->EndScene();
 	}
 
@@ -95,31 +95,21 @@ void Game::Update(float Delta)
 {
 }
 
-void Game::RenderFrame(DeviceManager *device)
+void Game::RenderFrame(LPDIRECT3DDEVICE9 device)
 {
 
 }
 
-void Game::LoadResources(DeviceManager *device)
+void Game::LoadResources(LPDIRECT3DDEVICE9 d3ddev)
 {
-	Texture texture;
-	LPDIRECT3DTEXTURE9 text = texture.loadTexture(device->getdevice(), L"Player_32x16.png");
-	this->playerTexture = text;
-	text = texture.loadTexture(device->getdevice(), L"brick_16x16.png");
-	this->brickTexture = text;
-
 
 }
 
-void Game::ProcessInput(DeviceManager *device, float Delta)
+void Game::ProcessInput(LPDIRECT3DDEVICE9 device, float Delta)
 {
 }
 
 void Game::OnKeyDown(int KeyCode)
-{
-}
-
-void Game::OnKeyUp(int KeyCode)
 {
 }
 

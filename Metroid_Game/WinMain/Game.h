@@ -23,14 +23,13 @@ class Game
 		//
 		//====================== VIRTUAL METHOD ===========================
 		//
-		virtual void Update(float Delta);
+		virtual void Update(float Delta) = 0;
 		// Đã bỏ delta time cho phương thức Render
-		virtual void RenderFrame(DeviceManager*);
-		virtual void LoadResources(DeviceManager*);
-		virtual void ProcessInput(DeviceManager*, float Delta);
+		virtual void RenderFrame(LPDIRECT3DDEVICE9) = 0;
+		virtual void LoadResources(LPDIRECT3DDEVICE9) = 0;
+		virtual void ProcessInput(LPDIRECT3DDEVICE9, float Delta) = 0;
 
-		virtual void OnKeyDown(int KeyCode);
-		virtual void OnKeyUp(int KeyCode);
+		virtual void OnKeyDown(int KeyCode) = 0;
 		//======================= END VIRTUAL METHOD ======================
 
 		//======================= Start texture ======================
