@@ -22,13 +22,18 @@ bool Map::loadMap(string filePath) {
 
 bool Map::Initialize(LPDIRECT3DDEVICE9 device)
 {
-	return true;
+	graphic = device;
+	//TODO: make dataset -> filepath for room
+	if (loadMap())
+		return true;
+	return false;
 }
 
 void Map::Draw(float gameTime)
 {
 	//declare a Sprite named painter for Draw
-	painter = new Sprite(); 
+	//TODO: edite SpriteManager class. 
+	painter = new GameSprite(); 
 
 	//firstly, get the start coordinate of camera view, as camera_X, camera_Y
 	//secondly, access to start coordinate of recent room as position.x, position.y

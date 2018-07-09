@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="drawable\BackGround.cpp" />
     <ClCompile Include="drawable\GameSprite.cpp" />
     <ClCompile Include="drawable\SpriteManager.cpp" />
@@ -144,6 +145,7 @@
     <ClCompile Include="trace.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="drawable\BackGround.h" />
     <ClInclude Include="drawable\GameSprite.h" />

@@ -11,6 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <vector>
+#include "../WinMain/drawable/GameSprite.h"
 
 using namespace std;
 
@@ -49,7 +50,8 @@ protected:
 	vector<string> stringMap;
 	vector<Coordinate*> Positions;
 	int roomID;
-	//GameSprite* painter;
+	GameSprite* painter;
+	LPDIRECT3DDEVICE9 graphic;
 
 	//Start coordinate of the camera
 	int camera_X;
@@ -58,5 +60,8 @@ protected:
 	//TODO: 
 	int widthLimitation;
 	int heightLimitation;
+
+	//TODO:
+	D3DXVECTOR3 position;
 
 };

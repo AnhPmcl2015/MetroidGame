@@ -43,6 +43,12 @@
     <Filter Include="Source Files\FrameWork\Map">
       <UniqueIdentifier>{8fc61aee-dff5-44f4-85c2-1a76bd436a61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\FrameWork\Camera">
+      <UniqueIdentifier>{3a5cbff3-3ac2-4a73-a1dd-6ab5d31387d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FrameWork\Camera">
+      <UniqueIdentifier>{b02fc363-96bb-4ef9-8851-ed6b778f77d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -83,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Source Files\FrameWork\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\FrameWork\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Header Files\FrameWork\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\FrameWork\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
