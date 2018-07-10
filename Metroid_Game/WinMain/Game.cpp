@@ -93,6 +93,7 @@ void Game::_RenderFrame()
 
 void Game::Update(float Delta)
 {
+
 }
 
 void Game::RenderFrame(LPDIRECT3DDEVICE9 device)

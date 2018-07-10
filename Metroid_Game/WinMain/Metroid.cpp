@@ -61,7 +61,7 @@ void Metroid::LoadResources(LPDIRECT3DDEVICE9 d3ddev)
 //Kiểm tra screen Mode (bắt đầu, room1, room2,... hay gameover)
 void Metroid::Update(float Delta)
 {
-
+	
 }
 
 //update các object trong game
