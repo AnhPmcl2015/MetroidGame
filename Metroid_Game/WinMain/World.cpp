@@ -32,7 +32,7 @@ void World::Render()
 	samus->Render();
 }
 
-void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
+void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 {
-	samus->InitSprites(d3ddv);
+	samus->InitSprites(d3ddv, texture);
 }

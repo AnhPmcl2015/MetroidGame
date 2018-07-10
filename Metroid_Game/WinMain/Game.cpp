@@ -24,12 +24,15 @@ Game::~Game()
 
 void Game::GameInit()
 {
+	int width = _dxgraphics->getScreenWidth();
+	int height = _dxgraphics->getScreenHeight();
 	//Game::gameSound->LoadSound(_hWnd);
 	_dxgraphics->_InitWindow();
 	int width = _dxgraphics->getScreenWidth();
 	int height = _dxgraphics->getScreenHeight();
 	camera = new Camera(width, height, 0, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));
 	_input->_InitKeyboard(_dxgraphics->gethInstance(), _dxgraphics->getWnd());
+	camera = new Camera(width, height, 0, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));
 	_device->_InitDirectX(*_dxgraphics);
 	LoadResources(_device->getdevice());
 }
@@ -104,15 +107,17 @@ void Game::Update(float Delta)
 	camera->Update();
 }
 
-void Game::RenderFrame(LPDIRECT3DDEVICE9 d3ddv)
+void Game::RenderFrame(LPDIRECT3DDEVICE9 device)
 {
+
 }
 
-void Game::LoadResources(LPDIRECT3DDEVICE9 d3ddv)
+void Game::LoadResources(LPDIRECT3DDEVICE9 d3ddev)
 {
+
 }
 
-void Game::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta)
+void Game::ProcessInput(LPDIRECT3DDEVICE9 device, float Delta)
 {
 }
 
@@ -120,6 +125,18 @@ void Game::OnKeyDown(int KeyCode)
 {
 }
 
-void Game::OnKeyUp(int KeyCode)
-{
+void Game::setPlayerTexture(LPDIRECT3DTEXTURE9 playerTexture) {
+	this->playerTexture = playerTexture;
+}
+
+LPDIRECT3DTEXTURE9 Game::getPlayerTexture() {
+	return this->playerTexture;
+}
+
+void Game::setBrickTexture(LPDIRECT3DTEXTURE9 brickTexture) {
+	this->brickTexture = brickTexture;
+}
+
+LPDIRECT3DTEXTURE9 Game::getBrickTexture() {
+	return this->brickTexture;
 }

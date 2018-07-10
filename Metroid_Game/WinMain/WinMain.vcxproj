@@ -97,7 +97,7 @@
       <ConformanceMode>false</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>d3d9.lib;dsound.lib;d3dx9.lib;d3dcompiler.lib;avrt.lib;ole32.lib;winmm.lib;dinput8.lib;dxguid.lib;comctl32.lib;dxerr.lib;legacy_stdio_definitions.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3dx9.lib;d3d9.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;d3dcompiler.lib;avrt.lib;winmm.lib;dinput8.lib;dxguid.lib;comctl32.lib;dxerr.lib;legacy_stdio_definitions.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -136,9 +136,11 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Metroid.cpp" />
     <ClCompile Include="Samus.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="trace.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="World.cpp" />
@@ -151,17 +153,22 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="Metroid.h" />
     <ClInclude Include="Samus.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="trace.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="brick_16x16.png" />
+    <Image Include="brick_32x32.png" />
     <Image Include="sprites\Player_32x16.png" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="field1.txt" />
     <Text Include="sprites\JUMPSHOOT_LEFT.txt" />
     <Text Include="sprites\JUMPSHOOT_RIGHT.txt" />
     <Text Include="sprites\JUMP_LEFT.txt" />
@@ -172,6 +179,8 @@
     <Text Include="sprites\RIGHTING.txt" />
     <Text Include="sprites\RUNSHOOT_LEFT.txt" />
     <Text Include="sprites\RUNSHOOT_RIGHT.txt" />
+    <Text Include="sprites\RUN_SHOOTUP_LEFT.txt" />
+    <Text Include="sprites\RUN_SHOOTUP_RIGHT.txt" />
     <Text Include="sprites\STANDSHOOT_LEFT.txt" />
     <Text Include="sprites\STANDSHOOT_RIGHT.txt" />
     <Text Include="sprites\STAND_LEFT.txt" />

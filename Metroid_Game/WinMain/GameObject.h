@@ -10,7 +10,7 @@
 class GameObject
 {
 public:
-	World *manager;	// con trỏ đến world để thao tác với các object ở world khi cần thiết
+	World * manager;	// con trỏ đến world để thao tác với các object ở world khi cần thiết
 
 	float pos_x;		// x postition of object
 	float pos_y;		// y position of object
@@ -18,8 +18,8 @@ public:
 	float lastPosY;
 	float friction = FRICTION;	//ma sát
 
-	/*float width;
-	float height;*/
+								/*float width;
+								float height;*/
 
 	float vx;		// x velocity
 	float vy;		// y velocity
@@ -35,7 +35,7 @@ public:
 	bool isActive;	// Cho biết GameObject có đang hoạt động hay không
 	Sprite* sprite;
 	DWORD last_time; // this is to control the animate rate of object
-public:	
+public:
 	GameObject();
 	~GameObject();
 

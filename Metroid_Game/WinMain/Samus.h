@@ -56,7 +56,7 @@ public:
 	Samus(LPD3DXSPRITE spriteHandler, World * manager);
 	~Samus();
 
-	void InitSprites(LPDIRECT3DDEVICE9 d3ddv);
+	void InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
 	void InitPostition();
 
 	SAMUS_STATE GetState();

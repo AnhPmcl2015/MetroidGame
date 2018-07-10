@@ -7,9 +7,9 @@ void Metroid::_InitBackground()
 {
 }
 
-void Metroid::_InitSprites(LPDIRECT3DDEVICE9 d3ddv)
+void Metroid::_InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 {
-	world->InitSprites(d3ddv);
+	world->InitSprites(d3ddv, texture);	
 }
 
 void Metroid::_InitPositions()
@@ -31,20 +31,42 @@ Metroid::~Metroid()
 {
 }
 
-void Metroid::LoadResources(LPDIRECT3DDEVICE9 d3ddv)
+/*
+	Khoi tao Spritehandler va Texture cho game
+*/
+void Metroid::LoadResources(LPDIRECT3DDEVICE9 d3ddev)
 {
 	//---------Khởi tạo spriteHandler---------------
-	if (d3ddv == NULL) return;
+	if (d3ddev == NULL) return;
 
-	//Create sprite handler
-	HRESULT result = D3DXCreateSprite(d3ddv, &spriteHandler);
-	if (result != D3D_OK) return;
-	//-----------------------
+	HRESULT result = D3DXCreateSprite(d3ddev, &spriteHandler);
+	if (result != D3D_OK) 
+		trace(L"Unable to create SpriteHandler");
 
+	Texture text;
+	this->setPlayerTexture(text.loadTexture(d3ddev, TEXTURE_GAME_CHARACTERS));
+	if (this->getPlayerTexture() == NULL)
+		trace(L"Unable to load PlayerTexture");
+
+	Texture text1;
+	this->setBrickTexture(text1.loadTexture(d3ddev, L"brick_32x32.png"));
+	if (this->getBrickTexture() == NULL)
+		trace(L"Unable to load BrickTexture");
+
+	
 	world = new World(spriteHandler, this);
 	srand((unsigned)time(NULL));
-	_InitSprites(d3ddv);
-	_InitPositions();
+	this->_InitSprites(d3ddev, this->getPlayerTexture());
+
+	// Khoi tao map
+	this->map = new Map(this->getSpriteHandler(), this->getBrickTexture(), "field1.txt", this->_device, 0, 0, this->_dxgraphics->getScreenWidth(), this->_dxgraphics->getScreenHeight());
+	if (map == NULL)
+		trace(L"Unable to load map");
+
+	if (camera)
+		camera->Follow(world->samus);
+
+	this->_InitPositions();
 }
 
 //Kiểm tra screen Mode (bắt đầu, room1, room2,... hay gameover)
@@ -57,7 +79,6 @@ void Metroid::Update(float Delta)
 //update các object trong game
 void Metroid::UpdateFrame(float Delta)
 {
-	
 	world->Update(Delta);
 }
 
@@ -70,11 +91,14 @@ void Metroid::Render(LPDIRECT3DDEVICE9 d3ddv)
 //render các scene chính (room1, room2...) trong game
 void Metroid::RenderStartScreen(LPDIRECT3DDEVICE9 d3ddv)
 {
+	
 }
 
 //render từng object trong game
 void Metroid::RenderFrame(LPDIRECT3DDEVICE9 d3ddv)
 {
+	
+	map->drawMap();
 	world->Render();
 }
 
@@ -104,7 +128,7 @@ void Metroid::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta)
 		}
 	}
 	else
-	{		
+	{
 		if (world->samus->getVelocityXLast() > 0)
 		{
 			if (world->samus->GetState() != MORPH_LEFT && world->samus->GetState() != MORPH_RIGHT
@@ -115,7 +139,7 @@ void Metroid::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta)
 				world->samus->SetState(STAND_RIGHT);
 				world->samus->ResetAllSprites();
 			}
-		}			
+		}
 		if (world->samus->getVelocityXLast() < 0)
 		{
 			if (world->samus->GetState() != MORPH_LEFT && world->samus->GetState() != MORPH_RIGHT
@@ -126,7 +150,7 @@ void Metroid::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta)
 				world->samus->SetState(STAND_LEFT);
 				world->samus->ResetAllSprites();
 			}
-		}			
+		}
 		world->samus->setVelocityX(0);
 	}
 
@@ -157,94 +181,17 @@ void Metroid::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta)
 
 void Metroid::OnKeyDown(int KeyCode)
 {
-	//world->samus->isJumping = false;
-
-	//if (world->samus->isSamusJumping() == false)
-	//{
-	//	switch (KeyCode)
-	//	{
-	//	case DIK_X:
-	//		if (_input->IsKeyDown(DIK_X))
-	//		{
-	//			world->samus->isJumping = true;
-	//			//world->samus->setNormaly(1.0f);
-	//			if (world->samus->GetState() != ON_SOMERSAULT_RIGHT && _input->IsKeyDown(DIK_RIGHT)/*&& samus->GetState() != ON_JUMP_AIM_UP_RIGHT*/)
-	//			{
-	//				start_jump = GetTickCount();
-	//				now_jump = GetTickCount();
-
-	//				//time_jump = 50;
-
-	//				world->samus->SetState(ON_SOMERSAULT_RIGHT);
-	//				world->samus->setVelocityY(world->samus->getVelocityY() + JUMP_VELOCITY_BOOST_FIRST);
-
-	//				now_jump = GetTickCount();
-	//				if ((now_jump - start_jump) <= 10 * tick_per_frame)
-	//				{
-	//					world->samus->setVelocityY(world->samus->getVelocityY() + JUMP_VELOCITY_BOOST);
-	//				}
-	//			}
-
-	//			if (world->samus->GetState() != ON_SOMERSAULT_LEFT && IsKeyDown(DIK_LEFT)/*&& samus->GetState() != ON_JUMP_AIM_UP_LEFT*/)
-	//			{
-	//				start_jump = GetTickCount();
-	//				now_jump = GetTickCount();
-	//				world->samus->SetState(ON_SOMERSAULT_LEFT);
-	//				world->samus->setVelocityY(world->samus->getVelocityY() + JUMP_VELOCITY_BOOST_FIRST);
-
-	//				now_jump = GetTickCount();
-	//				if ((now_jump - start_jump) <= 10 * tick_per_frame)
-	//				{
-	//					world->samus->setVelocityY(world->samus->getVelocityY() + JUMP_VELOCITY_BOOST);
-	//				}
-	//			}
-
-	//			if (world->samus->getVelocityXLast() < 0)
-	//			{
-	//				if (world->samus->GetState() != ON_JUMP_LEFT && world->samus->GetState() != ON_SOMERSAULT_LEFT
-	//					&& world->samus->GetState() != ON_JUMPING_SHOOTING_LEFT && world->samus->GetState() != ON_JUMP_AIM_UP_LEFT)
-	//				{
-	//					start_jump = GetTickCount();
-	//					now_jump = GetTickCount();
-	//					if (world->samus->GetState() == IDLING_AIM_UP_LEFT)
-	//						world->samus->SetState(ON_JUMP_AIM_UP_LEFT);
-	//					else
-	//						world->samus->SetState(ON_JUMP_LEFT);
-	//					world->samus->setVelocityY(world->samus->getVelocityY() + JUMP_VELOCITY_BOOST_FIRST);
-
-	//					now_jump = GetTickCount();
-	//					if ((now_jump - start_jump) <= 10 * tick_per_frame)
-	//					{
-	//						world->samus->setVelocityY(world->samus->getVelocityY() + JUMP_VELOCITY_BOOST);
-	//					}
-	//				}
-	//			}
-	//			if (world->samus->getVelocityXLast() > 0)
-	//			{
-	//				if (world->samus->GetState() != ON_JUMP_RIGHT && world->samus->GetState() != ON_SOMERSAULT_RIGHT
-	//					&& world->samus->GetState() != ON_JUMPING_SHOOTING_RIGHT && world->samus->GetState() != ON_JUMP_AIM_UP_RIGHT)
-	//				{
-	//					start_jump = GetTickCount();
-	//					now_jump = GetTickCount();
-	//					if (world->samus->GetState() == IDLING_AIM_UP_RIGHT)
-	//						world->samus->SetState(ON_JUMP_AIM_UP_RIGHT);
-	//					else
-	//						world->samus->SetState(ON_JUMP_RIGHT);
-	//					world->samus->setVelocityY(world->samus->getVelocityY() + JUMP_VELOCITY_BOOST_FIRST);
-
-	//					now_jump = GetTickCount();
-	//					if ((now_jump - start_jump) <= 10 * tick_per_frame)
-	//					{
-	//						world->samus->setVelocityY(world->samus->getVelocityY() + JUMP_VELOCITY_BOOST);
-	//					}
-	//				}
-	//			}
-	//		}
-	//	}
-	//}
 }
 
 DWORD Metroid::GetTickPerFrame()
 {
 	return tick_per_frame;
+}
+
+LPD3DXSPRITE Metroid::getSpriteHandler() {
+	return this->spriteHandler;
+}
+
+Map * Metroid::getMap() {
+	return this->map;
 }

@@ -5,6 +5,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "DeviceManager.h"
+#include "GameObject.h"
 
 
 class Camera
@@ -17,6 +18,7 @@ public:
 	//Game Functions
 	void Update();
 	void SetTransform(DeviceManager *device) const;
+	void Follow(GameObject * object);
 
 private:
 	float angle;
@@ -27,6 +29,7 @@ private:
 
 	int width;
 	int height;
+	GameObject* m_following = nullptr;
 };
 
 #endif /* CAMERA_H */

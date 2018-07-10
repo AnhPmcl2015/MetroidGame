@@ -1,59 +1,35 @@
-﻿#include "Sprite.h"
+#include "Sprite.h"
 #include <vector>
-
 /*
 	Khoi tao Sprite 
-		SpriteHandler : chỗ chứa sprite khi vẽ
 		textureFilePath: duong dan den file hinh anh chua Sprite
 		width: chieu ngang moi sprite
 		height: chieu dai moi sprite
+		startIndexOfSprite: vi tri index cua sprite dang xet trong texture
 		count: dem so luong sprite (trong truong hop xet chuyen dong nhan vat)
 
-	Ex: Sprite *playerJump = new Sprite(SpriteHandler, L'Player_32x16.png", WIDTH_SAMUS_STAND, HEIGHT_SAMUS_STAND, 4);
+	Ex: Sprite *playerJump = new Sprite(L'Player_32x16.png", WIDTH_SPRITE_PLAYER, HEIGHT_SPRITE_PLAYER, 1, 4, d3ddev);
 		Sprite di chuyen qua phai co 4 sprite => count = 4;
+		vi tri sprite di chuyen qua phai la dau tien => startIndexOfSprite = 1;
 */
+Sprite::Sprite(LPD3DXSPRITE sprite, LPDIRECT3DTEXTURE9 texture, int width, int height, int startIndexOfSprite, int count) {
 
-// Load Texture
-LPDIRECT3DTEXTURE9 loadTexture(LPDIRECT3DDEVICE9 d3ddev, D3DCOLOR transColor, LPWSTR fileName) {
-	HRESULT result;
-	LPDIRECT3DTEXTURE9 _texture = NULL;
-
-	// Doc thong tin file anh de tao texture
-	D3DXIMAGE_INFO infoOfTexture;
-
-	result = D3DXGetImageInfoFromFile(fileName, &infoOfTexture);
-	if (result != D3D_OK)
-	{
-		trace(L"[ERROR] Failed to get information from image file '%s'", fileName);
-		return NULL;
-	}
-
-	result = D3DXCreateTextureFromFileEx(
-		d3ddev,
-		fileName,
-		infoOfTexture.Width,
-		infoOfTexture.Height,
-		1,
-		D3DPOOL_DEFAULT,
-		D3DFMT_UNKNOWN,
-		D3DPOOL_DEFAULT,
-		D3DX_DEFAULT,
-		D3DX_DEFAULT,
-		transColor,
-		&infoOfTexture,
-		NULL,
-		&_texture);
-
-	if (result != D3D_OK)
-		return NULL;
-	return _texture;
+	
+	// Gan he mau trong suot
+	transColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+	this->currentIndexOfSprite = startIndexOfSprite;
+	this->sprite = sprite;
+	if (this->sprite == NULL)
+		return;
+	this->texture = texture;
+	if (this->texture == NULL)
+		return;
 }
 
-Sprite::Sprite(LPD3DXSPRITE SpriteHandler, LPWSTR textureFilePath, LPWSTR coord, int width, int height, int count)
+Sprite::Sprite(LPD3DXSPRITE SpriteHandler, LPDIRECT3DTEXTURE9 texture, LPWSTR coord, int width, int height, int count)
 {
 	this->count = count;
 	sprite = SpriteHandler;
-	this->textureFilePath = textureFilePath;
 	this->_Coord = coord;
 
 	// Gan he mau trong suot
@@ -65,18 +41,21 @@ Sprite::Sprite(LPD3DXSPRITE SpriteHandler, LPWSTR textureFilePath, LPWSTR coord,
 
 	LPDIRECT3DDEVICE9 d3ddv;
 	SpriteHandler->GetDevice(&d3ddv);
-	
-	texture = loadTexture(d3ddv, transColor, this->textureFilePath);
-	if (texture == NULL)
+
+	this->texture = texture;
+	if (this->texture == NULL)
 		return;
 }
 
 Sprite::~Sprite() {
-	texture->Release();
+
 }
 
 // Cap nhat vi tri cua sprite tiep theo
 void Sprite::updateSprite() {
+	this->currentIndexOfSprite += 1;
+	if (this->currentIndexOfSprite >= (this->startIndexOfSprite + this->count))
+		this->currentIndexOfSprite = startIndexOfSprite;
 	this->_Index = (this->_Index + 1) % count;
 }
 
@@ -87,67 +66,64 @@ void Sprite::updateSprite() {
 	height: Chieu dai pixel cua Sprite dang xet
 	position: Vi tri xua hien tren man hinh theo 3 truc (x, y, z)
 */
+//draw 1 sprite
+void Sprite::drawSprite(int x, int y, int width, int height, D3DXVECTOR3 position) {
+	if (this->sprite == NULL || this->texture == NULL)
+		return;
+
+	RECT rect;
+	rect.left = x;
+	rect.top = y;
+	rect.right = x + width;
+	rect.bottom = y + height;
+
+	//using this line for camera only
+	//this->sprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
+	this->sprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
+
+	D3DXMATRIX mat;
+
+	D3DXMatrixTransformation(&mat, NULL, NULL, NULL, NULL, NULL, &position);
+
+	this->sprite->SetTransform(&mat);
+
+	this->sprite->Draw(this->texture, &rect, NULL, NULL, this->transColor);
+	this->sprite->End();
+}
+
+//draw multi sprites
 void Sprite::drawSprite(int width, int height, D3DXVECTOR3 position) {
 	if (this->sprite == NULL || this->texture == NULL)
 		return;
 	RECT rect;
 	rect = ReadCoord();
-	/*RECT rect;
-	rect.left = (_Index % count) * width;
-	rect.top = (_Index / count) * height;
-	rect.right = rect.left + width;
-	rect.bottom = rect.top + height;*/
 
-	D3DXVECTOR3 pos(0,0,0);
+	D3DXVECTOR3 pos(0, 0, 0);
 	//pos.x = position.x;
 	//pos.y = position.y;
 
 	this->sprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
 
 	// Texture being used is width by height:
-	D3DXVECTOR2 spriteCentre = D3DXVECTOR2((float)width, (float)height);
-
-	// Screen position of the sprite
-	D3DXVECTOR2 trans = D3DXVECTOR2(position.x, position.y);
+	D3DXVECTOR3 spriteCentre = D3DXVECTOR3((float)width, (float)height,0);
 
 	// Build our matrix to rotate, scale and position our sprite
 	D3DXMATRIX mat;
 
-	D3DXVECTOR2 scaling(2.0f,-2.0f);
+	D3DXVECTOR3 scaling(1.0f, 1.0f, 1.0f);
 
 	// out, scaling centre, scaling rotation, scaling, rotation centre, rotation, translation
-	D3DXMatrixTransformation2D(&mat, &D3DXVECTOR2( width/2, height/2 ) , 0.0, &scaling, &spriteCentre, NULL, &trans);
-
+	D3DXMatrixTransformation(&mat, &D3DXVECTOR3(width / 2, height / 2,0), NULL, &scaling, &spriteCentre, NULL, &position);
 
 	this->sprite->SetTransform(&mat);
 	this->sprite->Draw(this->texture, &rect, NULL, NULL, this->transColor);
-	
+
 	this->sprite->End();
 }
 
 void Sprite::Reset()
 {
 	_Index = 0;
-}
-
-void Sprite::setWidth(int value)
-{
-	width = value;
-}
-
-int Sprite::getWidth()
-{
-	return width;
-}
-
-void Sprite::setHeight(int value)
-{
-	height = value;
-}
-
-int Sprite::getHeight()
-{
-	return height;
 }
 
 RECT Sprite::ReadCoord()
@@ -199,4 +175,24 @@ RECT Sprite::ReadCoord()
 	f.close();
 
 	return srect;
+}
+
+void Sprite::setWidth(int value)
+{
+	width = value;
+}
+
+int Sprite::getWidth()
+{
+	return width;
+}
+
+void Sprite::setHeight(int value)
+{
+	height = value;
+}
+
+int Sprite::getHeight()
+{
+	return height;
 }

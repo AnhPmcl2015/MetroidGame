@@ -25,7 +25,7 @@ public:
 
 	void Update(float t);
 	void Render();
-	void InitSprites(LPDIRECT3DDEVICE9 d3ddv);
+	void InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
 
 };
 
