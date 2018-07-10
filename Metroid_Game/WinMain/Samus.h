@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef _SAMUS_H
 #define _SAMUS_H_
 #include "Sprite.h"
@@ -17,6 +17,8 @@ enum SAMUS_STATE {
 	MORPH_RIGHT,
 	RUN_SHOOTING_LEFT,
 	RUN_SHOOTING_RIGHT,
+	RUN_SHOOT_UP_LEFT,
+	RUN_SHOOT_UP_RIGHT,
 	JUMP_LEFT,
 	JUMP_RIGHT,
 	TRANSFORM_BALL_LEFT,
@@ -38,6 +40,8 @@ protected:
 	Sprite * morphRight;
 	Sprite * runShootL;
 	Sprite * runShootR;
+	Sprite * runShootUpL;
+	Sprite * runShootUpR;
 	Sprite * jumpLeft;
 	Sprite * jumpRight;
 	Sprite * ballLeft;
@@ -45,8 +49,9 @@ protected:
 	Sprite * jumpShootL;
 	Sprite * jumpShootR;
 
-	SAMUS_STATE state;
+	SAMUS_STATE state;	
 public:
+	bool isJumping;	// Trạng thái đang nhảy của Samus
 	Samus();
 	Samus(LPD3DXSPRITE spriteHandler, World * manager);
 	~Samus();
@@ -56,6 +61,7 @@ public:
 
 	SAMUS_STATE GetState();
 	void SetState(SAMUS_STATE value);
+	bool isSamusJumping();
 
 	void ResetAllSprites();
 	bool GetStateActive();

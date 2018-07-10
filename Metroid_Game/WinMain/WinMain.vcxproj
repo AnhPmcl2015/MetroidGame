@@ -162,10 +162,22 @@
     <Image Include="sprites\Player_32x16.png" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="sprites\JUMPSHOOT_LEFT.txt" />
+    <Text Include="sprites\JUMPSHOOT_RIGHT.txt" />
+    <Text Include="sprites\JUMP_LEFT.txt" />
+    <Text Include="sprites\JUMP_RIGHT.txt" />
     <Text Include="sprites\LEFTING.txt" />
+    <Text Include="sprites\MORPH_LEFT.txt" />
+    <Text Include="sprites\MORPH_RIGHT.txt" />
     <Text Include="sprites\RIGHTING.txt" />
+    <Text Include="sprites\RUNSHOOT_LEFT.txt" />
+    <Text Include="sprites\RUNSHOOT_RIGHT.txt" />
+    <Text Include="sprites\STANDSHOOT_LEFT.txt" />
+    <Text Include="sprites\STANDSHOOT_RIGHT.txt" />
     <Text Include="sprites\STAND_LEFT.txt" />
     <Text Include="sprites\STAND_RIGHT.txt" />
+    <Text Include="sprites\TRANSFORM_BALL_LEFT.txt" />
+    <Text Include="sprites\TRANSFORM_BALL_RIGHT.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

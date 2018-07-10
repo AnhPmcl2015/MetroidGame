@@ -135,5 +135,41 @@
     <Text Include="sprites\RIGHTING.txt">
       <Filter>Resource Files\sprites</Filter>
     </Text>
+    <Text Include="sprites\JUMP_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\JUMP_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\MORPH_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\MORPH_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\TRANSFORM_BALL_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\TRANSFORM_BALL_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\JUMPSHOOT_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\JUMPSHOOT_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\RUNSHOOT_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\RUNSHOOT_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\STANDSHOOT_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\STANDSHOOT_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
   </ItemGroup>
 </Project>
