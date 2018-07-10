@@ -122,6 +122,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DeviceManager.cpp" />
     <ClCompile Include="DXGraphics.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -130,6 +131,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Metroid.cpp" />
+    <ClCompile Include="Samus.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="trace.cpp" />
@@ -137,6 +139,7 @@
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="DeviceManager.h" />
     <ClInclude Include="DXGraphics.h" />
@@ -145,6 +148,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Metroid.h" />
+    <ClInclude Include="Samus.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="trace.h" />
@@ -153,10 +157,27 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="brick_16x16.png" />
-    <Image Include="Player_32x16.png" />
+    <Image Include="brick_32x32.png" />
+    <Image Include="sprites\Player_32x16.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="field1.txt" />
+    <Text Include="sprites\JUMPSHOOT_LEFT.txt" />
+    <Text Include="sprites\JUMPSHOOT_RIGHT.txt" />
+    <Text Include="sprites\JUMP_LEFT.txt" />
+    <Text Include="sprites\JUMP_RIGHT.txt" />
+    <Text Include="sprites\LEFTING.txt" />
+    <Text Include="sprites\MORPH_LEFT.txt" />
+    <Text Include="sprites\MORPH_RIGHT.txt" />
+    <Text Include="sprites\RIGHTING.txt" />
+    <Text Include="sprites\RUNSHOOT_LEFT.txt" />
+    <Text Include="sprites\RUNSHOOT_RIGHT.txt" />
+    <Text Include="sprites\STANDSHOOT_LEFT.txt" />
+    <Text Include="sprites\STANDSHOOT_RIGHT.txt" />
+    <Text Include="sprites\STAND_LEFT.txt" />
+    <Text Include="sprites\STAND_RIGHT.txt" />
+    <Text Include="sprites\TRANSFORM_BALL_LEFT.txt" />
+    <Text Include="sprites\TRANSFORM_BALL_RIGHT.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

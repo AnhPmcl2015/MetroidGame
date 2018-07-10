@@ -4,7 +4,7 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	Metroid metroid(hInstance, L"Metroid game", GAME_SCREEN_RESOLUTION_512_416_24, 0, 80);
+	Metroid metroid(hInstance, L"Metroid game", GAME_SCREEN_RESOLUTION_512_480_24, 0, 80);
 
 	metroid.GameInit(); // DONE
 	metroid.GameRun();

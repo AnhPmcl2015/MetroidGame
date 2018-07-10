@@ -23,9 +23,12 @@ Game::~Game()
 
 void Game::GameInit()
 {
+	int width = _dxgraphics->getScreenWidth();
+	int height = _dxgraphics->getScreenHeight();
 	//Game::gameSound->LoadSound(_hWnd);
 	_dxgraphics->_InitWindow();
 	_input->_InitKeyboard(_dxgraphics->gethInstance(), _dxgraphics->getWnd());
+	camera = new Camera(width, height, 0, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));
 	_device->_InitDirectX(*_dxgraphics);
 	LoadResources(_device->getdevice());
 }
@@ -84,6 +87,10 @@ void Game::_RenderFrame()
 		_device->getdevice()->ColorFill(_device->getBuffer(), NULL, D3DCOLOR_XRGB(0xAA, 0xAA, 0xAA));
 
 		_device->clearScreen();
+		if (camera)
+		{
+			camera->SetTransform(_device);
+		}
 		RenderFrame(_device->getdevice());
 		_device->getdevice()->EndScene();
 	}
@@ -93,6 +100,7 @@ void Game::_RenderFrame()
 
 void Game::Update(float Delta)
 {
+	camera->Update();
 }
 
 void Game::RenderFrame(LPDIRECT3DDEVICE9 device)

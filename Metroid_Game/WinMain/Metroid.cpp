@@ -7,21 +7,14 @@ void Metroid::_InitBackground()
 {
 }
 
-void Metroid::_InitSprites(LPDIRECT3DDEVICE9 d3ddv)
+void Metroid::_InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 {
-	Texture text;
-	this->setPlayerTexture(text.loadTexture(d3ddv, L"Player_32x16.png"));
-	if (this->getPlayerTexture() == NULL)
-		trace(L"Unable to load PlayerTexture");
-
-	this->setBrickTexture(text.loadTexture(d3ddv, L"brick_16x16.png"));
-	if (this->getBrickTexture() == NULL)
-		trace(L"Unable to load BrickTexture");
+	world->InitSprites(d3ddv, texture);	
 }
 
 void Metroid::_InitPositions()
 {
-
+	world->samus->InitPostition();
 }
 
 Metroid::Metroid(HINSTANCE hInstance, LPWSTR Name, int Mode, int IsFullScreen, int FrameRate) 
@@ -50,23 +43,40 @@ void Metroid::LoadResources(LPDIRECT3DDEVICE9 d3ddev)
 	if (result != D3D_OK) 
 		trace(L"Unable to create SpriteHandler");
 
-	this->_InitSprites(d3ddev);
+	Texture text;
+	this->setPlayerTexture(text.loadTexture(d3ddev, TEXTURE_GAME_CHARACTERS));
+	if (this->getPlayerTexture() == NULL)
+		trace(L"Unable to load PlayerTexture");
+
+	Texture text1;
+	this->setBrickTexture(text1.loadTexture(d3ddev, L"brick_32x32.png"));
+	if (this->getBrickTexture() == NULL)
+		trace(L"Unable to load BrickTexture");
+
+	
+	world = new World(spriteHandler, this);
+	srand((unsigned)time(NULL));
+	this->_InitSprites(d3ddev, this->getPlayerTexture());
 
 	// Khoi tao map
 	this->map = new Map(this->getSpriteHandler(), this->getBrickTexture(), "field1.txt", this->_device, 0, 0, this->_dxgraphics->getScreenWidth(), this->_dxgraphics->getScreenHeight());
 	if (map == NULL)
 		trace(L"Unable to load map");
+
+	this->_InitPositions();
 }
 
 //Kiểm tra screen Mode (bắt đầu, room1, room2,... hay gameover)
 void Metroid::Update(float Delta)
 {
-
+	Game::Update(Delta);
+	UpdateFrame(Delta);
 }
 
 //update các object trong game
 void Metroid::UpdateFrame(float Delta)
 {
+	world->Update(Delta);
 }
 
 //render từng screen mode (room1, room2,... hay gameover)
@@ -78,17 +88,92 @@ void Metroid::Render(LPDIRECT3DDEVICE9 d3ddv)
 //render các scene chính (room1, room2...) trong game
 void Metroid::RenderStartScreen(LPDIRECT3DDEVICE9 d3ddv)
 {
-
+	
 }
 
 //render từng object trong game
 void Metroid::RenderFrame(LPDIRECT3DDEVICE9 d3ddv)
 {
+	world->Render();
 	map->drawMap(1.1);
+	
 }
 
 void Metroid::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta)
 {
+	if (_input->IsKeyDown(DIK_RIGHT))
+	{
+		world->samus->setVelocityXLast(world->samus->getVelocityX());
+		world->samus->setVelocityX(SAMUS_SPEED);
+		if (world->samus->GetState() != MORPH_LEFT && world->samus->GetState() != MORPH_RIGHT
+			&& world->samus->GetState() != JUMP_LEFT && world->samus->GetState() != JUMP_RIGHT
+			&& world->samus->GetState() != JUMP_SHOOT_UP_LEFT && world->samus->GetState() != JUMP_SHOOT_UP_RIGHT
+			&& world->samus->GetState() != TRANSFORM_BALL_LEFT && world->samus->GetState() != TRANSFORM_BALL_RIGHT)
+		{
+			world->samus->SetState(RUNNING_RIGHT);
+		}
+	}
+	else if (_input->IsKeyDown(DIK_LEFT)) {
+		world->samus->setVelocityXLast(world->samus->getVelocityX());
+		world->samus->setVelocityX(-SAMUS_SPEED);
+		if (world->samus->GetState() != MORPH_LEFT && world->samus->GetState() != MORPH_RIGHT
+			&& world->samus->GetState() != JUMP_LEFT && world->samus->GetState() != JUMP_RIGHT
+			&& world->samus->GetState() != JUMP_SHOOT_UP_LEFT && world->samus->GetState() != JUMP_SHOOT_UP_RIGHT
+			&& world->samus->GetState() != TRANSFORM_BALL_LEFT && world->samus->GetState() != TRANSFORM_BALL_RIGHT)
+		{
+			world->samus->SetState(RUNNING_LEFT);
+		}
+	}
+	else
+	{
+		if (world->samus->getVelocityXLast() > 0)
+		{
+			if (world->samus->GetState() != MORPH_LEFT && world->samus->GetState() != MORPH_RIGHT
+				&& world->samus->GetState() != JUMP_LEFT && world->samus->GetState() != JUMP_RIGHT
+				&& world->samus->GetState() != JUMP_SHOOT_UP_LEFT && world->samus->GetState() != JUMP_SHOOT_UP_RIGHT
+				&& world->samus->GetState() != TRANSFORM_BALL_LEFT && world->samus->GetState() != TRANSFORM_BALL_RIGHT)
+			{
+				world->samus->SetState(STAND_RIGHT);
+				world->samus->ResetAllSprites();
+			}
+		}
+		if (world->samus->getVelocityXLast() < 0)
+		{
+			if (world->samus->GetState() != MORPH_LEFT && world->samus->GetState() != MORPH_RIGHT
+				&& world->samus->GetState() != JUMP_LEFT && world->samus->GetState() != JUMP_RIGHT
+				&& world->samus->GetState() != JUMP_SHOOT_UP_LEFT && world->samus->GetState() != JUMP_SHOOT_UP_RIGHT
+				&& world->samus->GetState() != TRANSFORM_BALL_LEFT && world->samus->GetState() != TRANSFORM_BALL_RIGHT)
+			{
+				world->samus->SetState(STAND_LEFT);
+				world->samus->ResetAllSprites();
+			}
+		}
+		world->samus->setVelocityX(0);
+	}
+
+	if (_input->IsKeyDown(DIK_UP))
+	{
+		if (world->samus->GetState() == RUNNING_LEFT)
+			world->samus->SetState(RUN_SHOOTING_LEFT);
+		if (world->samus->GetState() == RUNNING_RIGHT)
+			world->samus->SetState(RUN_SHOOTING_RIGHT);
+		if (world->samus->GetState() == STAND_LEFT)
+			world->samus->SetState(STAND_SHOOT_UP_LEFT);
+		if (world->samus->GetState() == STAND_RIGHT)
+			world->samus->SetState(STAND_SHOOT_UP_RIGHT);
+		if (world->samus->GetState() == JUMP_LEFT)
+		{
+			world->samus->SetState(JUMP_SHOOT_UP_LEFT);
+		}
+		if (world->samus->GetState() == JUMP_RIGHT)
+		{
+			world->samus->SetState(JUMP_SHOOT_UP_RIGHT);
+		}
+		if (world->samus->GetState() == MORPH_LEFT)
+			world->samus->SetState(STAND_LEFT);
+		if (world->samus->GetState() == MORPH_RIGHT)
+			world->samus->SetState(STAND_RIGHT);
+	}
 }
 
 void Metroid::OnKeyDown(int KeyCode)

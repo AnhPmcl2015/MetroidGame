@@ -6,7 +6,6 @@
 #include <d3dx9.h>
 #include "Sprite.h"
 #include "Define.h"
-#include "World.h"
 
 class GameObject
 {
@@ -17,9 +16,10 @@ public:
 	float pos_y;		// y position of object
 	float lastPosX;
 	float lastPosY;
+	float friction = FRICTION;	//ma sát
 
-	/*float width;
-	float height;*/
+								/*float width;
+								float height;*/
 
 	float vx;		// x velocity
 	float vy;		// y velocity
@@ -89,4 +89,4 @@ public:
 
 	// ============================== END VIRTUAL METHOD =============================
 };
-#endif // !_GAME_OBJECT
+#endif // !_GAME_OBJECT_

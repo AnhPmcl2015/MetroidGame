@@ -31,6 +31,9 @@
     <Filter Include="Source Files\Character">
       <UniqueIdentifier>{95f75cfd-e3da-418d-977c-5c37242881bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\sprites">
+      <UniqueIdentifier>{368f882d-7d9b-4d40-a004-5b302023aea5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -69,7 +72,13 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\Character</Filter>
     </ClCompile>
+    <ClCompile Include="Samus.cpp">
+      <Filter>Source Files\Character</Filter>
+    </ClCompile>
     <ClCompile Include="World.cpp">
+      <Filter>Source Files\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
       <Filter>Source Files\FrameWork</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,21 +119,78 @@
     <ClInclude Include="GameObject.h">
       <Filter>Header Files\Character</Filter>
     </ClInclude>
+    <ClInclude Include="Samus.h">
+      <Filter>Header Files\Character</Filter>
+    </ClInclude>
     <ClInclude Include="World.h">
+      <Filter>Header Files\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
       <Filter>Header Files\FrameWork</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Player_32x16.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="brick_16x16.png">
       <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="brick_32x32.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\Player_32x16.png">
+      <Filter>Resource Files\sprites</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="field1.txt">
       <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="sprites\JUMP_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\JUMP_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\JUMPSHOOT_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\JUMPSHOOT_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\LEFTING.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\MORPH_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\MORPH_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\RIGHTING.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\RUNSHOOT_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\RUNSHOOT_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\STAND_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\STAND_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\STANDSHOOT_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\STANDSHOOT_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\TRANSFORM_BALL_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\TRANSFORM_BALL_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
     </Text>
   </ItemGroup>
 </Project>
