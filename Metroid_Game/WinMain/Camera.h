@@ -16,7 +16,7 @@ public:
 	void Follow(GameObject* _object);
 	void unFollow();
 	bool isFollowing();
-	void SetTransform(DeviceManger* gDecive) const;
+	void SetTransform(DeviceManger* _device);
 
 	int getWidth() { return cameraWidth; }
 	int getHeight() { return cameraHeight; }

@@ -40,7 +40,7 @@ void Camera::Update(bool isAutorun)
 	cameraX = cameraWidth / 2;
 	cameraY = cameraHeight / 2;
 
-	if (isFollowing) {
+	if (isFollowing()) {
 		cameraX = cameraX + 6;
 	}
 
@@ -62,9 +62,9 @@ bool Camera::isFollowing()
 	return false;
 }
 
-void Camera::SetTransform(DeviceManager * _device) const
-{
-	_device->getdevice()->SetTransform(D3DTS_PROJECTION, &_orthographicMatrix);
-	_device->getdevice()->SetTransform(D3DTS_WORLD, &_identifyMatrix);
-	_device->getdevice()->SetTransform(D3DTS_VIEW, &_viewMatrix);
-}
+//void Camera::SetTransform(DeviceManager * _device)
+//{
+//	_device->getdevice()->SetTransform(D3DTS_PROJECTION, &_orthographicMatrix);
+//	_device->getdevice()->SetTransform(D3DTS_WORLD, &_identifyMatrix);
+//	_device->getdevice()->SetTransform(D3DTS_VIEW, &_viewMatrix);
+//}
