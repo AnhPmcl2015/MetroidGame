@@ -21,7 +21,7 @@ public:
 
 	~Map();
 
-	void drawMap(float gameTime);
+	void drawMap();
 
 	void Update();
 	void Update(int _roomID);

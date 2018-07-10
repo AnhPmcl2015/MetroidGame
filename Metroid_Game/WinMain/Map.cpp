@@ -51,289 +51,294 @@ bool Map::loadMap(string filePath) {
 	return false;
 }
 
-void Map::drawMap(float gameTime) {
-	int x = this->camera_X/BRICK_SIZE;
-	int y = this->camera_Y/BRICK_SIZE;
+void Map::drawMap() {
+	int x = this->camera_X / BRICK_SIZE;
+	int y = this->camera_Y / BRICK_SIZE;
 
 	char brick;
-	
-	for (int i = y; i < Y_LIMITATION + y ; i++) {
-		string textline = (this->getStringMap())[i];
 
-		for (int j = x; j < X_LIMITATION + x; j++) {
-			brick = textline[j];
+	for (int i = 0; i < Y_LIMITATION; i++) {
+		int row_index = i;
+		string row_string = (this->getStringMap())[row_index];	//get map
+
+		for (int j = 0; j < X_LIMITATION; j++) {
+			int brick_in_row_index = j;
+			brick = row_string[brick_in_row_index];
+
+			D3DXVECTOR3 pos = D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0);
+			// draw different type of bricks
 			switch (brick)
 			{
 			case '1':
 			{
-				sprite->drawSprite(0, 0, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 0, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case '2':
 			{
-				sprite->drawSprite(0, 1 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 1 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case '3':
 			{
-				sprite->drawSprite(0, 2 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 2 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case '4':
 			{
-				sprite->drawSprite(0, 3 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 3 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case '5':
 			{
-				sprite->drawSprite(0, 4 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 4 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case '6':
 			{
-				sprite->drawSprite(0, 5 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 5 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case '7':
 			{
-				sprite->drawSprite(0, 6 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 6 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case '8':
 			{
-				sprite->drawSprite(0, 7 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 7 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case '9':
 			{
-				sprite->drawSprite(0, 8 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 8 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'a':
 			{
-				sprite->drawSprite(0, 9 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 9 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'b':
 			{
-				sprite->drawSprite(0, 10 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 10 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'c':
 			{
-				sprite->drawSprite(0, 11 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 11 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'd':
 			{
-				sprite->drawSprite(0, 12 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 12 * BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 
 				break;
 			}
 			case 'e':
 			{
-				sprite->drawSprite(0, 13* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 13* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'f':
 			{
-				sprite->drawSprite(0, 14* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 14* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 
 				break;
 			}
 			case 'g':
 			{
-				sprite->drawSprite(0, 15* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 15* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'h':
 			{
-				sprite->drawSprite(0, 16* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 16* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'i':
 			{
-				sprite->drawSprite(0, 17* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 17* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'k':
 			{
-				sprite->drawSprite(0, 18* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 18* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'l':
 			{
-				sprite->drawSprite(0, 19* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 19* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'm':
 			{
-				sprite->drawSprite(0, 20* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 20* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'n':
 			{
-				sprite->drawSprite(0, 21* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 21* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'o':
 			{
-				sprite->drawSprite(0, 22* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 22* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'p':
 			{
-				sprite->drawSprite(0, 23* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 23* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'q':
 			{
-				sprite->drawSprite(0, 24* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 24* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'r':
 			{
-				sprite->drawSprite(0, 25* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 25* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 's':
 			{
-				sprite->drawSprite(0, 26* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 26* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 't':
 			{
-				sprite->drawSprite(0, 27* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 27* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'u':
 			{
-				sprite->drawSprite(0, 28* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 28* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'v':
 			{
-				sprite->drawSprite(0, 29* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 29* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'w':
 			{
-				sprite->drawSprite(0, 30* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 30* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'x':
 			{
-				sprite->drawSprite(0, 31* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 31* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'y':
 			{
-				sprite->drawSprite(0, 32* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 32* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'z':
 			{
-				sprite->drawSprite(0, 33* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 33* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'A':
 			{
-				sprite->drawSprite(0, 34* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 34* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'B':
 			{
-				sprite->drawSprite(0, 35* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 35* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'C':
 			{
-				sprite->drawSprite(0, 36* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 36* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'D':
 			{
-				sprite->drawSprite(0, 37* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 37* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'E':
 			{
-				sprite->drawSprite(0, 38* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 38* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'F':
 			{
-				sprite->drawSprite(0, 39* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 39* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'G':
 			{
-				sprite->drawSprite(0, 40* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 40* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'H':
 			{
-				sprite->drawSprite(0, 41* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 41* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'I':
 			{
-				sprite->drawSprite(0, 42* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 42* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'K':
 			{
-				sprite->drawSprite(0, 43* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 43* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'L':
 			{
-				sprite->drawSprite(0, 44* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 44* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'M':
 			{
-				sprite->drawSprite(0, 45* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 45* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'N':
 			{
-				sprite->drawSprite(0, 46* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 46* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'O':
 			{
-				sprite->drawSprite(0, 47* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 47* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'P':
 			{
-				sprite->drawSprite(0, 48* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 48* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'Q':
 			{
-				sprite->drawSprite(0, 49* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 49* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'R':
 			{
-				sprite->drawSprite(0, 50* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 50* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'S':
 			{
-				sprite->drawSprite(0, 51* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 51* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case 'T':
 			{
-				sprite->drawSprite(0, 52* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 52* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case'U':
 			{
-				sprite->drawSprite(0, 53* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0));
+				sprite->drawSprite(0, 53* BRICK_SIZE, WIDTH_SPRITE_BRICK, HEIGHT_SPRITE_BRICK, pos);
 				break;
 			}
 			case '0':

@@ -192,5 +192,11 @@
     <Text Include="sprites\TRANSFORM_BALL_RIGHT.txt">
       <Filter>Resource Files\sprites</Filter>
     </Text>
+    <Text Include="sprites\RUN_SHOOTUP_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\RUN_SHOOTUP_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
   </ItemGroup>
 </Project>

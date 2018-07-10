@@ -79,9 +79,15 @@ void Sprite::drawSprite(int x, int y, int width, int height, D3DXVECTOR3 positio
 
 	//using this line for camera only
 	//this->sprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
-	this->sprite->Begin(D3DXSPRITE_ALPHABLEND);
+	this->sprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
 
-	this->sprite->Draw(this->texture, &rect, NULL, &position, this->transColor);
+	D3DXMATRIX mat;
+
+	D3DXMatrixTransformation(&mat, NULL, NULL, NULL, NULL, NULL, &position);
+
+	this->sprite->SetTransform(&mat);
+
+	this->sprite->Draw(this->texture, &rect, NULL, NULL, this->transColor);
 	this->sprite->End();
 }
 
@@ -96,22 +102,18 @@ void Sprite::drawSprite(int width, int height, D3DXVECTOR3 position) {
 	//pos.x = position.x;
 	//pos.y = position.y;
 
-	this->sprite->Begin(D3DXSPRITE_ALPHABLEND );
+	this->sprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
 
 	// Texture being used is width by height:
-	D3DXVECTOR2 spriteCentre = D3DXVECTOR2((float)width, (float)height);
-
-	// Screen position of the sprite
-	D3DXVECTOR2 trans = D3DXVECTOR2(position.x, position.y);
+	D3DXVECTOR3 spriteCentre = D3DXVECTOR3((float)width, (float)height,0);
 
 	// Build our matrix to rotate, scale and position our sprite
 	D3DXMATRIX mat;
 
-	D3DXVECTOR2 scaling(1.0f, -1.0f);
+	D3DXVECTOR3 scaling(1.0f, 1.0f, 1.0f);
 
 	// out, scaling centre, scaling rotation, scaling, rotation centre, rotation, translation
-	D3DXMatrixTransformation2D(&mat, &D3DXVECTOR2(width / 2, height / 2), 0.0, &scaling, &spriteCentre, NULL, &trans);
-
+	D3DXMatrixTransformation(&mat, &D3DXVECTOR3(width / 2, height / 2,0), NULL, &scaling, &spriteCentre, NULL, &position);
 
 	this->sprite->SetTransform(&mat);
 	this->sprite->Draw(this->texture, &rect, NULL, NULL, this->transColor);

@@ -63,6 +63,9 @@ void Metroid::LoadResources(LPDIRECT3DDEVICE9 d3ddev)
 	if (map == NULL)
 		trace(L"Unable to load map");
 
+	if (camera)
+		camera->Follow(world->samus);
+
 	this->_InitPositions();
 }
 
@@ -94,9 +97,9 @@ void Metroid::RenderStartScreen(LPDIRECT3DDEVICE9 d3ddv)
 //render từng object trong game
 void Metroid::RenderFrame(LPDIRECT3DDEVICE9 d3ddv)
 {
-	world->Render();
-	map->drawMap(1.1);
 	
+	map->drawMap();
+	world->Render();
 }
 
 void Metroid::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta)
