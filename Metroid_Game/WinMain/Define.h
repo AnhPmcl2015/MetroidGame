@@ -24,7 +24,7 @@ class Metroid;
 #define TEXTURE_GAME_CHARACTERS L"sprites\\Player_32x16.png"
 
 //================ SCREEN RESOLUTION ================
-#define GAME_SCREEN_RESOLUTION_512_480_24   0
+#define GAME_SCREEN_RESOLUTION_640_480_24   0
 #define GAME_SCREEN_RESOLUTION_800_600_24   1
 #define GAME_SCREEN_RESOLUTION_1024_768_24  2
 

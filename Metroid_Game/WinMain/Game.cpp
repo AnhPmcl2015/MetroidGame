@@ -24,15 +24,12 @@ Game::~Game()
 
 void Game::GameInit()
 {
-	int width = _dxgraphics->getScreenWidth();
-	int height = _dxgraphics->getScreenHeight();
 	//Game::gameSound->LoadSound(_hWnd);
 	_dxgraphics->_InitWindow();
 	int width = _dxgraphics->getScreenWidth();
 	int height = _dxgraphics->getScreenHeight();
 	camera = new Camera(width, height, 0, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));
 	_input->_InitKeyboard(_dxgraphics->gethInstance(), _dxgraphics->getWnd());
-	camera = new Camera(width, height, 0, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));
 	_device->_InitDirectX(*_dxgraphics);
 	LoadResources(_device->getdevice());
 }

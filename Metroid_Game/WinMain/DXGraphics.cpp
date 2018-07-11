@@ -4,7 +4,7 @@ void Graphics::_SetScreenDimension(int Mode)
 {
 	switch (Mode)
 	{
-	case GAME_SCREEN_RESOLUTION_512_480_24:
+	case GAME_SCREEN_RESOLUTION_640_480_24:
 		_ScreenWidth = 640;
 		_ScreenHeight = 480;
 		_Depth = 24;
@@ -125,7 +125,7 @@ Graphics::Graphics(HINSTANCE hInstance, LPWSTR name, int mode, int framerate, in
 	_Mode = mode;
 	_FrameRate = framerate;
 	_IsFullScreen = isFullScreen;
-	_SetScreenDimension(GAME_SCREEN_RESOLUTION_512_480_24);
+	_SetScreenDimension(GAME_SCREEN_RESOLUTION_640_480_24);
 }
 
 Graphics::~Graphics()
