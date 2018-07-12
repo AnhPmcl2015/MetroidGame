@@ -8,7 +8,7 @@ Camera::Camera(int width, int height, float angle, DirectX::XMFLOAT3 scaleFactor
 	this->angle = angle;
 	this->scaleFactors = scaleFactors;
 	//D3DXMatrixOrthoLH(&orthographicMatrix, width, height, 0.0f, 1.0f);
-	D3DXMatrixOrthoOffCenterLH(&orthographicMatrix, -width / 4, 3*(width / 4) , -height / 4, 3*(height / 4), 0.0f, 0.75f);
+	D3DXMatrixOrthoOffCenterLH(&orthographicMatrix, -width / 2, width / 2, -height / 4, 3*(height / 4), 0.0f, 1.0f);
 	D3DXMatrixIdentity(&identityMatrix);
 }
 
