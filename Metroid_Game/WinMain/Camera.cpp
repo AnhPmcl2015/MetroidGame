@@ -8,7 +8,7 @@ Camera::Camera(int width, int height, float angle, DirectX::XMFLOAT3 scaleFactor
 	this->angle = angle;
 	this->scaleFactors = scaleFactors;
 	//D3DXMatrixOrthoLH(&orthographicMatrix, width, height, 0.0f, 1.0f);
-	D3DXMatrixOrthoOffCenterLH(&orthographicMatrix, -width / 4, 3*(width / 4) , -height / 4, 3*(height / 4), 0.0f, 1.0f);
+	D3DXMatrixOrthoOffCenterLH(&orthographicMatrix, -width / 4, 3*(width / 4) , -height / 4, 3*(height / 4), 0.0f, 0.75f);
 	D3DXMatrixIdentity(&identityMatrix);
 }
 
@@ -21,9 +21,9 @@ void Camera::Follow(GameObject * object) {
 	m_following = object;
 }
 
-void Camera::Update()
+void Camera::Update(Map * map)
 {
-	D3DXVECTOR3 eye(100, 100, 1);	
+	D3DXVECTOR3 eye(90, 90, 1);	
 	D3DXVECTOR3 direction(0, 0, -1);
 	D3DXVECTOR3 up(0, -1, 0);	//r
 

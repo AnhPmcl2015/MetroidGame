@@ -57,15 +57,15 @@ void Map::drawMap() {
 
 	char brick;
 
-	for (int i = 0; i < Y_LIMITATION; i++) {
+	for (int i = 0, a = 0; i < Y_LIMITATION; i++, a++) {
 		int row_index = i;
 		string row_string = (this->getStringMap())[row_index];	//get map
 
-		for (int j = 0; j < X_LIMITATION; j++) {
+		for (int j = 0, b = 0; j < X_LIMITATION; j++, b++) {
 			int brick_in_row_index = j;
 			brick = row_string[brick_in_row_index];
 
-			D3DXVECTOR3 pos = D3DXVECTOR3(j * BRICK_SIZE, i * BRICK_SIZE, 0);
+			D3DXVECTOR3 pos = D3DXVECTOR3(b * BRICK_SIZE, a * BRICK_SIZE, 0);
 			// draw different type of bricks
 			switch (brick)
 			{

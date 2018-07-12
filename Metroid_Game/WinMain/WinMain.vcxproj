@@ -139,6 +139,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Metroid.cpp" />
     <ClCompile Include="Samus.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="trace.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Metroid.h" />
     <ClInclude Include="Samus.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="trace.h" />
@@ -187,6 +189,23 @@
     <Text Include="sprites\STAND_RIGHT.txt" />
     <Text Include="sprites\TRANSFORM_BALL_LEFT.txt" />
     <Text Include="sprites\TRANSFORM_BALL_RIGHT.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="sound\background\Appearance.wav" />
+    <Media Include="sound\background\Brain Mother.wav" />
+    <Media Include="sound\background\Intro.wav" />
+    <Media Include="sound\background\Item acquired.wav" />
+    <Media Include="sound\background\Kraid%27s Lair.wav" />
+    <Media Include="sound\background\Map.wav" />
+    <Media Include="sound\background\mother_brain_death.wav" />
+    <Media Include="sound\background\Ridley%27s Lair.wav" />
+    <Media Include="sound\background\samus_death.wav" />
+    <Media Include="sound\bullet.wav" />
+    <Media Include="sound\butllet_hit_enemy.wav" />
+    <Media Include="sound\jump.wav" />
+    <Media Include="sound\missile.wav" />
+    <Media Include="sound\samus_hit_enemy.wav" />
+    <Media Include="sound\samus_hit_life_point.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

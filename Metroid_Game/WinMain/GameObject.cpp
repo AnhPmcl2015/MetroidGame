@@ -21,6 +21,7 @@ void GameObject::InitSprites()
 GameObject::~GameObject()
 {
 	delete(sprite);
+	delete(manager);
 }
 
 void GameObject::Render()

@@ -20,6 +20,9 @@ Game::~Game()
 {
 	//Game::gameSound->shutdownDirectSound();
 	delete (camera);
+	delete (_input);
+	delete (_dxgraphics);
+	delete(_device);
 }
 
 void Game::GameInit()
@@ -73,9 +76,27 @@ void Game::GameRun()
 		}
 
 		_input->_ProcessKeyBoard();
+		CheckKey();
 
 		ProcessInput(_device->getdevice(), _DeltaTime);
 
+	}
+}
+
+void Game::CheckKey() 
+{
+	// Collect all buffered events
+	DWORD dwElements = KEYBOARD_BUFFER_SIZE;
+	HRESULT hr = _input->getKeyboard()->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), _input->getKeyEvents(), &dwElements, 0);
+
+	for (DWORD i = 0; i < dwElements; i++)
+	{
+		int KeyCode = _input->getKeyEvents()[i].dwOfs;
+		int KeyState = _input->getKeyEvents()[i].dwData;
+		if ((KeyState & 0x80) > 0)
+			OnKeyDown(KeyCode);
+		else
+			OnKeyUp(KeyCode);
 	}
 }
 
@@ -101,7 +122,6 @@ void Game::_RenderFrame()
 
 void Game::Update(float Delta)
 {
-	camera->Update();
 }
 
 void Game::RenderFrame(LPDIRECT3DDEVICE9 device)
@@ -119,6 +139,10 @@ void Game::ProcessInput(LPDIRECT3DDEVICE9 device, float Delta)
 }
 
 void Game::OnKeyDown(int KeyCode)
+{
+}
+
+void Game::OnKeyUp(int KeyCode)
 {
 }
 

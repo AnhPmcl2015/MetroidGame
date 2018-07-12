@@ -5,6 +5,7 @@
 class World;
 class Samus;
 class Metroid;
+class Game;
 
 #define KEYBOARD_BUFFER_SIZE	1024
 #define KEY_DOWN(code) ( IsKeyDown(code) )
@@ -13,10 +14,10 @@ class Metroid;
 #define TIME_FREEZING 5000
 #define TIME_IN_GAME 7000
 
-#define JUMP_VELOCITY_BOOST 0.1f
-#define JUMP_VELOCITY_BOOST_FIRST 0.6f
-#define FALLDOWN_VELOCITY_DECREASE 0.07f
-#define GRAVITY_VELOCITY 0.005f
+#define JUMP_VELOCITY_BOOST 0.5f
+#define JUMP_VELOCITY_BOOST_FIRST 0.5f
+#define FALLDOWN_VELOCITY_DECREASE 0.3f
+#define GRAVITY_VELOCITY 0.5f
 #define ANIMATE_RATE 20
 
 #define SAMUS_SPEED 100.0f
@@ -134,3 +135,10 @@ enum OBJECT_TYPE
 //================ BRICK SIZE =============================================
 #define BRICK_SIZE 32
 //================ END BRICK SIZE =========================================
+
+//================ GAME SOUND =============================================
+#define GAME_INTRO_SOUND L"sound\\background\\Intro.wav"
+#define APPEARING_SOUND L"Audio\\Enter_samus.wav"
+#define POWER_UP_SOUND L"Audio\\Power_Up.wav"
+#define ROOMA_SOUND L"Audio\\Brinstar.wav"
+//================ END GAME SOUND =========================================

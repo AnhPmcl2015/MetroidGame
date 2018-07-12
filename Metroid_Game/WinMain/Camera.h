@@ -6,7 +6,7 @@
 #include <d3dx9.h>
 #include "DeviceManager.h"
 #include "GameObject.h"
-
+#include "Map.h"
 
 class Camera
 {
@@ -16,7 +16,7 @@ public:
 	~Camera();
 
 	//Game Functions
-	void Update();
+	void Update(Map * map);
 	void SetTransform(DeviceManager *device) const;
 	void Follow(GameObject * object);
 

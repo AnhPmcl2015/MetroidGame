@@ -19,6 +19,7 @@ class Game
 		static Graphics * _dxgraphics;
 		DeviceManager * _device;
 
+		void CheckKey();
 		// Render a single frame
 		void _RenderFrame();
 
@@ -32,6 +33,7 @@ class Game
 		virtual void ProcessInput(LPDIRECT3DDEVICE9, float Delta) = 0;
 
 		virtual void OnKeyDown(int KeyCode) = 0;
+		virtual void OnKeyUp(int KeyCode) = 0;
 		//======================= END VIRTUAL METHOD ======================
 
 		//======================= Start texture ======================
