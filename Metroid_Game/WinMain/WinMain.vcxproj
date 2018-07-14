@@ -137,6 +137,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Math.cpp" />
     <ClCompile Include="Metroid.cpp" />
     <ClCompile Include="Samus.cpp" />
     <ClCompile Include="Sound.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Math.h" />
     <ClInclude Include="Metroid.h" />
     <ClInclude Include="Samus.h" />
     <ClInclude Include="Sound.h" />
