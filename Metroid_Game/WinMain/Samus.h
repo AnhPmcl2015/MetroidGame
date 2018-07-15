@@ -56,6 +56,9 @@ public:
 	bool isJumping;	// Trạng thái đang nhảy của Samus
 	bool canMorph = true;
 	bool isMorphing = false;
+	bool isFalling = false;
+	
+	float limitY;
 
 	Samus();
 	Samus(LPD3DXSPRITE spriteHandler, World * manager);
