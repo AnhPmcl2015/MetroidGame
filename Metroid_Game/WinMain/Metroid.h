@@ -7,16 +7,17 @@
 #include "Texture.h"
 #include "Sprite.h"
 #include "Map.h"
+#include "World.h"
 
 class Metroid : public Game
 {
 protected:
 	LPDIRECT3DSURFACE9 startscreen;
 	LPD3DXSPRITE spriteHandler;
-
+	World * world;
 private:
 	void _InitBackground();
-	void _InitSprites(LPDIRECT3DDEVICE9 d3ddv);
+	void _InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
 	void _InitPositions();
 
 	DWORD start_jump;
@@ -39,6 +40,7 @@ public:
 	// ---------------------------
 	virtual void ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta);
 	virtual void OnKeyDown(int KeyCode);
+	virtual void OnKeyUp(int KeyCode);
 
 	DWORD GetTickPerFrame();
 

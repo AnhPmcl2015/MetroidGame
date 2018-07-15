@@ -7,21 +7,14 @@ void Metroid::_InitBackground()
 {
 }
 
-void Metroid::_InitSprites(LPDIRECT3DDEVICE9 d3ddv)
+void Metroid::_InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 {
-	Texture text;
-	this->setPlayerTexture(text.loadTexture(d3ddv, L"Player_32x16.png"));
-	if (this->getPlayerTexture() == NULL)
-		trace(L"Unable to load PlayerTexture");
-
-	this->setBrickTexture(text.loadTexture(d3ddv, L"brick_16x16.png"));
-	if (this->getBrickTexture() == NULL)
-		trace(L"Unable to load BrickTexture");
+	world->InitSprites(d3ddv, texture);	
 }
 
 void Metroid::_InitPositions()
 {
-
+	world->samus->InitPostition();
 }
 
 Metroid::Metroid(HINSTANCE hInstance, LPWSTR Name, int Mode, int IsFullScreen, int FrameRate) 
@@ -36,6 +29,8 @@ Metroid::Metroid(HINSTANCE hInstance, LPWSTR Name, int Mode, int IsFullScreen, i
 
 Metroid::~Metroid()
 {
+	delete(map);
+	//delete(world);
 }
 
 /*
@@ -50,23 +45,53 @@ void Metroid::LoadResources(LPDIRECT3DDEVICE9 d3ddev)
 	if (result != D3D_OK) 
 		trace(L"Unable to create SpriteHandler");
 
-	this->_InitSprites(d3ddev);
+	Texture text;
+	this->setPlayerTexture(text.loadTexture(d3ddev, TEXTURE_GAME_CHARACTERS));
+	if (this->getPlayerTexture() == NULL)
+		trace(L"Unable to load PlayerTexture");
+
+	Texture text1;
+	this->setBrickTexture(text1.loadTexture(d3ddev, L"brick_32x32.png"));
+	if (this->getBrickTexture() == NULL)
+		trace(L"Unable to load BrickTexture");
+
+	
+	world = new World(spriteHandler, this);
+	srand((unsigned)time(NULL));
+	this->_InitSprites(d3ddev, this->getPlayerTexture());
 
 	// Khoi tao map
-	this->map = new Map(this->getSpriteHandler(), this->getBrickTexture(), "field1.txt", this->_device, 0, 0, this->_dxgraphics->getScreenWidth(), this->_dxgraphics->getScreenHeight());
-	if (map == NULL)
+	this->map = new Map(this->getSpriteHandler(), this->getBrickTexture(), "field1.txt", this->_device, 0, 0);
+	
+	if (map) 
+	{
+	}
+	else 
 		trace(L"Unable to load map");
+	
+	if (camera) 
+	{
+		camera->Follow(world->samus);
+		camera->SetMapBoundary(map->getBoundary());
+	}
+		
+
+
+	this->_InitPositions();
 }
 
 //Kiểm tra screen Mode (bắt đầu, room1, room2,... hay gameover)
 void Metroid::Update(float Delta)
 {
-	
+	this->camera->Update();
+	map->UpdateMap(this->camera->getBoundary());
+	UpdateFrame(Delta);
 }
 
 //update các object trong game
 void Metroid::UpdateFrame(float Delta)
 {
+	world->Update(Delta);
 }
 
 //render từng screen mode (room1, room2,... hay gameover)
@@ -78,20 +103,260 @@ void Metroid::Render(LPDIRECT3DDEVICE9 d3ddv)
 //render các scene chính (room1, room2...) trong game
 void Metroid::RenderStartScreen(LPDIRECT3DDEVICE9 d3ddv)
 {
-
+	
 }
 
 //render từng object trong game
 void Metroid::RenderFrame(LPDIRECT3DDEVICE9 d3ddv)
 {
-	map->drawMap(1.1);
+	map->drawMap();
+	world->Render();
 }
 
 void Metroid::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta)
 {
+	if (_input->IsKeyDown(DIK_RIGHT))
+	{
+		world->samus->setVelocityXLast(world->samus->getVelocityX());
+		if (!world->samus->isMorphing)
+			world->samus->setVelocityX(SAMUS_SPEED);
+		else 
+			world->samus->setVelocityX(SAMUS_MORPHING_SPEED);
+
+		if (world->samus->GetState() != MORPH_LEFT && world->samus->GetState() != MORPH_RIGHT
+			&& world->samus->GetState() != JUMP_LEFT && world->samus->GetState() != JUMP_RIGHT
+			&& world->samus->GetState() != JUMP_SHOOT_UP_LEFT && world->samus->GetState() != JUMP_SHOOT_UP_RIGHT
+			&& world->samus->GetState() != TRANSFORM_BALL_LEFT && world->samus->GetState() != TRANSFORM_BALL_RIGHT)
+		{
+			world->samus->SetState(RUNNING_RIGHT);			
+		}
+
+		if (world->samus->GetState() == TRANSFORM_BALL_RIGHT) {
+			//lan qua phai
+		}
+		else if (world->samus->GetState() == TRANSFORM_BALL_LEFT)
+			world->samus->SetState(TRANSFORM_BALL_RIGHT);
+	}
+	else if (_input->IsKeyDown(DIK_LEFT)) {
+		world->samus->setVelocityXLast(world->samus->getVelocityX());
+		if (!world->samus->isMorphing)
+			world->samus->setVelocityX(-SAMUS_SPEED);
+		else
+			world->samus->setVelocityX(-SAMUS_MORPHING_SPEED);
+
+		if (world->samus->GetState() != MORPH_LEFT && world->samus->GetState() != MORPH_RIGHT
+			&& world->samus->GetState() != JUMP_LEFT && world->samus->GetState() != JUMP_RIGHT
+			&& world->samus->GetState() != JUMP_SHOOT_UP_LEFT && world->samus->GetState() != JUMP_SHOOT_UP_RIGHT
+			&& world->samus->GetState() != TRANSFORM_BALL_LEFT && world->samus->GetState() != TRANSFORM_BALL_RIGHT)
+		{
+			world->samus->SetState(RUNNING_LEFT);
+		}
+		if (world->samus->GetState() == TRANSFORM_BALL_LEFT) {
+			//lan qua trai
+		}
+		else if (world->samus->GetState() == TRANSFORM_BALL_RIGHT)
+			world->samus->SetState(TRANSFORM_BALL_LEFT);
+	}
+	else //neu ko co nut bam nao duoc bam
+	{
+		if (world->samus->getVelocityXLast() > 0)
+		{
+			if (world->samus->GetState() != MORPH_LEFT && world->samus->GetState() != MORPH_RIGHT
+				&& world->samus->GetState() != JUMP_LEFT && world->samus->GetState() != JUMP_RIGHT
+				&& world->samus->GetState() != JUMP_SHOOT_UP_LEFT && world->samus->GetState() != JUMP_SHOOT_UP_RIGHT
+				&& world->samus->GetState() != TRANSFORM_BALL_LEFT && world->samus->GetState() != TRANSFORM_BALL_RIGHT 
+				&& world->samus->GetState() != STAND_SHOOT_UP_LEFT && world->samus->GetState() != STAND_SHOOT_UP_RIGHT)
+			{
+				world->samus->SetState(STAND_RIGHT);
+				world->samus->ResetAllSprites();
+				world->samus->setVelocityX(0);
+
+			}
+			if (world->samus->GetState() == TRANSFORM_BALL_RIGHT){
+				world->samus->setVelocityX(0);
+			}
+		}
+		if (world->samus->getVelocityXLast() < 0)
+		{
+			if (world->samus->GetState() != MORPH_LEFT && world->samus->GetState() != MORPH_RIGHT
+				&& world->samus->GetState() != TRANSFORM_BALL_LEFT && world->samus->GetState() != TRANSFORM_BALL_RIGHT
+				&& world->samus->GetState() != STAND_SHOOT_UP_RIGHT && world->samus->GetState() != STAND_SHOOT_UP_LEFT)
+			{
+				world->samus->SetState(STAND_LEFT);
+				world->samus->ResetAllSprites();
+				world->samus->setVelocityX(0);
+			}
+			if (world->samus->GetState() == TRANSFORM_BALL_LEFT) {
+				world->samus->setVelocityX(0);
+			}
+		}
+		
+	}
+
+	if (_input->IsKeyDown(DIK_UP))
+	{
+		if (world->samus->GetState() == RUNNING_LEFT)
+			world->samus->SetState(RUN_SHOOT_UP_LEFT);
+		if (world->samus->GetState() == RUNNING_RIGHT)
+			world->samus->SetState(RUN_SHOOT_UP_RIGHT);
+		if (world->samus->GetState() == STAND_LEFT)
+			world->samus->SetState(STAND_SHOOT_UP_LEFT);
+		if (world->samus->GetState() == STAND_RIGHT)
+			world->samus->SetState(STAND_SHOOT_UP_RIGHT);
+		if (world->samus->GetState() == JUMP_LEFT)
+		{
+			world->samus->SetState(JUMP_SHOOT_UP_LEFT);
+		}
+		if (world->samus->GetState() == JUMP_RIGHT)
+		{
+			world->samus->SetState(JUMP_SHOOT_UP_RIGHT);
+		}
+		if (world->samus->GetState() == MORPH_LEFT)
+			world->samus->SetState(STAND_LEFT);
+		if (world->samus->GetState() == MORPH_RIGHT)
+			world->samus->SetState(STAND_RIGHT);
+
+		if (world->samus->GetState() == TRANSFORM_BALL_LEFT) {
+			world->samus->Reset(world->samus->getPosX(), world->samus->getPosY() - 32.0f);
+			world->samus->SetState(STAND_SHOOT_UP_LEFT);
+			world->samus->isMorphing = false;
+		}
+		if (world->samus->GetState() == TRANSFORM_BALL_RIGHT) {
+			world->samus->Reset(world->samus->getPosX(), world->samus->getPosY() - 32.0f);
+			world->samus->SetState(STAND_SHOOT_UP_RIGHT);
+			world->samus->isMorphing = false;
+		}
+	}
+
+	if (_input->IsKeyDown(DIK_DOWN) && world->samus->canMorph) {
+		if (world->samus->getVelocityXLast() < 0) {
+			if (world->samus->GetState() == STAND_LEFT || world->samus->GetState() == RUNNING_LEFT) {
+				world->samus->Reset(world->samus->getPosX(), world->samus->getPosY() + 32.0f);
+				world->samus->SetState(TRANSFORM_BALL_LEFT);
+				world->samus->isMorphing = true;
+			}
+		}
+		else {
+			if (world->samus->GetState() == STAND_RIGHT || world->samus->GetState() == RUNNING_RIGHT) {
+				world->samus->Reset(world->samus->getPosX(), world->samus->getPosY() + 32.0f);
+				world->samus->SetState(TRANSFORM_BALL_RIGHT);
+				world->samus->isMorphing = true;
+			}
+		}
+	}
 }
 
 void Metroid::OnKeyDown(int KeyCode)
+{
+	world->samus->isJumping = false;
+	if (world->samus->isSamusJumping() == false)
+	{
+		/*switch (KeyCode)
+		{
+		case DIK_X:
+			
+		}*/
+		if (_input->IsKeyDown(DIK_X)) //start jump
+		{
+			world->samus->isJumping = true;
+
+			// START EDITED BY DUONGTH
+			if (world->samus->getVelocityXLast() < 0)
+			{
+				if (world->samus->GetState() == TRANSFORM_BALL_LEFT) {
+					world->samus->SetState(STAND_LEFT);
+					world->samus->isMorphing = false;
+					world->samus->Reset(world->samus->getPosX(), world->samus->getPosY() - 32.0f);
+				}
+				if (world->samus->GetState() == STAND_LEFT) {
+					start_jump = GetTickCount();
+					now_jump = GetTickCount();
+					if (world->samus->GetState() == STAND_SHOOT_UP_LEFT)
+						world->samus->SetState(JUMP_SHOOT_UP_LEFT);
+					else
+						world->samus->SetState(JUMP_LEFT);
+					world->samus->setVelocityY(world->samus->getVelocityY() + JUMP_VELOCITY_BOOST_FIRST);
+
+					now_jump = GetTickCount();
+					if ((now_jump - start_jump) <= 10 * tick_per_frame)
+					{
+						world->samus->setVelocityY(world->samus->getVelocityY() + JUMP_VELOCITY_BOOST);
+					}
+
+				}
+				/*if (world->samus->GetState() != JUMP_LEFT && world->samus->GetState() != MORPH_LEFT
+					&& world->samus->GetState() != JUMP_SHOOT_UP_LEFT)
+				{
+					start_jump = GetTickCount();
+					now_jump = GetTickCount();
+					if (world->samus->GetState() == STAND_SHOOT_UP_LEFT)
+						world->samus->SetState(JUMP_SHOOT_UP_LEFT);
+					else
+						world->samus->SetState(JUMP_LEFT);
+					world->samus->setVelocityY(world->samus->getVelocityY() + JUMP_VELOCITY_BOOST_FIRST);
+
+					now_jump = GetTickCount();
+					if ((now_jump - start_jump) <= 10 * tick_per_frame)
+					{
+						world->samus->setVelocityY(world->samus->getVelocityY() + JUMP_VELOCITY_BOOST);
+					}
+				}*/
+			}
+
+			if (world->samus->getVelocityXLast() > 0)
+			{
+				if (world->samus->GetState() != JUMP_RIGHT && world->samus->GetState() != MORPH_RIGHT
+					&& world->samus->GetState() != JUMP_SHOOT_UP_RIGHT)
+				{
+					start_jump = GetTickCount();
+					now_jump = GetTickCount();
+					if (world->samus->GetState() == STAND_SHOOT_UP_RIGHT)
+						world->samus->SetState(JUMP_SHOOT_UP_RIGHT);
+					else
+						world->samus->SetState(JUMP_RIGHT);
+					world->samus->setVelocityY(world->samus->getVelocityY() + JUMP_VELOCITY_BOOST_FIRST);
+
+					now_jump = GetTickCount();
+					if ((now_jump - start_jump) <= 10 * tick_per_frame)
+					{
+						world->samus->setVelocityY(world->samus->getVelocityY() + JUMP_VELOCITY_BOOST);
+					}
+				}
+			}
+
+			//	END EDITED BY DUONGTH
+
+			/* ORIGINAL CODE
+
+			if (world->samus->getVelocityXLast() < 0)
+			{
+			if (world->samus->GetState() != JUMP_LEFT && world->samus->GetState() != MORPH_LEFT
+			&& world->samus->GetState() != JUMP_SHOOT_UP_LEFT)
+			{
+			start_jump = GetTickCount();
+			now_jump = GetTickCount();
+			if (world->samus->GetState() == STAND_SHOOT_UP_LEFT)
+			world->samus->SetState(JUMP_SHOOT_UP_LEFT);
+			else
+			world->samus->SetState(JUMP_LEFT);
+			world->samus->setVelocityY(world->samus->getVelocityY() + JUMP_VELOCITY_BOOST_FIRST);
+
+			now_jump = GetTickCount();
+			if ((now_jump - start_jump) <= 10 * tick_per_frame)
+			{
+			world->samus->setVelocityY(world->samus->getVelocityY() + JUMP_VELOCITY_BOOST);
+			}
+			}
+			}
+			*/
+			
+			
+			
+		}
+	}
+}
+
+void Metroid::OnKeyUp(int KeyCode)
 {
 }
 

@@ -6,7 +6,6 @@
 #include <d3dx9.h>
 #include "Sprite.h"
 #include "Define.h"
-#include "World.h"
 
 class GameObject
 {
@@ -17,9 +16,10 @@ public:
 	float pos_y;		// y position of object
 	float lastPosX;
 	float lastPosY;
+	float friction = FRICTION;	//ma sát
 
-	/*float width;
-	float height;*/
+								/*float width;
+								float height;*/
 
 	float vx;		// x velocity
 	float vy;		// y velocity
@@ -35,6 +35,7 @@ public:
 	bool isActive;	// Cho biết GameObject có đang hoạt động hay không
 	Sprite* sprite;
 	DWORD last_time; // this is to control the animate rate of object
+
 public:
 	GameObject();
 	~GameObject();
@@ -88,5 +89,7 @@ public:
 	virtual void Destroy();
 
 	// ============================== END VIRTUAL METHOD =============================
+
+
 };
-#endif // !_GAME_OBJECT
+#endif // !_GAME_OBJECT_

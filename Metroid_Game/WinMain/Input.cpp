@@ -109,22 +109,26 @@ void Input::_ProcessKeyBoard()
 			_Keyboard->Acquire();
 		}
 	}
-
-	// Collect all buffered events
-	DWORD dwElements = KEYBOARD_BUFFER_SIZE;
-	HRESULT hr = _Keyboard->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), _KeyEvents, &dwElements, 0);
-
-	// Scan through all data, check if the key is pressed or released
-	for (DWORD i = 0; i < dwElements; i++)
-	{
-		int KeyCode = _KeyEvents[i].dwOfs;
-		int KeyState = _KeyEvents[i].dwData;
-		if ((KeyState & 0x80) > 0)
-			OnKeyDown(KeyCode);
-		else
-			OnKeyUp(KeyCode);
-	}
+	//CheckKey();
 }
+
+//// Scan through all data, check if the key is pressed or released	
+//void Input::CheckKey()
+//{
+//	// Collect all buffered events
+//	DWORD dwElements = KEYBOARD_BUFFER_SIZE;
+//	HRESULT hr = _Keyboard->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), _KeyEvents, &dwElements, 0);
+//
+//	for (DWORD i = 0; i < dwElements; i++)
+//	{
+//		int KeyCode = _KeyEvents[i].dwOfs;
+//		int KeyState = _KeyEvents[i].dwData;
+//		if ((KeyState & 0x80) > 0)
+//			OnKeyDown(KeyCode);
+//		else
+//			OnKeyUp(KeyCode);
+//	}
+//}
 
 int Input::IsKeyDown(int KeyCode)
 {
@@ -133,6 +137,7 @@ int Input::IsKeyDown(int KeyCode)
 
 void Input::OnKeyDown(int KeyCode)
 {
+	//Game::OnKeyDown(KeyCode);
 }
 
 void Input::OnKeyUp(int KeyCode)

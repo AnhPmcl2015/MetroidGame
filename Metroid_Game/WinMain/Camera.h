@@ -1,64 +1,36 @@
-#pragma once
+﻿#pragma once
+
 #include <DirectXMath.h>
-//#include "Player.h"
-#include "../WinMain/GameObject.h"
+#include <d3d9.h>
+#include <d3dx9.h>
+#include "DeviceManager.h"
+#include "GameObject.h"
+#include "Map.h"
 
-
-class DeviceManger;
-
-class Camera {
-public: 
-	Camera(int _cameraWidth, int _cameraHeight, float _cameraAngle, DirectX::XMFLOAT3 _scaleFactor);
+class Camera
+{
+public:
+	//Constructors and Destructor
+	Camera(int width, int height, float angle, DirectX::XMFLOAT3 scaleFactors);
 	~Camera();
 
-	void Update(bool isAutorun);
-	void Follow(/*Player _player*/);
-	void Follow(GameObject* _object);
-	void unFollow();
-	bool isFollowing();
-	void SetTransform(DeviceManger* _device);
-
-	int getWidth() { return cameraWidth; }
-	int getHeight() { return cameraHeight; }
-
-	int getX();
-	int getY();
-
+	//Game Functions
+	void Update();
+	void SetTransform(DeviceManager *device) const;
+	void SetMapBoundary(RECT rect);
+	RECT getBoundary();
+	void Follow(GameObject * object);
 
 private:
 	float angle;
-	DirectX::XMFLOAT3 scaleFactor;
-	D3DXMATRIX _orthographicMatrix;
-	D3DXMATRIX _identifyMatrix;
-	D3DXMATRIX _viewMatrix;
+	DirectX::XMFLOAT3 scaleFactors;
+	D3DXMATRIX orthographicMatrix;	//ma trận tầm nhìn
+	D3DXMATRIX identityMatrix;	//ma trận vật
+	D3DXMATRIX viewMatrix;	//ma trận trong world
 
-	//Player* player;
-	GameObject* gameObject;
-
-	int cameraWidth;
-	int cameraHeight;
-	bool refresh;
-
-	//CollisionManager* _collisionManager;
-	int status;
-
-	int stayX;
-	int stayY;
-
-	int limitX;
-	int limitY;
-	int limitWidth;
-	int limitHeight;
-
-	int limitUp;
-	int limitDown;
-	int limitLeft;
-	int limitRight;
-
-	int playerX;
-	int playerY;
-
-	int _x; int _y;
-	int cameraX;
-	int cameraY;
+	int width;
+	int height;
+	RECT m_map_bound = RECT();
+	GameObject* m_following = nullptr;
+	RECT Camera_bound;
 };

@@ -31,8 +31,20 @@
     <Filter Include="Source Files\Character">
       <UniqueIdentifier>{95f75cfd-e3da-418d-977c-5c37242881bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Camera">
-      <UniqueIdentifier>{35c85d23-4671-4f62-9da1-90c95408a669}</UniqueIdentifier>
+    <Filter Include="Resource Files\sprites">
+      <UniqueIdentifier>{368f882d-7d9b-4d40-a004-5b302023aea5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\sound">
+      <UniqueIdentifier>{b3b4d4c1-3ed0-4984-afd9-dee00e430122}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\sound\background">
+      <UniqueIdentifier>{4f8e5503-0ef4-4a12-9db7-c24892cf948b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SoundLibrary">
+      <UniqueIdentifier>{8599e4fb-43ae-4a88-afce-68b75b68095e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SoundLibrary">
+      <UniqueIdentifier>{0a83b4c0-153c-4ebd-809f-24bd31f30fb6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -72,11 +84,20 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\Character</Filter>
     </ClCompile>
+    <ClCompile Include="Samus.cpp">
+      <Filter>Source Files\Character</Filter>
+    </ClCompile>
     <ClCompile Include="World.cpp">
-      <Filter>Source Files\FrameWork</Filter>
+      <Filter>Source Files\Character</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Source Files\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="Math.cpp">
+      <Filter>Source Files\FrameWork</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,24 +137,137 @@
     <ClInclude Include="GameObject.h">
       <Filter>Header Files\Character</Filter>
     </ClInclude>
+    <ClInclude Include="Samus.h">
+      <Filter>Header Files\Character</Filter>
+    </ClInclude>
     <ClInclude Include="World.h">
-      <Filter>Header Files\FrameWork</Filter>
+      <Filter>Header Files\Character</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Header Files\Camera</Filter>
+      <Filter>Header Files\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Header Files\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>Header Files\FrameWork</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Player_32x16.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="brick_16x16.png">
       <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="brick_32x32.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\Player_32x16.png">
+      <Filter>Resource Files\sprites</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="field1.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="sprites\JUMP_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\JUMP_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\JUMPSHOOT_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\JUMPSHOOT_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\LEFTING.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\MORPH_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\MORPH_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\RIGHTING.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\RUNSHOOT_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\RUNSHOOT_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\STAND_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\STAND_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\STANDSHOOT_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\STANDSHOOT_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\TRANSFORM_BALL_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\TRANSFORM_BALL_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\RUN_SHOOTUP_LEFT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\RUN_SHOOTUP_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="sound\bullet.wav">
+      <Filter>Resource Files\sound</Filter>
+    </Media>
+    <Media Include="sound\butllet_hit_enemy.wav">
+      <Filter>Resource Files\sound</Filter>
+    </Media>
+    <Media Include="sound\jump.wav">
+      <Filter>Resource Files\sound</Filter>
+    </Media>
+    <Media Include="sound\missile.wav">
+      <Filter>Resource Files\sound</Filter>
+    </Media>
+    <Media Include="sound\samus_hit_enemy.wav">
+      <Filter>Resource Files\sound</Filter>
+    </Media>
+    <Media Include="sound\samus_hit_life_point.wav">
+      <Filter>Resource Files\sound</Filter>
+    </Media>
+    <Media Include="sound\background\Appearance.wav">
+      <Filter>Resource Files\sound\background</Filter>
+    </Media>
+    <Media Include="sound\background\Brain Mother.wav">
+      <Filter>Resource Files\sound\background</Filter>
+    </Media>
+    <Media Include="sound\background\Intro.wav">
+      <Filter>Resource Files\sound\background</Filter>
+    </Media>
+    <Media Include="sound\background\Item acquired.wav">
+      <Filter>Resource Files\sound\background</Filter>
+    </Media>
+    <Media Include="sound\background\Kraid%27s Lair.wav">
+      <Filter>Resource Files\sound\background</Filter>
+    </Media>
+    <Media Include="sound\background\Map.wav">
+      <Filter>Resource Files\sound\background</Filter>
+    </Media>
+    <Media Include="sound\background\mother_brain_death.wav">
+      <Filter>Resource Files\sound\background</Filter>
+    </Media>
+    <Media Include="sound\background\Ridley%27s Lair.wav">
+      <Filter>Resource Files\sound\background</Filter>
+    </Media>
+    <Media Include="sound\background\samus_death.wav">
+      <Filter>Resource Files\sound\background</Filter>
+    </Media>
   </ItemGroup>
 </Project>
