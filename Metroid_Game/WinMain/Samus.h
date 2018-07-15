@@ -57,8 +57,9 @@ public:
 	bool canMorph = true;
 	bool isMorphing = false;
 	bool isFalling = false;
+	bool isMorphingJump = false;
 	
-	float limitY;
+	float limitY = 0;
 
 	Samus();
 	Samus(LPD3DXSPRITE spriteHandler, World * manager);
