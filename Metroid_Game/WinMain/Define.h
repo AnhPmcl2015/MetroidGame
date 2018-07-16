@@ -13,18 +13,26 @@ class Game;
 
 #define TIME_FREEZING 5000
 #define TIME_IN_GAME 7000
+#define LIVE_TIME 3000
 
+#define ANIMATE_RATE 20
+#define JUMP_HEIGHT 100.0f
+
+#define FRICTION 1.0f
+#define TEXTURE_GAME_CHARACTERS L"sprites\\Player_32x16.png"
+
+//================ SCREEN SPEED ================
 #define JUMP_VELOCITY_BOOST 100.0f
 #define JUMP_VELOCITY_BOOST_FIRST 50.0f
 #define FALLDOWN_VELOCITY_DECREASE 0.3f
 #define GRAVITY_VELOCITY 100.f
-#define ANIMATE_RATE 20
-#define JUMP_HEIGHT 100.0f
-
 #define SAMUS_SPEED 100.0f
 #define SAMUS_MORPHING_SPEED 175.0f
-#define FRICTION 1.0f
-#define TEXTURE_GAME_CHARACTERS L"sprites\\Player_32x16.png"
+
+#define BULLET_SPEED_X 100.0f
+#define BULLET_SPEED_Y 100.0f
+//================ END SPEED ====================
+
 
 //================ SCREEN RESOLUTION ================
 #define GAME_SCREEN_RESOLUTION_640_480_24   0
@@ -48,6 +56,7 @@ enum OBJECT_TYPE
 	SAMUS = 1,
 	ENEMY = 2,
 	BRICK = 3,
+	BULLET = 4,
 };
 //================= END OBJECT TYPE ============
 

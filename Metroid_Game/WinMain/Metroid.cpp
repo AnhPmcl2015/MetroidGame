@@ -80,7 +80,7 @@ void Metroid::LoadResources(LPDIRECT3DDEVICE9 d3ddev)
 	this->_InitPositions();
 }
 
-//Kiểm tra screen Mode (bắt đầu, room1, room2,... hay gameover)
+
 void Metroid::Update(float Delta)
 {
 	this->camera->Update();
@@ -547,6 +547,34 @@ void Metroid::OnKeyDown(int KeyCode)
 
 
 		}
+	}
+
+	//ban
+	if (_input->IsKeyDown(DIK_Z)) {
+		Bullet* bullet = new Bullet(spriteHandler, world);
+		bullet->isActive = true;
+		if (world->samus->getlastPosX() > 0) {
+			if (world->samus->getlastPosY() < 0) {
+				bullet->setVelocityX(0);
+				bullet->setVelocityY(-BULLET_SPEED_Y);
+				bullet->Reset(world->samus->getPosX() + 16.0f, world->samus->getPosY());
+			}
+			bullet->setVelocityX(BULLET_SPEED_X);
+			bullet->setVelocityY(0);
+			bullet->Reset(world->samus->getPosX() + 32.0f, world->samus->getPosY() + 16.0f);
+		}
+		if (world->samus->getlastPosX() < 0) {
+			if (world->samus->getlastPosY() < 0) {
+				bullet->setVelocityX(0);
+				bullet->setVelocityY(-BULLET_SPEED_Y);
+				bullet->Reset(world->samus->getPosX() + 16.0f, world->samus->getPosY());
+			}
+			bullet->setVelocityX(-BULLET_SPEED_X);
+			bullet->setVelocityY(0);
+			bullet->Reset(world->samus->getPosX(), world->samus->getPosY() + 16.0f);
+		}
+
+		world->bulletList.push_back(bullet);
 	}
 }
 

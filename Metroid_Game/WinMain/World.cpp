@@ -25,6 +25,7 @@ World::~World()
 void World::Update(float t)
 {
 	samus->Update(t);
+	updateBullet(t);
 }
 
 void World::Render()
@@ -36,3 +37,20 @@ void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 {
 	samus->InitSprites(d3ddv, texture);
 }
+
+void World::updateBullet(float t)
+{
+	for (int i = 0; i < bulletList.size(); i++)
+	{
+		Bullet* currentBullet = bulletList[i];
+		currentBullet->Update(t);
+		if (!currentBullet->isActive) {
+			delete currentBullet;
+			currentBullet = NULL;
+			bulletList.erase(bulletList.begin() + i);
+		}
+	}
+}
+
+
+
