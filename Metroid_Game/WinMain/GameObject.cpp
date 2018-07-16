@@ -21,6 +21,7 @@ void GameObject::InitSprites()
 GameObject::~GameObject()
 {
 	delete(sprite);
+	delete(manager);
 }
 
 void GameObject::Render()
@@ -132,25 +133,25 @@ float GameObject::getVelocityXLast()
 	return vx_last;
 }
 
-//void GameObject::setWidth(float value)
-//{
-//	width = value;
-//}
-//
-//float GameObject::getWidth()
-//{
-//	return width;
-//}
-//
-//void GameObject::setHeight(float value)
-//{
-//	height = value;
-//}
-//
-//float GameObject::getHeight()
-//{
-//	return height;
-//}
+void GameObject::setWidth(int value)
+{
+	width = value;
+}
+
+int GameObject::getWidth()
+{
+	return width;
+}
+
+void GameObject::setHeight(int value)
+{
+	height = value;
+}
+
+int GameObject::getHeight()
+{
+	return height;
+}
 
 float GameObject::getgravity()
 {

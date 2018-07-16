@@ -59,5 +59,6 @@ LPDIRECT3DSURFACE9 DeviceManager::getBuffer()
 
 void DeviceManager::clearScreen()
 {
-	_d3ddv->ColorFill(_BackBuffer, NULL, D3DCOLOR_XRGB(0, 0, 0));
+	_d3ddv->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+	//_d3ddv->ColorFill(_BackBuffer, NULL, D3DCOLOR_XRGB(0, 0, 0));
 }

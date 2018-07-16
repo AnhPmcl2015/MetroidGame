@@ -1,12 +1,11 @@
-﻿#ifndef CAMERA_H
-#define CAMERA_H
+﻿#pragma once
 
 #include <DirectXMath.h>
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "DeviceManager.h"
 #include "GameObject.h"
-
+#include "Map.h"
 
 class Camera
 {
@@ -18,6 +17,8 @@ public:
 	//Game Functions
 	void Update();
 	void SetTransform(DeviceManager *device) const;
+	void SetMapBoundary(RECT rect);
+	RECT getBoundary();
 	void Follow(GameObject * object);
 
 private:
@@ -29,7 +30,7 @@ private:
 
 	int width;
 	int height;
+	RECT m_map_bound = RECT();
 	GameObject* m_following = nullptr;
+	RECT Camera_bound;
 };
-
-#endif /* CAMERA_H */

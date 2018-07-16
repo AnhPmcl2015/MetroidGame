@@ -50,8 +50,17 @@ protected:
 	Sprite * jumpShootR;
 
 	SAMUS_STATE state;	
+
+	int tempX;
 public:
 	bool isJumping;	// Trạng thái đang nhảy của Samus
+	bool canMorph = true;
+	bool isMorphing = false;
+	bool isFalling = false;
+	bool isMorphingJump = false;
+	
+	float limitY = 0;
+
 	Samus();
 	Samus(LPD3DXSPRITE spriteHandler, World * manager);
 	~Samus();
@@ -72,6 +81,7 @@ public:
 	void Render();
 	void Destroy();
 	//================= END OVERRIDE VIRTUAL METHOD =============
+
 };
 #endif // !_SAMUS_H
 

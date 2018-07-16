@@ -48,7 +48,8 @@ Sprite::Sprite(LPD3DXSPRITE SpriteHandler, LPDIRECT3DTEXTURE9 texture, LPWSTR co
 }
 
 Sprite::~Sprite() {
-
+	texture->Release();
+	//delete(_Coord);
 }
 
 // Cap nhat vi tri cua sprite tiep theo

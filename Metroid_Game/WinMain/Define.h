@@ -5,6 +5,7 @@
 class World;
 class Samus;
 class Metroid;
+class Game;
 
 #define KEYBOARD_BUFFER_SIZE	1024
 #define KEY_DOWN(code) ( IsKeyDown(code) )
@@ -13,24 +14,31 @@ class Metroid;
 #define TIME_FREEZING 5000
 #define TIME_IN_GAME 7000
 
-#define JUMP_VELOCITY_BOOST 0.1f
-#define JUMP_VELOCITY_BOOST_FIRST 0.6f
-#define FALLDOWN_VELOCITY_DECREASE 0.07f
-#define GRAVITY_VELOCITY 0.005f
+#define JUMP_VELOCITY_BOOST 100.0f
+#define JUMP_VELOCITY_BOOST_FIRST 50.0f
+#define FALLDOWN_VELOCITY_DECREASE 0.3f
+#define GRAVITY_VELOCITY 100.f
 #define ANIMATE_RATE 20
+#define JUMP_HEIGHT 100.0f
 
 #define SAMUS_SPEED 100.0f
+#define SAMUS_MORPHING_SPEED 175.0f
 #define FRICTION 1.0f
 #define TEXTURE_GAME_CHARACTERS L"sprites\\Player_32x16.png"
 
 //================ SCREEN RESOLUTION ================
-#define GAME_SCREEN_RESOLUTION_512_480_24   0
+#define GAME_SCREEN_RESOLUTION_640_480_24   0
 #define GAME_SCREEN_RESOLUTION_800_600_24   1
 #define GAME_SCREEN_RESOLUTION_1024_768_24  2
 
 #define GAME_SCREEN_RESOLUTION_640_480_32   10
 #define GAME_SCREEN_RESOLUTION_800_600_32   11
 #define GAME_SCREEN_RESOLUTION_1024_768_32  12
+
+#define CAMERA_FOLLOW_POINT_LEFT_RATIO   2.0/4
+#define CAMERA_FOLLOW_POINT_RIGHT_RATIO  2.0/4
+#define CAMERA_FOLLOW_POINT_BOTTOM_RATIO 1.0/4
+#define CAMERA_FOLLOW_POINT_TOP_RATIO    3.0/4
 //================ END RESOLUTION ====================
 
 
@@ -134,3 +142,10 @@ enum OBJECT_TYPE
 //================ BRICK SIZE =============================================
 #define BRICK_SIZE 32
 //================ END BRICK SIZE =========================================
+
+//================ GAME SOUND =============================================
+#define GAME_INTRO_SOUND L"sound\\background\\Intro.wav"
+#define APPEARING_SOUND L"Audio\\Enter_samus.wav"
+#define POWER_UP_SOUND L"Audio\\Power_Up.wav"
+#define ROOMA_SOUND L"Audio\\Brinstar.wav"
+//================ END GAME SOUND =========================================

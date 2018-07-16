@@ -19,7 +19,7 @@ World::World(LPD3DXSPRITE spriteHandler, Metroid * metroid)
 
 World::~World()
 {
-	delete(samus);
+	//delete(samus);
 }
 
 void World::Update(float t)
