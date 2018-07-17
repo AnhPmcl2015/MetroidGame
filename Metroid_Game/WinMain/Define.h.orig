@@ -13,6 +13,19 @@ class Game;
 
 #define TIME_FREEZING 5000
 #define TIME_IN_GAME 7000
+<<<<<<< HEAD
+
+#define JUMP_VELOCITY_BOOST 0.5f
+#define JUMP_VELOCITY_BOOST_FIRST 0.5f
+#define FALLDOWN_VELOCITY_DECREASE 0.3f
+#define GRAVITY_VELOCITY 0.5f
+#define ANIMATE_RATE 20
+
+#define SAMUS_SPEED 100.0f
+#define FRICTION 1.0f
+#define TEXTURE_GAME_CHARACTERS L"sprites\\Player_32x16.png"
+
+=======
 #define LIVE_TIME 3000
 
 #define ANIMATE_RATE 20
@@ -33,6 +46,8 @@ class Game;
 #define BULLET_SPEED_Y 100.0f
 //================ END SPEED ====================
 
+
+>>>>>>> 10a54bead4bf6b3523ccfe17696e3672e68474b3
 //================ SCREEN RESOLUTION ================
 #define GAME_SCREEN_RESOLUTION_640_480_24   0
 #define GAME_SCREEN_RESOLUTION_800_600_24   1
@@ -48,13 +63,17 @@ class Game;
 #define CAMERA_FOLLOW_POINT_TOP_RATIO    3.0/4
 //================ END RESOLUTION ====================
 
+
 //================= OBJECT TYPE ================
 enum OBJECT_TYPE
 {
 	SAMUS = 1,
 	ENEMY = 2,
 	BRICK = 3,
+<<<<<<< HEAD
+=======
 	BULLET = 4,
+>>>>>>> 10a54bead4bf6b3523ccfe17696e3672e68474b3
 };
 //================= END OBJECT TYPE ============
 
@@ -135,19 +154,20 @@ enum OBJECT_TYPE
 #define RUN_SHOOTUP_left_PATH L"sprites\\RUN_SHOOTUP_LEFT.txt"
 //================= END SPRITE SAMUS ============
 
-//================ BRICK SIZE =============================================
-#define BRICK_SIZE 32
-//================ END BRICK SIZE =========================================
 //================ SPRITE BRICK ================
 #define WIDTH_SPRITE_BRICK 32
 #define HEIGHT_SPRITE_BRICK 32
 //================= END SPRITE BRICK ============
+
 
 //================ ROOM LIMITATION (TILES COUNT)============================
 #define X_LIMITATION 20
 #define Y_LIMITATION 15
 //================ END ROOM LIMITATION ==================================
 
+//================ BRICK SIZE =============================================
+#define BRICK_SIZE 32
+//================ END BRICK SIZE =========================================
 
 //================ GAME SOUND =============================================
 #define GAME_INTRO_SOUND L"sound\\background\\Intro.wav"

@@ -25,7 +25,10 @@ World::~World()
 void World::Update(float t)
 {
 	samus->Update(t);
+<<<<<<< HEAD
+=======
 	updateBullet(t);
+>>>>>>> 10a54bead4bf6b3523ccfe17696e3672e68474b3
 }
 
 void World::Render()
@@ -37,6 +40,8 @@ void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 {
 	samus->InitSprites(d3ddv, texture);
 }
+<<<<<<< HEAD
+=======
 
 void World::updateBullet(float t)
 {
@@ -54,3 +59,4 @@ void World::updateBullet(float t)
 
 
 
+>>>>>>> 10a54bead4bf6b3523ccfe17696e3672e68474b3

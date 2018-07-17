@@ -5,7 +5,10 @@
 #include <d3dx9.h>
 #include "Define.h"
 #include "Samus.h"
+<<<<<<< HEAD
+=======
 #include "Bullet.h"
+>>>>>>> 10a54bead4bf6b3523ccfe17696e3672e68474b3
 
 /*
 Class này chứa tất cả những thứ trong Game
@@ -17,7 +20,10 @@ class World
 public:
 	Metroid * metroid;
 	Samus * samus;
+<<<<<<< HEAD
+=======
 	vector<Bullet * > bulletList;
+>>>>>>> 10a54bead4bf6b3523ccfe17696e3672e68474b3
 
 	LPD3DXSPRITE spriteHandler;
 
@@ -29,8 +35,11 @@ public:
 	void Render();
 	void InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
 
+<<<<<<< HEAD
+=======
 	void updateBullet(float t);
 
+>>>>>>> 10a54bead4bf6b3523ccfe17696e3672e68474b3
 };
 
 #endif // !_WORLD_H_

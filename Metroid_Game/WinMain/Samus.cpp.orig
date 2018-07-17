@@ -230,6 +230,8 @@ void Samus::Update(float t)
 {
 	//vy -= gravity;
 
+<<<<<<< HEAD
+=======
 
 
 	if (limitY != 0) {
@@ -284,6 +286,7 @@ void Samus::Update(float t)
 		}
 	}
 
+>>>>>>> 10a54bead4bf6b3523ccfe17696e3672e68474b3
 	pos_x += vx * t;
 	pos_y += vy * t;
 
