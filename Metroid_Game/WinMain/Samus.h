@@ -5,6 +5,8 @@
 #include "GameObject.h"
 #include "trace.h"
 #include "World.h"
+#include "Bullet.h"
+#include <vector>
 
 enum SAMUS_STATE {
 	STAND_LEFT,
@@ -82,6 +84,14 @@ public:
 	void Destroy();
 	//================= END OVERRIDE VIRTUAL METHOD =============
 
+	vector<Bullet * > bulletList;
+	bool initBullet();
+	void fire();
+	int bulletIndex = 0;
+	//TODO
+	int bulletCount = 5;
+	void updateBullet(float t);
+	void renderBullet();
 };
 #endif // !_SAMUS_H
 

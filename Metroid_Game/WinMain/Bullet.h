@@ -23,7 +23,7 @@ public:
 	float liveTime = 0;
 	
 	Bullet();
-	Bullet(LPD3DXSPRITE spriteHandler, World * manager);
+	Bullet(LPD3DXSPRITE spriteHandler);
 	~Bullet();
 
 	void InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
@@ -31,7 +31,7 @@ public:
 
 	BULLET_STATE GetState();
 	void SetState(BULLET_STATE value);
-	
+	bool isBulletActive();
 
 	void ResetAllSprites();
 	bool GetStateActive();

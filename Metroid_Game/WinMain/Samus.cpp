@@ -74,6 +74,12 @@ void Samus::Render()
 			jumpShootR->drawSprite(jumpShootR->getWidth(), jumpShootR->getHeight(), position);
 			break;
 		}
+		
+		for (int i = 0; i < bulletCount; i++) {
+			if (bulletList[i]->isBulletActive() == true) {
+				bulletList[i]->Render();
+			}
+		}
 
 		spriteHandler->End();
 	}	
@@ -85,6 +91,7 @@ Samus::Samus()
 	height = 64;*/
 
 	this->isActive = true;
+	initBullet();
 }
 
 void Samus::Destroy()
@@ -93,6 +100,48 @@ void Samus::Destroy()
 	this->isActive = false;
 
 	//--TO DO: Đưa Samus ra khỏi viewport
+}
+
+bool Samus::initBullet()
+{
+	for (int i = 0; i < bulletCount; i++) {
+		Bullet* bullet = new Bullet(spriteHandler);
+		if (bullet == NULL)
+			return false; 
+		bulletList.push_back(bullet);
+	}
+	return true;
+}
+
+void Samus::fire()
+{
+	if (getlastPosX() > 0) {
+		bulletList[bulletIndex]->setVelocityX(BULLET_SPEED_X);
+		bulletList[bulletIndex]->setVelocityY(0);
+		bulletList[bulletIndex]->Reset(getPosX() + 32.0f, getPosY() + 16.0f);
+	}
+	else if (getlastPosX() < 0) {
+		bulletList[bulletIndex]->setVelocityX(-BULLET_SPEED_X);
+		bulletList[bulletIndex]->setVelocityY(0);
+		bulletList[bulletIndex]->Reset(getPosX(), getPosY() + 16.0f);
+	}
+	bulletList[bulletIndex]->isBulletActive() == true;
+	bulletIndex++;
+	if (bulletIndex > 4)
+		bulletIndex = 0;
+}
+
+void Samus::updateBullet(float t)
+{
+	for (int i = 0; i < bulletCount; i++) {
+		if (bulletList[i]->isBulletActive() == true) {
+			bulletList[i]->Update(t);
+		}
+	}
+}
+
+void Samus::renderBullet()
+{
 }
 
 Samus::Samus(LPD3DXSPRITE spriteHandler, World * manager)
@@ -155,6 +204,7 @@ void Samus::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 	ballRight = new Sprite(spriteHandler, texture, BALLRIGHT_PATH, WIDTH_SAMUS_BALLRIGHT, HEIGHT_SAMUS_BALLRIGHT, COUNT_SAMUS_BALLRIGHT);
 	jumpShootL = new Sprite(spriteHandler, texture, JUMPSHOOTleft_PATH, WIDTH_SAMUS_JUMPSHOOT, HEIGHT_SAMUS_JUMPSHOOT, COUNT_SAMUS_JUMPSHOOT);
 	jumpShootR = new Sprite(spriteHandler, texture, JUMPSHOOTright_PATH, WIDTH_SAMUS_JUMPSHOOT, HEIGHT_SAMUS_JUMPSHOOT, COUNT_SAMUS_JUMPSHOOT);
+
 }
 
 void Samus::InitPostition()
@@ -286,6 +336,8 @@ void Samus::Update(float t)
 
 	pos_x += vx * t;
 	pos_y += vy * t;
+
+	updateBullet(t);
 
 	// Animate samus if he is running
 	DWORD now = GetTickCount();

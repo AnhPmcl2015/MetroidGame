@@ -55,6 +55,10 @@ void Metroid::LoadResources(LPDIRECT3DDEVICE9 d3ddev)
 	if (this->getBrickTexture() == NULL)
 		trace(L"Unable to load BrickTexture");
 
+	Texture  text2;
+	this->setBulletTexture(text.loadTexture(d3ddev, TEXTURE_BULLET));
+	if (this->getBulletTexture() == NULL)
+		trace(L"Unable to load Bullet Texture");
 
 	world = new World(spriteHandler, this);
 	srand((unsigned)time(NULL));
@@ -551,7 +555,7 @@ void Metroid::OnKeyDown(int KeyCode)
 
 	//ban
 	if (_input->IsKeyDown(DIK_Z)) {
-		Bullet* bullet = new Bullet(spriteHandler, world);
+		/*Bullet* bullet = new Bullet(spriteHandler, world);
 		bullet->isActive = true;
 		if (world->samus->getlastPosX() > 0) {
 			if (world->samus->getlastPosY() < 0) {
@@ -574,7 +578,9 @@ void Metroid::OnKeyDown(int KeyCode)
 			bullet->Reset(world->samus->getPosX(), world->samus->getPosY() + 16.0f);
 		}
 
-		world->bulletList.push_back(bullet);
+		world->bulletList.push_back(bullet);*/
+
+		world->samus->fire();
 	}
 }
 

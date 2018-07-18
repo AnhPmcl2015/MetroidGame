@@ -175,6 +175,9 @@
     <Image Include="sprites\Player_32x16.png">
       <Filter>Resource Files\sprites</Filter>
     </Image>
+    <Image Include="sprites\bullet.png">
+      <Filter>Resource Files\sprites</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="field1.txt">
@@ -232,6 +235,9 @@
       <Filter>Resource Files\sprites</Filter>
     </Text>
     <Text Include="sprites\RUN_SHOOTUP_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\BULLET.txt">
       <Filter>Resource Files\sprites</Filter>
     </Text>
   </ItemGroup>

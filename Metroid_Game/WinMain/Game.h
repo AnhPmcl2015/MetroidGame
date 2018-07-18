@@ -39,6 +39,7 @@ class Game
 		//======================= Start texture ======================
 		LPDIRECT3DTEXTURE9 playerTexture;
 		LPDIRECT3DTEXTURE9 brickTexture;
+		LPDIRECT3DTEXTURE9 bulletTexture;
 		//======================= End Texture ========================
 
 	public:
@@ -58,6 +59,9 @@ class Game
 		LPDIRECT3DTEXTURE9 getPlayerTexture();
 		void setBrickTexture(LPDIRECT3DTEXTURE9);
 		LPDIRECT3DTEXTURE9 getBrickTexture();
+
+		void setBulletTexture(LPDIRECT3DTEXTURE9);
+		LPDIRECT3DTEXTURE9 getBulletTexture();
 };
 
 #endif

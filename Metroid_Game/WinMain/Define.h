@@ -20,6 +20,7 @@ class Game;
 
 #define FRICTION 1.0f
 #define TEXTURE_GAME_CHARACTERS L"sprites\\Player_32x16.png"
+#define TEXTURE_BULLET L"sprites\\bullet.png"
 
 //================ SCREEN SPEED ================
 #define JUMP_VELOCITY_BOOST 100.0f
@@ -62,7 +63,7 @@ enum OBJECT_TYPE
 
 
 //================ SPRITE SAMUS ================
-#define WIDTH_SAMUS_STAND 42
+#define WIDTH_SAMUS_STAND 42 
 #define HEIGHT_SAMUS_STAND 66
 #define COUNT_SAMUS_STAND 1
 #define STAND_RIGHT_PATH L"sprites\\STAND_RIGHT.txt"
@@ -135,7 +136,17 @@ enum OBJECT_TYPE
 #define HEIGHT_SAMUS_RUN_SHOOTUP_left 78
 #define COUNT_SAMUS_RUN_SHOOTUP_left 3
 #define RUN_SHOOTUP_left_PATH L"sprites\\RUN_SHOOTUP_LEFT.txt"
+
+
+
 //================= END SPRITE SAMUS ============
+
+//================= START SPRITE BULLET ==========
+#define WIDTH_BULLET 12
+#define HEIGHT_BULLET 14
+#define COUNT_BULLET 1
+#define BULLET_PATH L"sprites\\BULLET.txt"
+//================= END SPRITE BULLET ============
 
 //================ SPRITE BRICK ================
 #define WIDTH_SPRITE_BRICK 32

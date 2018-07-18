@@ -161,3 +161,12 @@ void Game::setBrickTexture(LPDIRECT3DTEXTURE9 brickTexture) {
 LPDIRECT3DTEXTURE9 Game::getBrickTexture() {
 	return this->brickTexture;
 }
+
+
+void Game::setBulletTexture(LPDIRECT3DTEXTURE9 bulletTexture) {
+	this->bulletTexture = bulletTexture;
+}
+
+LPDIRECT3DTEXTURE9 Game::getBulletTexture() {
+	return this->bulletTexture;
+}

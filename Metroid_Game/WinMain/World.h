@@ -17,7 +17,6 @@ class World
 public:
 	Metroid * metroid;
 	Samus * samus;
-	vector<Bullet * > bulletList;
 
 	LPD3DXSPRITE spriteHandler;
 
@@ -29,7 +28,7 @@ public:
 	void Render();
 	void InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
 
-	void updateBullet(float t);
+	//void updateBullet(float t);
 
 };
 
