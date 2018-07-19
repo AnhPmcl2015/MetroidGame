@@ -6,6 +6,7 @@ class World;
 class Samus;
 class Metroid;
 class Game;
+class Bullet;
 
 #define KEYBOARD_BUFFER_SIZE	1024
 #define KEY_DOWN(code) ( IsKeyDown(code) )

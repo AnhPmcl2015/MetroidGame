@@ -12,6 +12,7 @@ Bullet::Bullet(LPD3DXSPRITE spriteHandler) {
 	//this->manager = manager;
 	this->isActive = false;
 	this->type = BULLET;
+	//initsprite
 }
 
 Bullet::~Bullet() {

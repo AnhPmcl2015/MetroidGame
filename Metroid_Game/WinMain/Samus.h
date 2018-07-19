@@ -8,6 +8,8 @@
 #include "Bullet.h"
 #include <vector>
 
+using namespace std;
+
 enum SAMUS_STATE {
 	STAND_LEFT,
 	STAND_RIGHT,
@@ -28,6 +30,7 @@ enum SAMUS_STATE {
 	JUMP_SHOOT_UP_LEFT,
 	JUMP_SHOOT_UP_RIGHT,
 };
+
 
 class Samus : public GameObject
 {
@@ -84,8 +87,8 @@ public:
 	void Destroy();
 	//================= END OVERRIDE VIRTUAL METHOD =============
 
-	vector<Bullet * > bulletList;
-	bool initBullet();
+	vector<Bullet *> bulletList;
+	bool initBullet(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
 	void fire();
 	int bulletIndex = 0;
 	//TODO
