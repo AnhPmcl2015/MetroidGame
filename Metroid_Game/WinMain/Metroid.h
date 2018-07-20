@@ -4,7 +4,7 @@
 
 #include "Define.h"
 #include "Game.h"
-#include "Texture.h"
+#include "BulletManager.h"
 #include "Sprite.h"
 #include "Map.h"
 #include "World.h"
@@ -12,18 +12,21 @@
 class Metroid : public Game
 {
 protected:
+	LPDIRECT3DTEXTURE9 _texture;
 	LPDIRECT3DSURFACE9 startscreen;
 	LPD3DXSPRITE spriteHandler;
 	World * world;
+	//Manager * manager;
 private:
 	void _InitBackground();
-	void _InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
+	void _InitSprites(LPDIRECT3DDEVICE9 d3ddv);
 	void _InitPositions();
 
 	DWORD start_jump;
 	DWORD now_jump;
 	DWORD tick_per_frame;
 
+	Texture texture;
 	Map *map;
 public:
 	Metroid(HINSTANCE hInstance, LPWSTR Name, int Mode, int IsFullScreen, int FrameRate);

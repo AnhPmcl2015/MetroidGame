@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DeviceManager.cpp" />
     <ClCompile Include="DXGraphics.cpp" />
@@ -150,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletManager.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="DeviceManager.h" />
@@ -171,10 +173,12 @@
   <ItemGroup>
     <Image Include="brick_16x16.png" />
     <Image Include="brick_32x32.png" />
+    <Image Include="sprites\bullet.png" />
     <Image Include="sprites\Player_32x16.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="field1.txt" />
+    <Text Include="sprites\BULLET.txt" />
     <Text Include="sprites\JUMPSHOOT_LEFT.txt" />
     <Text Include="sprites\JUMPSHOOT_RIGHT.txt" />
     <Text Include="sprites\JUMP_LEFT.txt" />

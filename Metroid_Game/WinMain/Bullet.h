@@ -11,18 +11,25 @@ enum BULLET_STATE {
 	BOSS_BULLET
 };
 
+enum BulletDirection
+{
+	SHOOT_UP,
+	SHOOT_LEFT,
+	SHOOT_RIGHT
+};
+
 class Bullet : public GameObject {
 protected:
 	Sprite * bulletSprite;
-
+	BulletDirection bulletdir;
 	BULLET_STATE state = SAMUS_BULLET;
-
 public:
 	bool isActive;
 	//ket thuc thoi gian liveTime, xem nhu vien dan bay het duong bay -> huy vien dan
 	float liveTime = 0;
 	
 	Bullet();
+	Bullet(float x_pos, float y_pos, float _vx, float _vy);
 	Bullet(LPD3DXSPRITE spriteHandler, World * manager);
 	~Bullet();
 
@@ -31,7 +38,8 @@ public:
 
 	BULLET_STATE GetState();
 	void SetState(BULLET_STATE value);
-	
+	void SetDirection(BulletDirection value);
+	BulletDirection GetDirection();
 
 	void ResetAllSprites();
 	bool GetStateActive();

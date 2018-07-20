@@ -2,9 +2,17 @@
 
 Bullet::Bullet()
 {
-	vx = 0 ;
+	vx = 0;
 	vy = 0;
 	liveTime = 0;
+}
+
+Bullet::Bullet(float x_pos, float y_pos, float _vx, float _vy)
+{
+	pos_x = x_pos;
+	pos_y = y_pos;
+	vx = _vx;
+	vy = _vy;
 }
 
 Bullet::Bullet(LPD3DXSPRITE spriteHandler, World * manager) {
@@ -21,7 +29,7 @@ Bullet::~Bullet() {
 void Bullet::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture) {
 	if (d3ddv == NULL) return ;
 	//cai dat sprite o day
-	//bulletSprite = new Sprite(spriteHandler, texture, )
+	bulletSprite = new Sprite(spriteHandler, texture, BULLET_PATH, WIDTH_BULLET, HEIGHT_BULLET, 1);
 }
 
 void Bullet::InitPostition() {
@@ -30,16 +38,17 @@ void Bullet::InitPostition() {
 
 BULLET_STATE Bullet::GetState()
 {
-	return BULLET_STATE();
+	return state;
 }
 
 void Bullet::SetState(BULLET_STATE value)
 {
+	state = value;
 }
 
 void Bullet::ResetAllSprites()
 {
-	//not use
+	bulletSprite->Reset();
 }
 
 bool Bullet::GetStateActive()
@@ -85,7 +94,7 @@ void Bullet::Render()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
 
-		//bulletSprite->drawSprite() ve o day
+		bulletSprite->drawSprite(bulletSprite->getWidth(), bulletSprite->getHeight(), position);
 
 		spriteHandler->End();
 	}
@@ -96,3 +105,12 @@ void Bullet::Destroy()
 	isActive = false;
 }
 
+void Bullet::SetDirection(BulletDirection value)
+{
+	bulletdir = value;
+}
+
+BulletDirection Bullet::GetDirection()
+{
+	return bulletdir;
+}

@@ -6,6 +6,10 @@
 #include "Define.h"
 #include "Samus.h"
 #include "Bullet.h"
+#include "BulletManager.h"
+#include "Texture.h"
+#include <vector>
+using namespace std;
 
 /*
 Class này chứa tất cả những thứ trong Game
@@ -15,10 +19,13 @@ Các class khác chứa con trỏ đến class này để thao tác với các �
 class World
 {
 public:
+	Texture * texture;
 	Metroid * metroid;
 	Samus * samus;
-	vector<Bullet * > bulletList;
-
+	Manager * manager;
+	Bullet * bullet;
+	//vector<Bullet*> bulletList = vector<Bullet*> ();
+	vector<Bullet*> weapon = vector<Bullet*>(0);
 	LPD3DXSPRITE spriteHandler;
 
 	World();
@@ -27,7 +34,7 @@ public:
 
 	void Update(float t);
 	void Render();
-	void InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
+	void InitSprites(LPDIRECT3DDEVICE9 d3ddv);
 
 	void updateBullet(float t);
 

@@ -35,12 +35,6 @@ class Game
 		virtual void OnKeyDown(int KeyCode) = 0;
 		virtual void OnKeyUp(int KeyCode) = 0;
 		//======================= END VIRTUAL METHOD ======================
-
-		//======================= Start texture ======================
-		LPDIRECT3DTEXTURE9 playerTexture;
-		LPDIRECT3DTEXTURE9 brickTexture;
-		//======================= End Texture ========================
-
 	public:
 		//Doi tuong Direct Sound
 		//static SoundManager *gameSound;
@@ -53,11 +47,6 @@ class Game
 
 		// Run game
 		void GameRun();
-
-		void setPlayerTexture(LPDIRECT3DTEXTURE9);
-		LPDIRECT3DTEXTURE9 getPlayerTexture();
-		void setBrickTexture(LPDIRECT3DTEXTURE9);
-		LPDIRECT3DTEXTURE9 getBrickTexture();
 };
 
 #endif

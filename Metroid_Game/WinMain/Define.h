@@ -135,19 +135,24 @@ enum OBJECT_TYPE
 #define RUN_SHOOTUP_left_PATH L"sprites\\RUN_SHOOTUP_LEFT.txt"
 //================= END SPRITE SAMUS ============
 
-//================ BRICK SIZE =============================================
-#define BRICK_SIZE 32
-//================ END BRICK SIZE =========================================
-//================ SPRITE BRICK ================
+//================ SPRITE BRICK ===========================================
 #define WIDTH_SPRITE_BRICK 32
 #define HEIGHT_SPRITE_BRICK 32
-//================= END SPRITE BRICK ============
+#define BRICK_SIZE 32
+#define BRICK_TEXTURE L"brick_32x32.png"
+//================= END SPRITE BRICK ======================================
 
-//================ ROOM LIMITATION (TILES COUNT)============================
+//================ ROOM LIMITATION (TILES COUNT)===========================
 #define X_LIMITATION 20
 #define Y_LIMITATION 15
-//================ END ROOM LIMITATION ==================================
+//================ END ROOM LIMITATION ====================================
 
+//================ GAME ITEM ===========================
+#define BULLET_PATH L"sprites\\BULLET.txt"
+#define BULLET_TEXTURE L"sprites\\bullet.png"
+#define WIDTH_BULLET 12
+#define HEIGHT_BULLET 14
+//================ END GAME ITEM ===================================
 
 //================ GAME SOUND =============================================
 #define GAME_INTRO_SOUND L"sound\\background\\Intro.wav"

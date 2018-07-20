@@ -108,6 +108,9 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Source Files\Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="BulletManager.cpp">
+      <Filter>Source Files\Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -164,6 +167,9 @@
     <ClInclude Include="Bullet.h">
       <Filter>Header Files\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="BulletManager.h">
+      <Filter>Header Files\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="brick_16x16.png">
@@ -173,6 +179,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="sprites\Player_32x16.png">
+      <Filter>Resource Files\sprites</Filter>
+    </Image>
+    <Image Include="sprites\bullet.png">
       <Filter>Resource Files\sprites</Filter>
     </Image>
   </ItemGroup>
@@ -232,6 +241,9 @@
       <Filter>Resource Files\sprites</Filter>
     </Text>
     <Text Include="sprites\RUN_SHOOTUP_RIGHT.txt">
+      <Filter>Resource Files\sprites</Filter>
+    </Text>
+    <Text Include="sprites\BULLET.txt">
       <Filter>Resource Files\sprites</Filter>
     </Text>
   </ItemGroup>

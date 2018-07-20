@@ -7,9 +7,9 @@ void Metroid::_InitBackground()
 {
 }
 
-void Metroid::_InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
+void Metroid::_InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 {
-	world->InitSprites(d3ddv, texture);
+	world->InitSprites(d3ddv);
 }
 
 void Metroid::_InitPositions()
@@ -45,38 +45,22 @@ void Metroid::LoadResources(LPDIRECT3DDEVICE9 d3ddev)
 	if (result != D3D_OK)
 		trace(L"Unable to create SpriteHandler");
 
-	Texture text;
-	this->setPlayerTexture(text.loadTexture(d3ddev, TEXTURE_GAME_CHARACTERS));
-	if (this->getPlayerTexture() == NULL)
-		trace(L"Unable to load PlayerTexture");
-
-	Texture text1;
-	this->setBrickTexture(text1.loadTexture(d3ddev, L"brick_32x32.png"));
-	if (this->getBrickTexture() == NULL)
+	_texture = texture.loadTexture(d3ddev, BRICK_TEXTURE);
+	if (_texture == NULL)
 		trace(L"Unable to load BrickTexture");
 
+	// Khoi tao map
+	this->map = new Map(this->getSpriteHandler(), _texture, "field1.txt", this->_device, 0, 0);
 
 	world = new World(spriteHandler, this);
 	srand((unsigned)time(NULL));
-	this->_InitSprites(d3ddev, this->getPlayerTexture());
-
-	// Khoi tao map
-	this->map = new Map(this->getSpriteHandler(), this->getBrickTexture(), "field1.txt", this->_device, 0, 0);
-
-	if (map)
-	{
-	}
-	else
-		trace(L"Unable to load map");
+	this->_InitSprites(d3ddev);	
 
 	if (camera)
 	{
 		camera->Follow(world->samus);
 		camera->SetMapBoundary(map->getBoundary());
 	}
-
-
-
 	this->_InitPositions();
 }
 
@@ -581,7 +565,7 @@ void Metroid::OnKeyDown(int KeyCode)
 void Metroid::OnKeyUp(int KeyCode)
 {
 	if (_input->IsKeyDown(DIK_RIGHT)) {
-		if (world->samus->isJumping)
+		if (world->samus->isJumping == false)
 			world->samus->SetState(JUMP_RIGHT);
 	}
 }
