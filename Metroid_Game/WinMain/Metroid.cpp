@@ -56,7 +56,7 @@ void Metroid::LoadResources(LPDIRECT3DDEVICE9 d3ddev)
 		trace(L"Unable to load BrickTexture");
 
 	Texture  text2;
-	this->setBulletTexture(text.loadTexture(d3ddev, TEXTURE_BULLET));
+	this->setBulletTexture(text2.loadTexture(d3ddev, TEXTURE_BULLET));
 	if (this->getBulletTexture() == NULL)
 		trace(L"Unable to load Bullet Texture");
 
