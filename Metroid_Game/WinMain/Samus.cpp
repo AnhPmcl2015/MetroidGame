@@ -83,7 +83,6 @@ Samus::Samus()
 {
 	/*width = 40;
 	height = 64;*/
-
 	this->isActive = true;
 }
 
@@ -95,11 +94,16 @@ void Samus::Destroy()
 	//--TO DO: Đưa Samus ra khỏi viewport
 }
 
-Samus::Samus(LPD3DXSPRITE spriteHandler, World * manager)
+Samus::Samus(LPD3DXSPRITE spriteHandler, World * manager, Grid * grid)
 {
 	this->spriteHandler = spriteHandler;
 	this->manager = manager;
 	this->isActive = true;
+
+
+	this->grid = grid;
+	this->previousUnit = NULL;
+	this->nextUnit = NULL;
 
 	//Set type
 	this->type = SAMUS;
@@ -112,7 +116,7 @@ Samus::Samus(LPD3DXSPRITE spriteHandler, World * manager)
 
 Samus::~Samus()
 {
-	/*delete(standRight);
+	delete(standRight);
 	delete(standLeft);
 	delete(runRight);
 	delete(runLeft);
@@ -129,7 +133,7 @@ Samus::~Samus()
 	delete(jumpShootR);
 	delete(jumpShootL);
 	delete(jumpRight);
-	delete(jumpLeft);*/
+	delete(jumpLeft);
 }
 
 void Samus::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
@@ -160,9 +164,9 @@ void Samus::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 void Samus::InitPostition()
 {
 	//--TO DO: This code will be edited soon
-	pos_x = 320;
-	pos_y = 352;
-
+	pos_x = 992;	
+	pos_y = 352;	
+	grid->add(this);
 	vx = 0;
 	vx_last = 1.0f;
 	vy = 0;
@@ -217,6 +221,7 @@ bool Samus::GetStateActive()
 
 void Samus::Reset(int x, int y)
 {
+	//manager->maruMari->Init(704, 186);
 	// Cho samus active trở lại
 	this->isActive = true;
 
@@ -225,64 +230,16 @@ void Samus::Reset(int x, int y)
 	this->pos_y = y;
 }
 
+bool Samus::isSamusDeath()
+{
+	if (isDeath == true)
+		return true;
+}
+
 // Update samus status
 void Samus::Update(float t)
 {
-	//vy -= gravity;
-
-
-
-	if (limitY != 0) {
-		if (isJumping || isFalling || isMorphingJump) {
-			if (isJumping && !isFalling) {
-				if (getPosY() < limitY) {
-					isFalling = true;
-					isJumping = true;
-					isMorphingJump = false;
-				}
-				else
-					vy = -JUMP_VELOCITY_BOOST;
-			}
-			if (isJumping && isFalling) {
-				if (getPosY() < limitY + JUMP_HEIGHT) {
-					vy = GRAVITY_VELOCITY;
-				}
-				else {
-					isJumping = false;
-					isMorphingJump = false;
-					isFalling = false;
-					limitY = 0;
-					if (vx > 0) SetState(STAND_RIGHT);
-					else SetState(STAND_LEFT);
-					vy = 0;
-				}
-			}
-			if (isMorphingJump && !isFalling) {
-				if (getPosY() < limitY) {
-					isFalling = true;
-					isJumping = false;
-					isMorphingJump = true;
-				}
-				else
-					vy = -JUMP_VELOCITY_BOOST;
-			}
-			if (isMorphingJump && isFalling) {
-				if (getPosY() < limitY + JUMP_HEIGHT) {
-					vy = GRAVITY_VELOCITY;
-				}
-				else {
-					isJumping = false;
-					isMorphingJump = false;
-					isFalling = false;
-					limitY = 0;
-					if (vx > 0) SetState(STAND_RIGHT);
-					else SetState(STAND_LEFT);
-					vy = 0;
-				}
-			}
-		
-		}
-	}
+	//vy += gravity;
 
 	pos_x += vx * t;
 	pos_y += vy * t;

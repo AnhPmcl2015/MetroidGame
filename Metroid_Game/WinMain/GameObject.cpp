@@ -20,8 +20,8 @@ void GameObject::InitSprites()
 
 GameObject::~GameObject()
 {
-	delete(sprite);
-	delete(manager);
+	//delete(sprite);
+	//delete(manager);
 }
 
 void GameObject::Render()
@@ -161,4 +161,20 @@ float GameObject::getgravity()
 void GameObject::setgravity(float value)
 {
 	gravity = value;
+}
+
+void GameObject::SetBound(int objWidth, int objHeight)
+{
+	rigidBody.x = objWidth;
+	rigidBody.y = objHeight;
+}
+
+RECT GameObject::GetBound()
+{
+	objBound.left = pos_x;
+	objBound.right = pos_x + rigidBody.x;
+	objBound.top = pos_y;
+	objBound.bottom = pos_y - rigidBody.y;
+
+	return objBound;
 }

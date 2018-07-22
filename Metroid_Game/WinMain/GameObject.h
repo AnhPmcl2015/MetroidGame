@@ -1,4 +1,7 @@
 ﻿#pragma once
+#ifndef _GAME_OBJECT_H_
+#define _GAME_OBJECT_H_
+
 #include <d3dx9.h>
 #include "Sprite.h"
 #include "Define.h"
@@ -6,16 +9,20 @@
 class GameObject
 {
 public:
+	friend class Grid;
 	World * manager;	// con trỏ đến world để thao tác với các object ở world khi cần thiết
+	Grid * grid;
 
+	int width;
+	int height;
 	float pos_x;		// x postition of object
 	float pos_y;		// y position of object
-	float lastPosX;
+	float lastPosX;		
 	float lastPosY;
 	float friction = FRICTION;	//ma sát
 
-								/*float width;
-								float height;*/
+	GameObject * previousUnit;
+	GameObject * nextUnit;
 
 	float vx;		// x velocity
 	float vy;		// y velocity
@@ -29,13 +36,10 @@ public:
 
 	OBJECT_TYPE type;		//Loại GameObject, được định nghĩa trong file type
 	bool isActive;	// Cho biết GameObject có đang hoạt động hay không
-	Sprite* sprite;
+	//Sprite* sprite;
 	DWORD last_time; // this is to control the animate rate of object
-
-protected:
-	int width;
-	int height;
-
+	RECT objBound;
+	D3DXVECTOR2 rigidBody;
 public:
 	GameObject();
 	~GameObject();
@@ -67,13 +71,17 @@ public:
 	void setVelocityYLast(float value);
 	float getVelocityYLast();
 
+	void setWidth(int value);
 	int getWidth();
-	void setWidth(int width);
+
+	void setHeight(int value);
 	int getHeight();
-	void setHeight(int height);
 
 	float getgravity();
 	void setgravity(float value);
+
+	void SetBound(int objWidth, int objHeight);
+	RECT GetBound();
 	//===============================END GET - SET METHOD============================
 
 	//=============================== VIRTUAL METHOD FOR INHERITANCE ================
@@ -91,3 +99,4 @@ public:
 
 
 };
+#endif // !_GAME_OBJECT_
