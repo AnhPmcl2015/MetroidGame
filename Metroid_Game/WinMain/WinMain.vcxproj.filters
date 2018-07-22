@@ -52,6 +52,18 @@
     <Filter Include="Source Files\Bullet">
       <UniqueIdentifier>{ec0d378a-adfb-4b64-aa5e-9823168b5a4e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Enemy">
+      <UniqueIdentifier>{52cca69b-d78b-40da-b48f-d0a36ece928e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Enemy">
+      <UniqueIdentifier>{ae267dcf-9b69-4441-82f8-30c4e505ccaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Item">
+      <UniqueIdentifier>{681fa9e2-e42d-454f-abed-d8080526c49e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Item">
+      <UniqueIdentifier>{5b819743-aaf9-4fa9-8c14-b4f9cb835bc7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -111,6 +123,48 @@
     <ClCompile Include="BulletManager.cpp">
       <Filter>Source Files\Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="Gate.cpp">
+      <Filter>Source Files\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Source Files\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="TileObject.cpp">
+      <Filter>Source Files\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Source Files\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT.cpp">
+      <Filter>Source Files\SoundLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUTenum.cpp">
+      <Filter>Source Files\SoundLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUTmisc.cpp">
+      <Filter>Source Files\SoundLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="SDKsound.cpp">
+      <Filter>Source Files\SoundLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="SDKwavefile.cpp">
+      <Filter>Source Files\SoundLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Skree.cpp">
+      <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Zoomer.cpp">
+      <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="MaruMari.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -169,6 +223,48 @@
     </ClInclude>
     <ClInclude Include="BulletManager.h">
       <Filter>Header Files\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Gate.h">
+      <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="TileObject.h">
+      <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Header Files\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Skree.h">
+      <Filter>Header Files\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Zoomer.h">
+      <Filter>Header Files\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT.h">
+      <Filter>Header Files\SoundLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUTenum.h">
+      <Filter>Header Files\SoundLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUTmisc.h">
+      <Filter>Header Files\SoundLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="SDKsound.h">
+      <Filter>Header Files\SoundLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="SDKwavefile.h">
+      <Filter>Header Files\SoundLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="MaruMari.h">
+      <Filter>Header Files\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

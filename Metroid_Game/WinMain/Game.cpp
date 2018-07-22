@@ -27,7 +27,6 @@ Game::~Game()
 
 void Game::GameInit()
 {
-	//Game::gameSound->LoadSound(_hWnd);
 	_dxgraphics->_InitWindow();
 	int width = _dxgraphics->getScreenWidth();
 	int height = _dxgraphics->getScreenHeight();
@@ -70,9 +69,8 @@ void Game::GameRun()
 			_RenderFrame();
 
 		}
-		else
-		{
-			Sleep(1);
+		else {
+			Sleep(tick_per_frame);
 		}
 
 		_input->_ProcessKeyBoard();
@@ -106,14 +104,12 @@ void Game::_RenderFrame()
 	if (result == D3D_OK)
 	{
 		// Clear back buffer with BLACK
-		//_device->getdevice()->ColorFill(_device->getBuffer(), NULL, D3DCOLOR_XRGB(0, 0, 0));
-
 		_device->clearScreen();
 		if (camera)
 		{
 			camera->SetTransform(_device);
 		}
-		RenderFrame(_device->getdevice());
+		Render(_device->getdevice());
 		_device->getdevice()->EndScene();
 	}
 
@@ -124,7 +120,7 @@ void Game::Update(float Delta)
 {
 }
 
-void Game::RenderFrame(LPDIRECT3DDEVICE9 device)
+void Game::Render(LPDIRECT3DDEVICE9 device)
 {
 
 }

@@ -8,14 +8,13 @@ Camera::Camera(int width, int height, float angle, DirectX::XMFLOAT3 scaleFactor
 	this->angle = angle;
 	this->scaleFactors = scaleFactors;
 	//D3DXMatrixOrthoLH(&orthographicMatrix, width, height, 0.0f, 1.0f);
-
 	
 	float left = -width * CAMERA_FOLLOW_POINT_LEFT_RATIO;
 	float right = width * CAMERA_FOLLOW_POINT_RIGHT_RATIO;
 	float top = height * CAMERA_FOLLOW_POINT_TOP_RATIO;
 	float bottom = -height * CAMERA_FOLLOW_POINT_BOTTOM_RATIO;
 	D3DXMatrixOrthoOffCenterLH(&orthographicMatrix, left, right, bottom, top, 0.0f, 1.0f);
-	D3DXMatrixIdentity(&identityMatrix);
+	//D3DXMatrixIdentity(&identityMatrix);
 }
 
 Camera::~Camera()
@@ -35,15 +34,15 @@ void Camera::Update()
 {
 	D3DXVECTOR3 eye(320, 352, 1);	// x,y not important, camera've been following m_following
 	D3DXVECTOR3 direction(0, 0, -1);
-	D3DXVECTOR3 up(0, -1, 0);	//r
-
-	//int cameraX = width/2, cameraY = height/2;
+	D3DXVECTOR3 up(0, -1, 0);	
 
 	if (m_following != nullptr)
 	{
 		//camera follow object
 		eye.x = m_following->pos_x;
 		eye.y = m_following->pos_y;
+
+		m_following->lastPosY = m_following->pos_y;
 
 		//set bound camera
 		Camera_bound.top	= m_following->pos_y - CAMERA_FOLLOW_POINT_TOP_RATIO * height;
@@ -74,7 +73,7 @@ void Camera::Update()
 void Camera::SetTransform(DeviceManager* device) const
 {
 	device->getdevice()->SetTransform(D3DTS_PROJECTION, &orthographicMatrix);
-	device->getdevice()->SetTransform(D3DTS_WORLD, &identityMatrix);
+	//device->getdevice()->SetTransform(D3DTS_WORLD, &identityMatrix);
 	device->getdevice()->SetTransform(D3DTS_VIEW, &viewMatrix);
 }
 
