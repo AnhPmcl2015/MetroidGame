@@ -8,35 +8,11 @@ Gate::Gate(LPD3DXSPRITE spriteHandler, World * manager, GATE_TYPE type)
 	this->width = GATE_WIDTH;
 	this->height = GATE_HEIGHT;
 
-	LPWSTR exists_path = NULL;
-	LPWSTR destroy_path = NULL;
-
-	//Init sprites
-	switch (type)
-	{
-	case GATE_TYPE::LEFT:
-		exists_path = GATE_LEFT_EXISTS;
-		destroy_path = GATE_LEFT_DESTROYING;
-		gate_type = LEFT;
-		break;
-	case GATE_TYPE::RIGHT:
-		exists_path = GATE_RIGHT_EXISTS;
-		destroy_path = GATE_RIGHT_DESTROYING;
-		gate_type = RIGHT;
-		break;
-	}
-
-	//exists = new Sprite(spriteHandler, GATE_SPRITES_PATH, exists_path, GATE_WIDTH, GATE_HEIGHT, GATE_EXISTS_COUNT, 1);
-	//destroying = new Sprite(spriteHandler, GATE_SPRITES_PATH, destroy_path, GATE_WIDTH, GATE_HEIGHT, GATE_DESTROYING_COUNT, 1);
-
 	//Set state
 	state = GATE_STATE::CLOSE;
 
 	//Set time survive
 	time_survive = GATE_TIME_SURVIVE;
-
-	//Set collider
-	//collider = new Collider(0, 0, -GATE_HEIGHT, GATE_WIDTH);
 }
 
 Gate::~Gate()
@@ -50,16 +26,37 @@ GATE_TYPE Gate::GetGateType()
 	return gate_type;
 }
 
+void Gate::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
+{
+	if (d3ddv == NULL) return;
+	//Create sprite handler
+	HRESULT result = D3DXCreateSprite(d3ddv, &spriteHandler);
+	if (result != D3D_OK) return;
+
+	LPWSTR exists_path = NULL;
+	LPWSTR destroy_path = NULL;
+
+	switch (gate_type)
+	{
+	case LEFT:
+		exists_path = GATE_LEFT_EXISTS;
+		destroy_path = GATE_LEFT_DESTROYING;
+		break;
+	case RIGHT:
+		exists_path = GATE_RIGHT_EXISTS;
+		destroy_path = GATE_RIGHT_DESTROYING;
+		break;
+	}
+
+	exists = new Sprite(spriteHandler, texture, exists_path, GATE_WIDTH, GATE_HEIGHT, GATE_EXISTS_COUNT);
+	destroying = new Sprite(spriteHandler, texture, destroy_path, GATE_WIDTH, GATE_HEIGHT, GATE_DESTROYING_COUNT);
+}
+
 void Gate::Update(float t)
 {
+
 	if (!isActive)
 		return;
-
-	/*if (!IsInCamera())
-	{
-		isActive = false;
-		return;
-	}*/
 
 	DWORD now = GetTickCount();
 	if (now - last_time > 1000 / ANIMATE_RATE)
@@ -67,13 +64,12 @@ void Gate::Update(float t)
 		switch (state)
 		{
 		case DESTROYING:
-			/*destroying->Next();
+			destroying->updateSprite();
 			if (destroying->GetIndex() == destroying->GetCount() - 1)
 			{
 				state = OPEN;
 				isActive = false;
-				collider = NULL;
-			}*/
+			}
 			break;
 		}
 		last_time = now;
@@ -82,17 +78,22 @@ void Gate::Update(float t)
 
 void Gate::Render()
 {
+	D3DXVECTOR3 position;
+	position.x = pos_x;
+	position.y = pos_y;
+	position.z = 0;
+
 	if (!isActive)
 		return;
 
-	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
 	switch (state)
 	{
 	case CLOSE:
-		//exists->Render(pos_x, pos_y);
+		exists->drawSprite(exists->getWidth(), exists->getHeight(), position);
 		break;
 	case DESTROYING:
-		//destroying->Render(pos_x, pos_y);
+		destroying->drawSprite(destroying->getWidth(), destroying->getHeight(), position);
 		break;
 	}
 	spriteHandler->End();

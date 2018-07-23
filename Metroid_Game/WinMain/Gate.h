@@ -1,10 +1,8 @@
 #pragma once
 #include "Sprite.h"
-#include "Collision.h"
 #include "Define.h"
 #include "GameObject.h"
 #include "trace.h"
-#include "Camera.h"
 
 enum GATE_STATE {  //State of Gate
 	OPEN,
@@ -26,6 +24,7 @@ public:
 
 	GATE_TYPE GetGateType();
 
+	void InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
 	void Update(float t);
 	void Render();
 	void DestroyGate();

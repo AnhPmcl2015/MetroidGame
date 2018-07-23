@@ -314,7 +314,7 @@ enum ENEMY_TYPE
 
 enum GATE_TYPE
 {
-	LEFT = 0,
-	RIGHT = 1
+	LEFT = 1,
+	RIGHT = 2
 };
 //================= END GATE ===========

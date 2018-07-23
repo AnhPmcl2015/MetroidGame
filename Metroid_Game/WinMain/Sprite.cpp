@@ -57,6 +57,10 @@ void Sprite::updateSprite() {
 	this->currentIndexOfSprite += 1;
 	if (this->currentIndexOfSprite >= (this->startIndexOfSprite + this->count))
 		this->currentIndexOfSprite = startIndexOfSprite;
+}
+
+void Sprite::updateIndex()
+{
 	this->_Index = (this->_Index + 1) % count;
 }
 
@@ -197,4 +201,14 @@ void Sprite::setHeight(int value)
 int Sprite::getHeight()
 {
 	return height;
+}
+
+int Sprite::GetIndex()
+{
+	return this->_Index;
+}
+
+int Sprite::GetCount()
+{
+	return count;
 }
