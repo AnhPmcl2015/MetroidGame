@@ -31,11 +31,11 @@ void Bullet::initBullet(float posX, float posY) {
 	}
 	else if (this->direction == SHOOT_UP_RIGHT) {
 		this->pos_x = posX + 16;
-		this->pos_y = posY - 12;
+		this->pos_y = posY - 22;
 	}
 	else if (this->direction == SHOOT_UP_LEFT) {
 		this->pos_x = posX + 6;
-		this->pos_y = posY - 12;
+		this->pos_y = posY - 22;
 	}
 	else if (this->direction == SHOOT_LEFT) {
 		this->pos_x = posX - 12;
@@ -65,9 +65,11 @@ void Bullet::Update(float t, float posX, float posY) {
 		this->Reset(posX, posY);
 	}
 
-
 	if (this->isActive == true && this->count == 0) {
-		this->initBullet(posX, posY);
+		if (this->direction == OFF)
+			this->isActive = false;
+		if(this->isActive)
+			this->initBullet(posX, posY);
 	}
 
 	if (this->isActive == false && this->count == 0 || this->direction == OFF)
@@ -89,7 +91,9 @@ void Bullet::Update(float t, float posX, float posY) {
 
 
 void Bullet::Render() {
-	if (this->isActive == false && this->count == 0)
+	if (this->isActive == false && this->count == 0|| this->direction == OFF)
+		return;
+	if (this->count == 3 || this->count == 4 || this->count == 7)
 		return;
 	D3DXVECTOR3 pos = D3DXVECTOR3(this->pos_x, this->pos_y, 0);
 	this->bulletSprite->drawSprite(0, 0, WIDTH_BULLET, HEIGHT_BULLET, pos);
