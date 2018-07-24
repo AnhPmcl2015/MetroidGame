@@ -247,17 +247,9 @@ bool Samus::isSamusDeath()
 void Samus::Update(float t)
 {
 	//vy += gravity;
-	switch (state) {
-	case JUMP_LEFT: case JUMP_RIGHT: {
-		if (this->pos_x - this->lastPosX >= 160)
-			vy = -vy;
-	}
-	}
 
 	pos_x += vx * t;
 	pos_y += vy * t;
-
-
 
 	// Animate samus if he is running
 	DWORD now = GetTickCount();

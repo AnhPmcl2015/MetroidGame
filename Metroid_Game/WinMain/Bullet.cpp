@@ -61,6 +61,14 @@ void Bullet::Update(float delta) {
 // Cập nhật lại vị trí của viên đạn theo con samus khi đã đi hết quãng đường bắn.
 // Được cập nhật theo tình trạng của viên đạn
 void Bullet::Update(float t, float posX, float posY) {
+	if (this->direction == OFF && this->tempDirection == OFF)
+	{
+		return;
+	}
+	else if (this->direction == OFF && this->tempDirection != OFF || this->direction != this->tempDirection && this->count == 0) {
+		this->direction = this->tempDirection;
+	}
+
 	if (this->count == BULLET_COUNT) {
 		this->Reset(posX, posY);
 	}
@@ -68,8 +76,10 @@ void Bullet::Update(float t, float posX, float posY) {
 	if (this->isActive == true && this->count == 0) {
 		if (this->direction == OFF)
 			this->isActive = false;
-		if(this->isActive)
+		if (this->isActive) {
 			this->initBullet(posX, posY);
+			this->isRendered = true;
+		}
 	}
 
 	if (this->isActive == false && this->count == 0 || this->direction == OFF)
@@ -105,7 +115,7 @@ void Bullet::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture) {
 }
 
 void Bullet::setDirection(Bullet_SAMUS_Direction direction) {
-	this->direction = direction;
+	this->tempDirection = direction;
 }
 
 
