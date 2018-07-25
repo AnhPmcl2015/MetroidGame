@@ -1,46 +1,32 @@
 #pragma once
-#include "Sprite.h"
 #include "GameObject.h"
-#include "trace.h"
-#include "World.h"
 #include "Define.h"
+#include "Texture.h"
+#include "Metroid.h"
 
-enum BULLET_STATE {
-	SAMUS_BULLET,
-	KREE_BULLET,
-	BOSS_BULLET
-};
-
-class Bullet : public GameObject {
-protected:
-	Sprite * bulletSprite;
-
-	BULLET_STATE state = SAMUS_BULLET;
-
+class Bullet : public GameObject
+{
+private:
+	Sprite *bulletSprite;
+	Bullet_SAMUS_Direction direction;
+	bool isRendered;
+	int count;
 public:
-	bool isActive;
-	//ket thuc thoi gian liveTime, xem nhu vien dan bay het duong bay -> huy vien dan
-	float liveTime = 0;
-	
+	void initBullet(float posX, float posY);
+	void Update(float t);
+	void Update(float t, float posX, float posY);
+	void Render();
+	void InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
+	void Reset(float posX, float posY);
 	Bullet();
 	Bullet(LPD3DXSPRITE spriteHandler);
 	~Bullet();
+	
 
-	void InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
-	void InitPostition();
-
-	BULLET_STATE GetState();
-	void SetState(BULLET_STATE value);
-	bool isBulletActive();
-
-	void ResetAllSprites();
-	bool GetStateActive();
-
-	//================ OVERRIDE VIRTUAL METHOD ==================
-	void Reset(int  x, int y);
-	void Update(float t);
-	void Render();
-	void Destroy();
-	//================= END OVERRIDE VIRTUAL METHOD =============
-
+	void setDirection(Bullet_SAMUS_Direction direction);
+	Bullet_SAMUS_Direction getDirection();
+	void setIsRendered(bool isRendered);
+	bool getIsRendered();
+	void setCount(int count);
+	int getCount();
 };

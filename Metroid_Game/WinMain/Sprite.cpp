@@ -26,11 +26,11 @@ Sprite::Sprite(LPD3DXSPRITE sprite, LPDIRECT3DTEXTURE9 texture, int width, int h
 		return;
 }
 
-Sprite::Sprite(LPD3DXSPRITE SpriteHandler, LPDIRECT3DTEXTURE9 texture, LPWSTR coord, int width, int height, int count)
+Sprite::Sprite(LPD3DXSPRITE SpriteHandler, LPDIRECT3DTEXTURE9 texture, LPWSTR _coord, int width, int height, int count)
 {
 	this->count = count;
 	sprite = SpriteHandler;
-	this->_Coord = coord;
+	this->_Coord = _coord;
 
 	// Gan he mau trong suot
 	transColor = D3DCOLOR_ARGB(255, 255, 255, 255);
@@ -54,9 +54,9 @@ Sprite::~Sprite() {
 
 // Cap nhat vi tri cua sprite tiep theo
 void Sprite::updateSprite() {
-	this->currentIndexOfSprite += 1;
+	/*this->currentIndexOfSprite += 1;
 	if (this->currentIndexOfSprite >= (this->startIndexOfSprite + this->count))
-		this->currentIndexOfSprite = startIndexOfSprite;
+		this->currentIndexOfSprite = startIndexOfSprite;*/
 	this->_Index = (this->_Index + 1) % count;
 }
 
@@ -129,9 +129,11 @@ void Sprite::Reset()
 
 RECT Sprite::ReadCoord()
 {
-	int ** coord = new int*[2];	//init array Sprite's position
+	//init array Sprite's position
+	vector<vector<int>> coord;
+	coord.resize(count);
 
-								//Read file info of file
+	//Read file info of file
 	fstream f;
 	try
 	{
@@ -155,7 +157,8 @@ RECT Sprite::ReadCoord()
 			pos.push_back(split);
 		}
 
-		coord[id] = new int[count];
+		for (int i = 0; i < coord.size(); i++)
+			coord[i].resize(2);
 
 		coord[id][0] = stoi(pos[0]);
 		srect.left = coord[id][0];
@@ -170,11 +173,9 @@ RECT Sprite::ReadCoord()
 		{
 			break;
 		}
-
 		id++;
 	}
 	f.close();
-
 	return srect;
 }
 

@@ -5,31 +5,6 @@
 #include "GameObject.h"
 #include "trace.h"
 #include "World.h"
-#include "Bullet.h"
-#include <vector>
-
-using namespace std;
-
-enum SAMUS_STATE {
-	STAND_LEFT,
-	STAND_RIGHT,
-	RUNNING_LEFT,
-	RUNNING_RIGHT,
-	STAND_SHOOT_UP_LEFT,
-	STAND_SHOOT_UP_RIGHT,
-	MORPH_LEFT,
-	MORPH_RIGHT,
-	RUN_SHOOTING_LEFT,
-	RUN_SHOOTING_RIGHT,
-	RUN_SHOOT_UP_LEFT,
-	RUN_SHOOT_UP_RIGHT,
-	JUMP_LEFT,
-	JUMP_RIGHT,
-	TRANSFORM_BALL_LEFT,
-	TRANSFORM_BALL_RIGHT,
-	JUMP_SHOOT_UP_LEFT,
-	JUMP_SHOOT_UP_RIGHT,
-};
 
 
 class Samus : public GameObject
@@ -57,17 +32,20 @@ protected:
 	SAMUS_STATE state;	
 
 	int tempX;
+	bool isBall;
 public:
-	bool isJumping;	// Trạng thái đang nhảy của Samus
+	bool isJumping = false;;	// Trạng thái đang nhảy của Samus
 	bool canMorph = true;
 	bool isMorphing = false;
+	int limitY = 0;
 	bool isFalling = false;
-	bool isMorphingJump = false;
-	
-	float limitY = 0;
+	bool isMorphingJump = false; 
+	bool isHighJump = false;
 
+	float health;	// Máu của Samus
+	bool isDeath = false;	// Trạng thái chết của Samus
 	Samus();
-	Samus(LPD3DXSPRITE spriteHandler, World * manager);
+	Samus(LPD3DXSPRITE spriteHandler, World * manager, Grid * grid);
 	~Samus();
 
 	void InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
@@ -76,25 +54,25 @@ public:
 	SAMUS_STATE GetState();
 	void SetState(SAMUS_STATE value);
 	bool isSamusJumping();
+	//bool isSamusCrouch();
+	bool isSamusDeath();
 
 	void ResetAllSprites();
 	bool GetStateActive();
 
+	void setIsBall(bool isBall);
+	bool getIsBall();
+
+	void jumpLeftHandle(DWORD start_jump, DWORD now_jump, DWORD tick_per_frame);
+	void jumpRightHandle(DWORD start_jump, DWORD now_jump, DWORD tick_per_frame);
+
 	//================ OVERRIDE VIRTUAL METHOD ==================
-	void Reset(int  x, int y);
+	void Reset(float  x, float y);
 	void Update(float t);
 	void Render();
 	void Destroy();
 	//================= END OVERRIDE VIRTUAL METHOD =============
 
-	vector<Bullet *> bulletList;
-	bool initBullet(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
-	void fire();
-	int bulletIndex = 0;
-	//TODO
-	int bulletCount = 5;
-	void updateBullet(float t);
-	void renderBullet();
 };
 #endif // !_SAMUS_H
 

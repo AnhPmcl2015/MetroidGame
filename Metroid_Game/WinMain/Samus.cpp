@@ -13,6 +13,10 @@ void Samus::Render()
 		D3DXVECTOR3 position;
 		position.x = pos_x;
 		position.y = pos_y;
+		if (this->state == STAND_SHOOT_UP_LEFT || this->state == STAND_SHOOT_UP_RIGHT || this->state == RUN_SHOOT_UP_LEFT || this->state == RUN_SHOOT_UP_RIGHT) {
+			position.y -= 10;
+		}
+
 		position.z = 0;
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND| D3DXSPRITE_OBJECTSPACE);
@@ -74,12 +78,6 @@ void Samus::Render()
 			jumpShootR->drawSprite(jumpShootR->getWidth(), jumpShootR->getHeight(), position);
 			break;
 		}
-		
-		for (int i = 0; i < bulletCount; i++) {
-			if (bulletList[i]->isBulletActive() == true) {
-				bulletList[i]->Render();
-			}
-		}
 
 		spriteHandler->End();
 	}	
@@ -87,10 +85,8 @@ void Samus::Render()
 
 Samus::Samus()
 {
-	/*width = 40;
-	height = 64;*/
-
 	this->isActive = true;
+	this->isBall = false;
 }
 
 void Samus::Destroy()
@@ -101,72 +97,30 @@ void Samus::Destroy()
 	//--TO DO: Đưa Samus ra khỏi viewport
 }
 
-bool Samus::initBullet(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
-{
-	for (int i = 0; i < bulletCount; i++) {
-		Bullet* bullet = new Bullet(spriteHandler);
-		if (bullet == NULL)
-			return false; 
-		bulletList.push_back(bullet);
-	}
-	bulletIndex = 0;
-
-	for (int i = 0; i < bulletCount; i++) {
-		if (bulletList[i] != NULL )
-			bulletList[i]->InitSprites(d3ddv, texture);
-	}
-
-	return true;
-}
-
-void Samus::fire()
-{
-	if (this->getVelocityXLast() > 0) {
-		bulletList[bulletIndex]->setVelocityX(BULLET_SPEED_X);
-		bulletList[bulletIndex]->setVelocityY(0);
-		bulletList[bulletIndex]->Reset(getPosX() + 32.0f, getPosY() + 16.0f);
-	}
-	else if (this->getVelocityXLast() < 0) {
-		bulletList[bulletIndex]->setVelocityX(-BULLET_SPEED_X);
-		bulletList[bulletIndex]->setVelocityY(0);
-		bulletList[bulletIndex]->Reset(getPosX(), getPosY() + 16.0f);
-	}
-	bulletList[bulletIndex]->isActive = true;
-	bulletIndex++;
-	if (bulletIndex == 5)
-		bulletIndex = 0;
-}
-
-void Samus::updateBullet(float t)
-{
-	for (int i = 0; i < bulletCount; i++) {
-		if (bulletList[i]->isBulletActive() == true) {
-			bulletList[i]->Update(t);
-		}
-	}
-}
-
-void Samus::renderBullet()
-{
-}
-
-Samus::Samus(LPD3DXSPRITE spriteHandler, World * manager)
+Samus::Samus(LPD3DXSPRITE spriteHandler, World * manager, Grid * grid)
 {
 	this->spriteHandler = spriteHandler;
 	this->manager = manager;
 	this->isActive = true;
+
+
+	this->grid = grid;
+	this->previousUnit = NULL;
+	this->nextUnit = NULL;
 
 	//Set type
 	this->type = SAMUS;
 
 	/*width = 40;
 	height = 50;*/
+
 	gravity = FALLDOWN_VELOCITY_DECREASE;
+	this->isBall = false;
 }
 
 Samus::~Samus()
 {
-	/*delete(standRight);
+	delete(standRight);
 	delete(standLeft);
 	delete(runRight);
 	delete(runLeft);
@@ -183,12 +137,11 @@ Samus::~Samus()
 	delete(jumpShootR);
 	delete(jumpShootL);
 	delete(jumpRight);
-	delete(jumpLeft);*/
+	delete(jumpLeft);
 }
 
 void Samus::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 {
-
 	if (d3ddv == NULL) return;
 
 	//Create instance of sprites
@@ -210,16 +163,16 @@ void Samus::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 	ballRight = new Sprite(spriteHandler, texture, BALLRIGHT_PATH, WIDTH_SAMUS_BALLRIGHT, HEIGHT_SAMUS_BALLRIGHT, COUNT_SAMUS_BALLRIGHT);
 	jumpShootL = new Sprite(spriteHandler, texture, JUMPSHOOTleft_PATH, WIDTH_SAMUS_JUMPSHOOT, HEIGHT_SAMUS_JUMPSHOOT, COUNT_SAMUS_JUMPSHOOT);
 	jumpShootR = new Sprite(spriteHandler, texture, JUMPSHOOTright_PATH, WIDTH_SAMUS_JUMPSHOOT, HEIGHT_SAMUS_JUMPSHOOT, COUNT_SAMUS_JUMPSHOOT);
-
-	initBullet(d3ddv,texture);
 }
 
 void Samus::InitPostition()
 {
 	//--TO DO: This code will be edited soon
-	pos_x = 320;
-	pos_y = 352;
-
+	/*pos_x = 992;	
+	pos_y = 320;*/	
+	this->pos_x = 1140;
+	this->pos_y = 352;
+	grid->add(this);
 	vx = 0;
 	vx_last = 1.0f;
 	vy = 0;
@@ -227,8 +180,6 @@ void Samus::InitPostition()
 	//Init state of samus
 	state = STAND_RIGHT;
 }
-
-
 
 SAMUS_STATE Samus::GetState()
 {
@@ -267,6 +218,7 @@ void Samus::ResetAllSprites()
 	ballRight->Reset();
 	jumpShootL->Reset();
 	jumpShootR->Reset();
+
 }
 
 bool Samus::GetStateActive()
@@ -274,8 +226,9 @@ bool Samus::GetStateActive()
 	return isActive;
 }
 
-void Samus::Reset(int x, int y)
+void Samus::Reset(float x, float y)
 {
+	//manager->maruMari->Init(704, 186);
 	// Cho samus active trở lại
 	this->isActive = true;
 
@@ -284,10 +237,23 @@ void Samus::Reset(int x, int y)
 	this->pos_y = y;
 }
 
+bool Samus::isSamusDeath()
+{
+	if (isDeath == true)
+		return true;
+}
+
 // Update samus status
 void Samus::Update(float t)
 {
-	//vy -= gravity;
+	//vy += gravity;
+	//switch (state) {
+	//case JUMP_LEFT: case JUMP_RIGHT: case  JUMP_SHOOT_UP_LEFT: case JUMP_SHOOT_UP_RIGHT: case MORPH_LEFT {
+	//	if (this->pos_x - this->lastPosX >= 160)
+ //			vy = -vy;
+	//}
+	//}
+
 	if (limitY != 0) {
 		if (isJumping || isFalling || isMorphingJump) {
 			if (isJumping && !isFalling) {
@@ -299,8 +265,8 @@ void Samus::Update(float t)
 				else
 					vy = -JUMP_VELOCITY_BOOST;
 			}
-			if (isJumping && isFalling) {
-				if (getPosY() < limitY + JUMP_HEIGHT) {
+			else if (isJumping && isFalling) {
+				if (getPosY() < limitY + HIGH_JUMP_HEIGHT) {
 					vy = GRAVITY_VELOCITY;
 				}
 				else {
@@ -313,7 +279,7 @@ void Samus::Update(float t)
 					vy = 0;
 				}
 			}
-			if (isMorphingJump && !isFalling) {
+			else if (isMorphingJump && !isFalling) {
 				if (getPosY() < limitY) {
 					isFalling = true;
 					isJumping = false;
@@ -322,8 +288,8 @@ void Samus::Update(float t)
 				else
 					vy = -JUMP_VELOCITY_BOOST;
 			}
-			if (isMorphingJump && isFalling) {
-				if (getPosY() < limitY + JUMP_HEIGHT) {
+			else if (isMorphingJump && isFalling) {
+				if (getPosY() < limitY + HIGH_JUMP_HEIGHT) {
 					vy = GRAVITY_VELOCITY;
 				}
 				else {
@@ -336,14 +302,15 @@ void Samus::Update(float t)
 					vy = 0;
 				}
 			}
-		
+
 		}
 	}
+
 
 	pos_x += vx * t;
 	pos_y += vy * t;
 
-	updateBullet(t);
+
 
 	// Animate samus if he is running
 	DWORD now = GetTickCount();
@@ -411,4 +378,105 @@ void Samus::Update(float t)
 	
 }
 //----------------------------------------------------------
+
+void Samus::setIsBall(bool isBall) {
+	this->isBall = isBall;
+}
+
+bool Samus::getIsBall() {
+	return this->isBall;
+}
+
+
+void Samus::jumpLeftHandle(DWORD start_jump, DWORD now_jump, DWORD tick_per_frame)
+{
+	switch (state) {
+	case TRANSFORM_BALL_LEFT: {
+		SetState(STAND_LEFT);
+		isMorphing = false;
+		Reset(getPosX(),getPosY() - 32.0f); break;
+	}
+	//dung 1 cho nhay
+	case STAND_LEFT:  { 
+		limitY = getPosY() - HIGH_JUMP_HEIGHT;
+		SetState(JUMP_LEFT);
+		isMorphingJump = false;
+		isJumping = true;
+		isFalling = false;
+		setVelocityY(-JUMP_VELOCITY_BOOST); 
+		break;
+	}
+	case STAND_SHOOT_UP_LEFT: {
+		limitY = getPosY() - HIGH_JUMP_HEIGHT;
+		SetState(JUMP_SHOOT_UP_LEFT);
+		isMorphingJump = false;
+		isJumping = true;
+		isFalling = false;
+		setVelocityY(-JUMP_VELOCITY_BOOST); 
+		break;
+	}
+	case RUNNING_LEFT: {
+		limitY = getPosY() - HIGH_JUMP_HEIGHT;
+		SetState(MORPH_RIGHT);
+		isMorphingJump = true;
+		isJumping = true;
+		isFalling = false;
+		setVelocityY(-JUMP_VELOCITY_BOOST);
+		break;
+	}
+	}
+
+	if (isJumping == true) {
+		if ((now_jump - start_jump) <= 10 * tick_per_frame)
+		{
+			setVelocityY(getVelocityY() - JUMP_VELOCITY_BOOST_FIRST);
+		}
+	}
+}
+
+void Samus::jumpRightHandle(DWORD start_jump, DWORD now_jump, DWORD tick_per_frame)
+{
+	switch (state) {
+	case TRANSFORM_BALL_RIGHT: {
+		SetState(STAND_RIGHT);
+		isMorphing = false;
+		Reset(getPosX(), getPosY() - 32.0f); break;
+	}
+							  //dung 1 cho nhay
+	case STAND_RIGHT: {
+		limitY = getPosY() - HIGH_JUMP_HEIGHT;
+		SetState(JUMP_RIGHT);
+		isMorphingJump = false;
+		isJumping = true;
+		isFalling = false;
+		setVelocityY(-JUMP_VELOCITY_BOOST);
+		break;
+	}
+	case STAND_SHOOT_UP_RIGHT: {
+		limitY = getPosY() - HIGH_JUMP_HEIGHT;
+		SetState(JUMP_SHOOT_UP_RIGHT);
+		isMorphingJump = false;
+		isJumping = true;
+		isFalling = false;
+		setVelocityY(-JUMP_VELOCITY_BOOST);
+		break;
+	}
+	case RUNNING_RIGHT: {
+		limitY = getPosY() - HIGH_JUMP_HEIGHT;
+		SetState(MORPH_RIGHT);
+		isMorphingJump = true;
+		isJumping = true;
+		isFalling = false;
+		setVelocityY(-JUMP_VELOCITY_BOOST);
+		break;
+	}
+	}
+
+	if (isJumping == true) {
+		if ((now_jump - start_jump) <= 10 * tick_per_frame)
+		{
+			setVelocityY(getVelocityY() - JUMP_VELOCITY_BOOST_FIRST);
+		}
+	}
+}
 
