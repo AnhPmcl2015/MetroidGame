@@ -1,6 +1,4 @@
 ﻿#pragma once
-#ifndef _GAME_OBJECT_H_
-#define _GAME_OBJECT_H_
 
 #include <d3dx9.h>
 #include "Sprite.h"
@@ -11,7 +9,6 @@ class GameObject
 public:
 	friend class Grid;
 	World * manager;	// con trỏ đến world để thao tác với các object ở world khi cần thiết
-	Grid * grid;
 
 	int width;
 	int height;
@@ -21,6 +18,7 @@ public:
 	float lastPosY;
 	float friction = FRICTION;	//ma sát
 
+	Sprite * currentSprite;
 	GameObject * previousUnit;
 	GameObject * nextUnit;
 
@@ -43,7 +41,8 @@ public:
 public:
 	GameObject();
 	~GameObject();
-
+	float sweptAABB(GameObject* object, float &normalX, float &normalY);
+	bool isCollided(GameObject* object2);
 	//======================== GET - SET METHOD ================================
 	OBJECT_TYPE getType();
 	void setType(OBJECT_TYPE type);
@@ -99,4 +98,3 @@ public:
 
 
 };
-#endif // !_GAME_OBJECT_

@@ -1,6 +1,4 @@
 ﻿#pragma once
-#ifndef _SAMUS_H
-#define _SAMUS_H_
 #include "Sprite.h"
 #include "GameObject.h"
 #include "trace.h"
@@ -41,7 +39,7 @@ public:
 	float health;	// Máu của Samus
 	bool isDeath = false;	// Trạng thái chết của Samus
 	Samus();
-	Samus(LPD3DXSPRITE spriteHandler, World * manager, Grid * grid);
+	Samus(LPD3DXSPRITE spriteHandler, World * manager);
 	~Samus();
 
 	void InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
@@ -67,6 +65,5 @@ public:
 	//================= END OVERRIDE VIRTUAL METHOD =============
 
 };
-#endif // !_SAMUS_H
 
 
