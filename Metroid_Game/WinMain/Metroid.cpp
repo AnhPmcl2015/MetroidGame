@@ -29,7 +29,7 @@ Metroid::Metroid(HINSTANCE hInstance, LPWSTR Name, int Mode, int IsFullScreen, i
 	isInGame = false;
 	isFreezing = false;
 
-	sound = new GameSound();	
+	//sound = new GameSound();	
 
 	time_jump = 3 * _DeltaTime;
 	time_freezing = TIME_FREEZING;
