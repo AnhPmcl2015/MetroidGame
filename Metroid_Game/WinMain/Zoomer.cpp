@@ -8,6 +8,7 @@ Zoomer::Zoomer()
 
 Zoomer::Zoomer(LPD3DXSPRITE spriteHandler, World * manager, ENEMY_TYPE enemy_type) : Enemy(spriteHandler, manager)
 {
+	this->setType(ENEMY);
 	this->enemy_type = enemy_type;
 	this->isActive = false;
 
@@ -72,13 +73,13 @@ void Zoomer::setEnemyStatefromString(string _state) {
 	if (_state == "ON_ZOOMER_UP") {
 		setState(ON_ZOOMER_UP);
 	}
-	else if (_state == "LEFT_ZOOMER") {
+	else if (_state == "ON_ZOOMER_LEFT") {
 		setState(ON_ZOOMER_LEFT);
 	}
-	else if (_state == "RIGHT_ZOOMER") {
+	else if (_state == "ON_ZOOMER_RIGHT") {
 		setState(ON_ZOOMER_RIGHT);
 	}
-	else if (_state == "BOT_ZOOMER") {
+	else if (_state == "ON_ZOOMER_BOTTOM") {
 		setState(ON_ZOOMER_BOTTOM);
 	}
 }

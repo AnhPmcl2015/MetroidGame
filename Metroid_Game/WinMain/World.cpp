@@ -40,6 +40,13 @@ void World::Update(float t)
 	int column = (int)floor(this->samus->getlastPosX() / CELL_SIZE);
 	vector<GameObject*> listObject;
 	listObject.push_back(this->samus);
+
+	for (int i = 0; i < this->enemy.size(); i++) {
+		if (!this->enemy[i]->isActive && !this->enemy[i]->isDeath) {
+			listObject.push_back(this->enemy[i]);
+		}
+	}
+
 	this->grid->updateGrid(listObject);
 
 	maruMari->Update(t);
@@ -74,11 +81,9 @@ void World::Render()
 		this->samusBullet[i]->Render();
 	}
 	for (int i = 0; i < this->enemy.size(); i++) {
-		if (this->enemy[i]->isActive) {
-			for (int i = 0; i < this->enemy.size(); i++) {
-				if (this->enemy[i]->isActive && !this->enemy[i]->isDeath) {
-					this->enemy[i]->Render();
-				}
+		if (this->enemy[i]->isInsideMapBound(this->metroid->camera->getBoundary())) {
+			if (this->enemy[i]->isActive && !this->enemy[i]->isDeath) {
+				this->enemy[i]->Render();
 			}
 		}
 	}
