@@ -143,13 +143,14 @@ void World::loadEnemyPositions(string filePath) {
 			}
 			case SKREE_CASE: {
 
-				break;
+				//break;
 			}
 			case RIO_CASE: {
 
-				break;
+				//break;
 			}
 			default:
+				monster = new Zoomer(spriteHandler, this, ZOOMER_PINK);
 				break;
 			}
 			monster->setPosX(stoi(v[3]));
