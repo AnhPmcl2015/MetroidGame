@@ -138,6 +138,7 @@
     <ClCompile Include="DXUT.cpp" />
     <ClCompile Include="DXUTenum.cpp" />
     <ClCompile Include="DXUTmisc.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Grid.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="trace.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="World.cpp" />
+    <ClCompile Include="Zoomer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
@@ -168,6 +170,7 @@
     <ClInclude Include="DXUT.h" />
     <ClInclude Include="DXUTenum.h" />
     <ClInclude Include="DXUTmisc.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Grid.h" />
@@ -186,6 +189,7 @@
     <ClInclude Include="trace.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="World.h" />
+    <ClInclude Include="Zoomer.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="brick_16x16.png" />
@@ -215,6 +219,7 @@
     <Text Include="enemy\ZOOMER_YELLOW_RIGHT.txt" />
     <Text Include="enemy\ZOOMER_YELLOW_TOP.txt" />
     <Text Include="field1.txt" />
+    <Text Include="Monster_Room1.txt" />
     <Text Include="sprites\item\BULLET.txt" />
     <Text Include="sprites\item\ITEM_ENERGY.txt" />
     <Text Include="sprites\item\ITEM_MISSILE.txt" />

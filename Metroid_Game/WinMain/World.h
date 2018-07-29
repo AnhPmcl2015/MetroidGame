@@ -3,6 +3,7 @@
 #include <d3dx9.h>
 #include "Define.h"
 #include "Samus.h"
+#include "Zoomer.h"
 #include <vector>
 #include "Texture.h"
 #include "Grid.h"
@@ -23,6 +24,7 @@ public:
 	Samus * samus;
 	MaruMari * maruMari;
 	vector<Bullet*> samusBullet;
+	vector<Enemy*> enemy;
 	LPD3DXSPRITE spriteHandler;
 
 	World();
@@ -33,4 +35,6 @@ public:
 	void Render();
 	void InitSprites(LPDIRECT3DDEVICE9 d3ddv);
 
+	void loadEnemyPositions(string filePath);
+	vector<string> World::split(string s, string c);
 };

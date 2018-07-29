@@ -112,7 +112,7 @@ float GameObject::sweptAABB(GameObject* object, COLLISION_DIRECTION& collisionDi
 			}
 		}
 		else {			// Này là va chạm với trục X rồi nè
-			if (yInvEntry > 0.0f) {	
+			if (yInvEntry > 0.0f) {
 				if (this->pos_x + this->width <= object->pos_x || this->pos_x >= object->pos_x + object->width)
 					collisionDirection = NONE;
 				else
@@ -126,6 +126,7 @@ float GameObject::sweptAABB(GameObject* object, COLLISION_DIRECTION& collisionDi
 			}
 		}
 	}
+
 	// Trả về thời gian va chạm
 	return entryTime;
 }
