@@ -202,6 +202,7 @@
     <Text Include="enemy\BLOCK_LEFT.txt" />
     <Text Include="enemy\BLOCK_RIGHT.txt" />
     <Text Include="enemy\ENEMY_DETROYED.txt" />
+    <Text Include="enemy\Monster_Room1.txt" />
     <Text Include="enemy\ZOOMER_PINK_BOTTOM.txt" />
     <Text Include="enemy\ZOOMER_PINK_LEFT.txt" />
     <Text Include="enemy\ZOOMER_PINK_RIGHT.txt" />
