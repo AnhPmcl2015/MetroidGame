@@ -12,8 +12,10 @@ World::World(LPD3DXSPRITE spriteHandler, Metroid * metroid, int width, int heigh
 	this->spriteHandler = spriteHandler;
 	this->metroid = metroid;
 
+	grid = new Grid(height, width);
+
 	//Khởi tạo các đối tượng trong World
-	samus = new Samus(spriteHandler, this);
+	samus = new Samus(spriteHandler, this, this->grid);
 	
 	// Khởi tạo đạn (3 viên)
 	Bullet *bullet1 = new Bullet(spriteHandler);
@@ -24,7 +26,6 @@ World::World(LPD3DXSPRITE spriteHandler, Metroid * metroid, int width, int heigh
 	this->samusBullet.push_back(bullet3);
 
 	maruMari = new MaruMari(spriteHandler, this);
-	grid = new Grid(height, width);
 }
 
 World::~World()
@@ -37,9 +38,6 @@ void World::Update(float t)
 	this->samus->Update(t);
 	int row = (int)floor(this->samus->getlastPosY() / CELL_SIZE);
 	int column = (int)floor(this->samus->getlastPosX() / CELL_SIZE);
-	vector<GameObject*> listObject;
-	listObject.push_back(this->samus);
-	this->grid->updateGrid(listObject);
 
 	maruMari->Update(t);
 
