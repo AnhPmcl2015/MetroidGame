@@ -17,16 +17,14 @@ class GameObject;
 #define TIME_FREEZING 5000
 #define TIME_IN_GAME 7000
 
-#define JUMP_VELOCITY_BOOST 80.0f
+#define JUMP_VELOCITY_BOOST 0.5f
 #define JUMP_VELOCITY_BOOST_FIRST 64.0f
 #define FALLDOWN_VELOCITY_DECREASE 0.3f
-#define GRAVITY_VELOCITY 100.0f
+#define GRAVITY_VELOCITY 0.5f
 #define ANIMATE_RATE 30
 #define LIVE_TIME 3000
 
-#define SHORT_JUMP_HEIGHT 64.0f  
-#define HIGH_JUMP_HEIGHT 160.0f
-#define SAMUS_SPEED 100.0f
+#define SAMUS_SPEED 200.0f
 #define FRICTION 1.0f
 #define TEXTURE_GAME_CHARACTERS L"sprites\\Player_32x16.png"
 
@@ -232,7 +230,7 @@ enum ENEMY_TYPE
 {
 	ZOOMER_YELLOW = 0,
 	ZOOMER_PINK = 1,
-	BIRD = 2,
+	SKREE = 2,
 	BLOCK = 3,
 	BEE = 4,
 	RIDLEY = 5,
@@ -246,7 +244,7 @@ enum ENEMY_TYPE
 #define ZOOMER_WIDTH 36
 #define ZOOMER_HEIGHT 32
 #define ZOOMER_SPRITE_COUNT 2
-#define ZOOMER_SPEED 0.07f;
+#define ZOOMER_SPEED 0.07f
 
 ///////ENERGY
 #define ENERGY_SPRITE_PATH L"sprites\\energy\\energy.png"
@@ -333,4 +331,25 @@ enum Bullet_SAMUS_Direction
 	SHOOT_RIGHT,
 	OFF
 };
+
 //================== END Bullet ====================
+
+//================== Grid ====================
+#define CELL_SIZE 128
+#define DEFINE_ROW 50
+#define DEFINE_COLUMN 100
+#define COLLISION_DISTANCE 15
+enum COLLISION_DIRECTION {
+	TOP,
+	BOTTOM,
+	LEFT,
+	RIGHT,
+	NONE
+};
+//================== END Grid ====================
+
+#define ZOOMER_YELLOW_CASE 0
+#define ZOOMER_PINK_CASE 1
+#define SKREE_CASE 2
+#define RIO_CASE 3
+

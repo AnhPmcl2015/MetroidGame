@@ -10,7 +10,6 @@
 #include "Bullet.h"
 
 using namespace std;
-//#include "BulletManager.h"
 
 /*
 Class này chứa tất cả những thứ trong Game
@@ -20,24 +19,22 @@ Các class khác chứa con trỏ đến class này để thao tác với các �
 class World
 {
 public:
-	Grid * grid;
 	Metroid * metroid;
+	Grid *grid;
 	Samus * samus;
 	MaruMari * maruMari;
-	Bullet *samusBullet;
-	/*Zoomer * zoomer_yellow;
-	Zoomer * zoomer_pink;*/
-	//Manager * bulletManager;
+	vector<Bullet*> samusBullet;
 	LPD3DXSPRITE spriteHandler;
-	//vector<Zoomer*> zoomerYellow = vector<Zoomer*>(3);
-	//vector<Zoomer*> zoomerPink = vector<Zoomer*>(3);
+	vector<Enemy*> enemy;
 
 	World();
-	World(LPD3DXSPRITE spriteHandler, Metroid * metroid);
+	World(LPD3DXSPRITE spriteHandler, Metroid * metroid, int width, int height);
 	~World();
 
 	void Update(float t);
 	void Render();
 	void InitSprites(LPDIRECT3DDEVICE9 d3ddv);
 
+	void loadEnemyPositions(string filePath);
+	vector<string> World::split(string s, string c);
 };
