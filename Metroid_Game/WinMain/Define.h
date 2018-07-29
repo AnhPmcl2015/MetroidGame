@@ -196,8 +196,7 @@ enum ITEM_TYPE
 {
 	MARU_MARI,
 	ENERGY_ITEM,
-	MISSILE_ITEM,
-	BOMB_ITEM
+	MISSILE_ITEM
 };
 
 #define ITEM_TIME_SURVIVE 5000
@@ -231,7 +230,7 @@ enum ENEMY_TYPE
 {
 	ZOOMER_YELLOW = 0,
 	ZOOMER_PINK = 1,
-	BIRD = 2,
+	SKREE = 2,
 	BLOCK = 3,
 	BEE = 4,
 	RIDLEY = 5,
@@ -245,7 +244,7 @@ enum ENEMY_TYPE
 #define ZOOMER_WIDTH 36
 #define ZOOMER_HEIGHT 32
 #define ZOOMER_SPRITE_COUNT 2
-#define ZOOMER_SPEED 0.07f;
+#define ZOOMER_SPEED 75.0f
 
 ///////ENERGY
 #define ENERGY_SPRITE_PATH L"sprites\\energy\\energy.png"
@@ -348,3 +347,9 @@ enum COLLISION_DIRECTION {
 	NONE
 };
 //================== END Grid ====================
+
+#define ZOOMER_YELLOW_CASE 0
+#define ZOOMER_PINK_CASE 1
+#define SKREE_CASE 2
+#define RIO_CASE 3
+

@@ -25,6 +25,7 @@ public:
 	MaruMari * maruMari;
 	vector<Bullet*> samusBullet;
 	LPD3DXSPRITE spriteHandler;
+	vector<Enemy*> enemy;
 
 	World();
 	World(LPD3DXSPRITE spriteHandler, Metroid * metroid, int width, int height);
@@ -34,4 +35,6 @@ public:
 	void Render();
 	void InitSprites(LPDIRECT3DDEVICE9 d3ddv);
 
+	void loadEnemyPositions(string filePath);
+	vector<string> World::split(string s, string c);
 };

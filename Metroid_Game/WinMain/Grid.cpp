@@ -126,6 +126,9 @@ void Grid::handleCollision(GameObject *object, GameObject *otherObject) {
 		if (object->getType() == SAMUS) {
 			object->setActive(false);
 		}
+		if (object->getType() == ENEMY && object->getType() == SAMUS) {
+			otherObject->setActive(false);
+		}
 	}
 }
 
@@ -137,6 +140,9 @@ void Grid::updateGrid(vector<GameObject*> listObject) {
 	for (int i = 0; i < listObject.size(); i++) {
 		GameObject* object = listObject[i];
 		
+		if (object[i].getType() == ENEMY)
+			string a;
+
 		// Kiểm tra xem nó có thay đổi cell hay không
 		int oldRow = floor(object->getlastPosY() / CELL_SIZE);
 		int oldColumn = floor(object->getlastPosX() / CELL_SIZE);
