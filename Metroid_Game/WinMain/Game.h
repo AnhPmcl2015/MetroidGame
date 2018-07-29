@@ -15,7 +15,6 @@
 class Game
 {
 	protected:
-
 		DWORD _DeltaTime;		// Time between the last frame and current frame
 		Input * _input;
 		static Graphics * _dxgraphics;

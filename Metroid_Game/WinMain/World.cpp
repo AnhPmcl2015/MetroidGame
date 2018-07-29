@@ -12,8 +12,10 @@ World::World(LPD3DXSPRITE spriteHandler, Metroid * metroid, int width, int heigh
 	this->spriteHandler = spriteHandler;
 	this->metroid = metroid;
 
+	grid = new Grid(height, width);
+
 	//Khởi tạo các đối tượng trong World
-	samus = new Samus(spriteHandler, this);
+	samus = new Samus(spriteHandler, this, this->grid);
 	
 	// Khởi tạo đạn (3 viên)
 	Bullet *bullet1 = new Bullet(spriteHandler);
@@ -24,8 +26,8 @@ World::World(LPD3DXSPRITE spriteHandler, Metroid * metroid, int width, int heigh
 	this->samusBullet.push_back(bullet3);
 
 	maruMari = new MaruMari(spriteHandler, this);
-	grid = new Grid(height, width);
 	loadEnemyPositions("Monster_Room1.txt");
+
 }
 
 World::~World()
@@ -38,16 +40,6 @@ void World::Update(float t)
 	this->samus->Update(t);
 	int row = (int)floor(this->samus->getlastPosY() / CELL_SIZE);
 	int column = (int)floor(this->samus->getlastPosX() / CELL_SIZE);
-	vector<GameObject*> listObject;
-	listObject.push_back(this->samus);
-
-	for (int i = 0; i < this->enemy.size(); i++) {
-		if (!this->enemy[i]->isActive && !this->enemy[i]->isDeath) {
-			listObject.push_back(this->enemy[i]);
-		}
-	}
-
-	this->grid->updateGrid(listObject);
 
 	maruMari->Update(t);
 
@@ -80,6 +72,7 @@ void World::Render()
 	for (int i = 0; i < this->samusBullet.size(); i++) {
 		this->samusBullet[i]->Render();
 	}
+
 	for (int i = 0; i < this->enemy.size(); i++) {
 		if (this->enemy[i]->isInsideMapBound(this->metroid->camera->getBoundary())) {
 			if (this->enemy[i]->isActive && !this->enemy[i]->isDeath) {
@@ -118,49 +111,46 @@ void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 	}
 }
 
-
 void World::loadEnemyPositions(string filePath) {
 	ifstream file_txt(filePath);
 	string str;
 	vector<string> v;
 	while (getline(file_txt, str)) {
-			v = split(str, "\t");		
-			Enemy *monster;
-			int value = atoi(v[0].c_str());
-			switch (value)
-			{
-			case ZOOMER_YELLOW_CASE: {
-				monster = new Zoomer(spriteHandler, this, ZOOMER_YELLOW);
-				monster->SetDirection(v[5]);
-				monster->setEnemyStatefromString(v[6]);
-				break;
-			}
-			case ZOOMER_PINK_CASE: {
-				monster = new Zoomer(spriteHandler, this, ZOOMER_PINK);
-				monster->SetDirection(v[5]);
-				monster->setEnemyStatefromString(v[6]);
-				break;
-			}
-			case SKREE_CASE: {
+		v = split(str, "\t");
+		Enemy *monster;
+		int value = atoi(v[0].c_str());
+		switch (value)
+		{
+		case ZOOMER_YELLOW_CASE: {
+			monster = new Zoomer(spriteHandler, this, ZOOMER_YELLOW);
+			monster->SetDirection(v[5]);
+			monster->setEnemyStatefromString(v[6]);
+			break;
+		}
+		case ZOOMER_PINK_CASE: {
+			monster = new Zoomer(spriteHandler, this, ZOOMER_PINK);
+			monster->SetDirection(v[5]);
+			monster->setEnemyStatefromString(v[6]);
+			break;
+		}
+		case SKREE_CASE: {
 
-				//break;
-			}
-			case RIO_CASE: {
+			break;
+		}
+		case RIO_CASE: {
 
-				//break;
-			}
-			default:
-				monster = new Zoomer(spriteHandler, this, ZOOMER_PINK);
-				break;
-			}
-			monster->setPosX(stoi(v[3]));
-			monster->setPosY(stoi(v[4]));
-			monster->setActive(false);
-			monster->setVelocityX(0);
-			monster->setVelocityY(0);
-			this->enemy.push_back(monster);
-			this->grid->add(monster);
-			v.clear();
+			break;
+		}
+		default:
+			break;
+		}
+		monster->setPosX(stoi(v[3]));
+		monster->setPosY(stoi(v[4]));
+		monster->setActive(false);
+		monster->setVelocityX(0);
+		monster->setVelocityY(0);
+		this->enemy.push_back(monster);
+		v.clear();
 	}
 	if (v.size() != NULL)
 		trace(L"Unable to load EnemyPosition");

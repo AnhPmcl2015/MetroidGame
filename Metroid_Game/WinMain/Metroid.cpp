@@ -72,9 +72,8 @@ void Metroid::LoadResources(LPDIRECT3DDEVICE9 d3ddev)
 	int width = this->map->getColumn();
 	world = new World(spriteHandler, this, width, height);
 	srand((unsigned)time(NULL));
-
-	this->_InitPositions();
 	this->_InitSprites(d3ddev);
+	this->_InitPositions();
 
 	if (camera) 
 	{

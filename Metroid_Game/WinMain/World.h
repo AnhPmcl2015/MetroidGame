@@ -24,8 +24,8 @@ public:
 	Samus * samus;
 	MaruMari * maruMari;
 	vector<Bullet*> samusBullet;
-	LPD3DXSPRITE spriteHandler;
 	vector<Enemy*> enemy;
+	LPD3DXSPRITE spriteHandler;
 
 	World();
 	World(LPD3DXSPRITE spriteHandler, Metroid * metroid, int width, int height);

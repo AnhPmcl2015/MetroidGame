@@ -230,7 +230,7 @@ enum ENEMY_TYPE
 {
 	ZOOMER_YELLOW = 0,
 	ZOOMER_PINK = 1,
-	SKREE = 2,
+	BIRD = 2,
 	BLOCK = 3,
 	BEE = 4,
 	RIDLEY = 5,
@@ -352,4 +352,3 @@ enum COLLISION_DIRECTION {
 #define ZOOMER_PINK_CASE 1
 #define SKREE_CASE 2
 #define RIO_CASE 3
-
