@@ -4,14 +4,14 @@
 MaruMari::MaruMari(LPD3DXSPRITE spriteHandler, World * manager) :Item(spriteHandler, manager)
 {
 	this->setType(ITEM);
-	item_type = MARU_MARI;
 	maruMari = NULL;
 	isActive = true;
 
 	this->previousUnit = NULL;
 	this->nextUnit = NULL;
-	this->width = 32;
-	this->height = 32;
+
+	this->width = MARU_MARI_WIDTH;
+	this->height = MARU_MARI_HEIGHT;
 }
 
 MaruMari::~MaruMari()

@@ -55,12 +55,6 @@
     <Filter Include="Resource Files\sprites\item">
       <UniqueIdentifier>{fb1abdc0-0e80-45e5-8574-a60b549521f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Enemy">
-      <UniqueIdentifier>{779cf9dd-5114-461b-90fb-89cd3f0aae96}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Enemy">
-      <UniqueIdentifier>{b30fca7c-048a-4271-9914-f45089ec159b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\enemy">
       <UniqueIdentifier>{fc10af0f-6843-41ef-a031-9203a5d2d817}</UniqueIdentifier>
     </Filter>
@@ -137,12 +131,6 @@
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Source Files\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Zoomer.cpp">
-      <Filter>Source Files\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>Source Files\Item</Filter>
@@ -226,12 +214,6 @@
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Header Files\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Zoomer.h">
-      <Filter>Header Files\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>Header Files\Item</Filter>

@@ -95,25 +95,37 @@ float GameObject::sweptAABB(GameObject* object, COLLISION_DIRECTION& collisionDi
 		collisionDirection = NONE;
 		return deltaTime;
 	}
+	// Chỗ này có một cái hơi fun đó là khi vy = 0 mà pos_y dù nó thấp hơn vật khác vẫn bị xét là va chạm với cạnh, tương tự với vx
 	else {
 		if (xEntry > yEntry) { // này là đã va chạm ở trục Y rồi
 			if (xInvEntry > 0.0f) {
-				collisionDirection = RIGHT;
+				if (this->pos_y + this->height <= object->pos_y || this->pos_y >= object->pos_y + object->height)
+					collisionDirection = NONE;
+				else
+					collisionDirection = RIGHT;
 			}
 			else {
-				collisionDirection = LEFT;
+				if (this->pos_y >= object->pos_y + object->height || this->pos_y + this->height <= object->pos_y)
+					collisionDirection = NONE;
+				else
+					collisionDirection = LEFT;
 			}
 		}
 		else {			// Này là va chạm với trục X rồi nè
-			if (yInvEntry > 0.0f) {
-				collisionDirection = BOTTOM;
+			if (yInvEntry > 0.0f) {	
+				if (this->pos_x + this->width <= object->pos_x || this->pos_x >= object->pos_x + object->width)
+					collisionDirection = NONE;
+				else
+					collisionDirection = BOTTOM;
 			}
 			else {
-				collisionDirection = TOP;
+				if (this->pos_x + this->width <= object->pos_x || this->pos_x >= object->pos_x + object->width)
+					collisionDirection = NONE;
+				else
+					collisionDirection = TOP;
 			}
 		}
 	}
-
 	// Trả về thời gian va chạm
 	return entryTime;
 }

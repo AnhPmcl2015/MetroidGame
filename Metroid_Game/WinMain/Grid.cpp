@@ -1,5 +1,6 @@
 ﻿#include "Grid.h"
 #include "Samus.h"
+#include "MaruMari.h"
 // Lưu vào mảng 2 chiều
 // Height khi quy đổi ra sẽ là row -> pos_y tương ứng với row
 // Width khi quy đổi ra sẽ là column -> pos_x tương ứng column
@@ -145,12 +146,6 @@ bool Grid::handleCollision(GameObject *object, GameObject *otherObject) {
 
 void Grid::handleSamus(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
 	Samus* samus = dynamic_cast<Samus*>(object);
-	if (collisionDirection == LEFT) {
-		if (samus->vx < 0) {
-			samus->SetState(STAND_LEFT);
-		}
-	}
-
 	object->pos_x += object->vx * collisionTime*this->getDeltaTime();
 	object->pos_y += object->vy * collisionTime*this->getDeltaTime();
 }

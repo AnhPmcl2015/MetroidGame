@@ -175,7 +175,8 @@ void Samus::InitPostition()
 	//--TO DO: This code will be edited soon
 	/*pos_x = 992;	
 	pos_y = 320;*/	
-	this->pos_x = 1140;
+	//this->pos_x = 1140;
+	this->pos_x = 356;
 	this->pos_y = 352;
 	vx = 0;
 	vx_last = 1.0f;

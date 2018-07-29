@@ -3,7 +3,6 @@
 #include <d3dx9.h>
 #include "Define.h"
 #include "Samus.h"
-#include "Zoomer.h"
 #include <vector>
 #include "Texture.h"
 #include "Grid.h"
