@@ -1,4 +1,4 @@
-#include "Enemy.h"
+﻿#include "Enemy.h"
 #include "Game.h"
 #include "World.h"
 
@@ -31,7 +31,7 @@ void Enemy::InitPostition(int x, int y)
 	this->pos_y = y;
 }
 
-void Enemy::InitSprites(LPDIRECT3DDEVICE9 d3ddv) 
+void Enemy::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 {
 	if (d3ddv == NULL) return;
 	//Create sprite handler

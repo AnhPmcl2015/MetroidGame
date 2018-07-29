@@ -353,7 +353,7 @@ void Zoomer::startMoving()
 void Zoomer::Update(float t)
 {
 	if (!isActive) return;
-	
+
 	pos_x += vx * t;
 	pos_y += vy * t;
 

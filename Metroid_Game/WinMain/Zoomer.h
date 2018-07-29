@@ -28,8 +28,8 @@ public:
 	void setState(ZOOMER_STATE _state);
 	ZOOMER_STATE getState();
 
-	
-	
+
+
 	//============== OVERRIDE VIRTUAL METHOD ===================
 	virtual void Update(float t);
 	virtual void Render();

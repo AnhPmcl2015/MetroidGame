@@ -93,7 +93,7 @@ float GameObject::sweptAABB(GameObject* object, COLLISION_DIRECTION& collisionDi
 												// neu khong co va cham
 	if (entryTime > exitTime || xEntry < 0.0f && yEntry < 0.0f || xEntry > 1.0f || yEntry > 1.0f) {
 		collisionDirection = NONE;
-		return 1.0f;
+		return deltaTime;
 	}
 	else {
 		if (xEntry > yEntry) { // này là đã va chạm ở trục Y rồi
@@ -118,31 +118,6 @@ float GameObject::sweptAABB(GameObject* object, COLLISION_DIRECTION& collisionDi
 	return entryTime;
 }
 
-bool GameObject::isCollided(GameObject* otherObject) {
-	RECT o1 = this->GetBound();
-	RECT o2 = otherObject->GetBound();
-
-	bool top = o1.top >= o2.top && o1.top <= o2.bottom;
-	bool bot = o1.bottom >= o2.top && o1.bottom <= o2.bottom;
-	bool right = o1.right <= o2.right && o1.right >= o2.left;
-	bool left = o1.left <= o2.right && o1.left >= o2.left;
-
-	bool first_case = (left && bot) || (left && top);
-	bool second_case = (right && bot) || (right && top);
-
-	bool third_caseA = left && (o1.bottom >= o2.bottom) && (o1.top <= o2.top);
-	bool third_caseB = right && (o1.bottom >= o2.bottom) && (o1.top <= o2.top);
-	bool third_case = third_caseA || third_caseB;
-
-	bool fourth_caseA = top && (o1.left >= o2.left) && (o1.right <= o2.right);
-	bool fourth_caseB = bot && (o1.left >= o2.left) && (o1.right <= o2.right);
-	bool fourth_case = fourth_caseA || fourth_caseB;
-
-	if (first_case || second_case || third_case || fourth_case)
-		return true;
-
-	return false;
-}
 
 void GameObject::Update(float t)
 {

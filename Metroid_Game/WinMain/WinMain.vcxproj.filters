@@ -391,7 +391,7 @@
       <Filter>Resource Files\sprites\item</Filter>
     </Text>
     <Text Include="Monster_Room1.txt">
-      <Filter>Resource Files\enemy</Filter>
+      <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
