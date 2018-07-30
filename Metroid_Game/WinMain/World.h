@@ -8,6 +8,7 @@
 #include "Texture.h"
 #include "Grid.h"
 #include "Bullet.h"
+#include "Energy.h"
 
 using namespace std;
 
@@ -23,6 +24,7 @@ public:
 	Grid *grid;
 	Samus * samus;
 	MaruMari * maruMari;
+	Energy * energy;
 	vector<Bullet*> samusBullet;
 	vector<Enemy*> enemy;
 	LPD3DXSPRITE spriteHandler;

@@ -105,6 +105,13 @@ void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 		this->samusBullet[i]->InitSprites(d3ddv, bulletTexture);
 	}
 
+	// Energy texture
+	Texture texture3;
+	LPDIRECT3DTEXTURE9 enerTexture = texture3.loadTexture(d3ddv, ITEM_ENERGY);
+	if (enerTexture == NULL)
+		trace(L"Unable to load EnergyTexture");
+	energy->InitSprites(d3ddv, enerTexture);
+
 	//Enemy (Zoomer) Texture
 	for (int i = 0; i < this->enemy.size(); i++) {
 		this->enemy[i]->InitSprites(d3ddv);
@@ -135,13 +142,14 @@ void World::loadEnemyPositions(string filePath) {
 		}
 		case SKREE_CASE: {
 
-			break;
+			//break;
 		}
 		case RIO_CASE: {
 
-			break;
+			//break;
 		}
 		default:
+			monster = new Zoomer(spriteHandler, this, ZOOMER_PINK);
 			break;
 		}
 		monster->setPosX(stoi(v[3]));

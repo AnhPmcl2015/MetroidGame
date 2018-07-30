@@ -15,9 +15,11 @@ void Metroid::_InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 void Metroid::_InitPositions()
 {
 	world->samus->InitPostition();
+	world->maruMari->Init(420, 362);
+	world->energy->Init(420, 320);
 	this->world->grid->add(this->world->samus);
-	world->maruMari->Init(420, 352);
 	this->world->grid->add(this->world->maruMari);
+	this->world->grid->add(this->world->energy);
 }
 
 Metroid::Metroid(HINSTANCE hInstance, LPWSTR Name, int Mode, int IsFullScreen, int FrameRate) 
