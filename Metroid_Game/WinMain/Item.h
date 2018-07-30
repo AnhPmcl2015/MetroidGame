@@ -15,7 +15,7 @@ public:
 	//============= OVERRIDE VIRTUAL METHOD =================
 	virtual void InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
 	virtual void Init(float posX, float posY);
-	virtual void Update(int t);
+	virtual void Update(float t);
 	virtual void Render();
 	//============= END OVERRIDE VIRTUAL METHOD =============
 };

@@ -17,9 +17,9 @@ protected:
 	LPD3DXSPRITE spriteHandler;
 	LPDIRECT3DTEXTURE9 _texture;
 	World * world;
-	CSound * intro;
+	/*CSound * intro;
 	CSound * appear;
-	GameSound *sound;
+	GameSound *sound;*/
 private:
 	void _InitBackground();
 	void _InitSprites(LPDIRECT3DDEVICE9 d3ddv);

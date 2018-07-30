@@ -66,6 +66,15 @@ void Enemy::startMoving()
 {
 }
 
+void Enemy::startMovingBySamus(int _posX, int _posY)
+{
+}
+
+void Enemy::setOrbitFromString(string _orbit)
+{
+}
+
+
 bool Enemy::isInsideMapBound(RECT cameraBound)
 {
 	RECT bound = cameraBound;

@@ -14,8 +14,7 @@ Zoomer::Zoomer(LPD3DXSPRITE spriteHandler, World * manager, ENEMY_TYPE enemy_typ
 
 	//Set vận tốc
 	gravity = FALLDOWN_VELOCITY_DECREASE;
-	vx = ZOOMER_SPEED;
-	vy = 0;
+
 }
 
 
@@ -93,6 +92,16 @@ ZOOMER_STATE Zoomer::getState() {
 	return state;
 }
 
+void Zoomer::setOrbit(ZOOMER_ORBIT _orbit)
+{
+	orbit = _orbit;
+}
+
+ZOOMER_ORBIT Zoomer::getOrbit()
+{
+	return orbit;
+}
+
 void Zoomer::startMoving()
 {
 	if (direction == "RIGHT") {
@@ -110,6 +119,19 @@ void Zoomer::startMoving()
 	else if (direction == "DOWN") {
 		setVelocityY(ZOOMER_SPEED);
 		setVelocityX(0);
+	}
+}
+
+void Zoomer::setOrbitFromString(string _orbit)
+{
+	if (_orbit == "1") {
+		setOrbit(SPEC_1);
+	}
+	else if (_orbit == "2") {
+		setOrbit(SPEC_2);
+	}
+	else if (_orbit == "3") {
+		setOrbit(SPEC_3);
 	}
 }
 
@@ -352,8 +374,93 @@ void Zoomer::startMoving()
 
 void Zoomer::Update(float t)
 {
+	//grid->add(this);
 	if (!isActive) return;
 
+	switch (orbit) {
+	case SPEC_1: {
+		if (pos_x > SPEC_1_X && direction != "LEFT") {
+			vx = 0;
+			vy = ZOOMER_SPEED;
+			setState(ON_ZOOMER_RIGHT);
+			direction = "DOWN";
+		}
+		if (pos_y > SPEC_1_Y && direction =="DOWN") {
+			vx = ZOOMER_SPEED;
+			vy = 0;
+			setState(ON_ZOOMER_UP);
+			direction = "RIGHT";
+		}
+		if (pos_x > SPEC_1_X + BRICK_SIZE && direction == "RIGHT") {
+			vy = ZOOMER_SPEED;
+			vx = 0;
+			setState(ON_ZOOMER_RIGHT);
+			direction = "DOWN2";
+		}
+		if (pos_y > SPEC_1_Y + BRICK_SIZE * 6 && direction == "DOWN2") {
+			vx = -ZOOMER_SPEED;
+			vy = 0;
+			setState(ON_ZOOMER_BOTTOM);
+			direction = "LEFT";
+		}
+		if (pos_x < SPEC_1_X - BRICK_SIZE * 2 && direction == "LEFT") {
+			vx = 0;
+			vy = -ZOOMER_SPEED;
+			setState(ON_ZOOMER_LEFT);
+			direction = "UP";
+		}
+		if (pos_y < SPEC_1_Y - BRICK_SIZE*2 && direction == "UP") {
+			vx = ZOOMER_SPEED;
+			vy = 0;
+			setState(ON_ZOOMER_UP);
+			direction = "RIGHT0";
+		}
+		break;
+	}
+	case SPEC_2: {
+		if (pos_x > 1120 && direction != "UP") {
+			vx = 0;
+			vy = ZOOMER_SPEED;
+			setState(ON_ZOOMER_RIGHT);
+			direction = "DOWN";
+		}
+		if (pos_y > 320) {
+			vy = 0;
+			vx = -ZOOMER_SPEED;
+			setState(ON_ZOOMER_BOTTOM);
+			direction = "RIGHT";
+		}
+		if (pos_x < SPEC_2_X - BRICK_SIZE*3) { //1024
+			vx = 0;
+			vy = -ZOOMER_SPEED;
+			setState(ON_ZOOMER_LEFT);
+			direction = "UP1";
+		}
+		if (direction == "UP1" && pos_y <  SPEC_2_Y - BRICK_SIZE * 6) { //128
+			vy = 0;
+			vx = ZOOMER_SPEED;
+			setState(ON_ZOOMER_UP);
+			direction = "RIGHT2";
+		}
+		if (direction == "RIGHT2" && pos_x > SPEC_2_X - BRICK_SIZE * 2) { //1056
+			vy = -ZOOMER_SPEED;
+			vx = 0;
+			setState(ON_ZOOMER_LEFT);
+			direction = "UP2";
+		}
+		if (direction == "UP2" && pos_y < SPEC_2_Y - BRICK_SIZE * 8) {
+			vx = ZOOMER_SPEED;
+			vy = 0;
+			setState(ON_ZOOMER_UP);
+			direction = "RIGHT";
+		}
+		break;
+	}
+	case SPEC_3: {
+
+		break;
+	}
+	}
 	pos_x += vx * t;
 	pos_y += vy * t;
 

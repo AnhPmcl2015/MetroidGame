@@ -26,6 +26,7 @@ World::World(LPD3DXSPRITE spriteHandler, Metroid * metroid, int width, int heigh
 	this->samusBullet.push_back(bullet3);
 
 	maruMari = new MaruMari(spriteHandler, this);
+	//energy = new Energy(spriteHandler, this);
 	loadEnemyPositions("Monster_Room1.txt");
 
 }
@@ -42,6 +43,7 @@ void World::Update(float t)
 	int column = (int)floor(this->samus->getlastPosX() / CELL_SIZE);
 
 	maruMari->Update(t);
+	//energy->Update(t);
 
 	for (int i = 0; i < this->samusBullet.size(); i++) {
 		this->samusBullet[i]->Update(t, this->samus->getPosX(), this->samus->getPosY());
@@ -53,8 +55,10 @@ void World::Update(float t)
 			if (!this->enemy[i]->isActive && !this->enemy[i]->isDeath) {
 				enemy[i]->isActive = true;
 				enemy[i]->startMoving();
+				enemy[i]->startMovingBySamus(this->samus->getPosX(), this->samus->getPosY());
 			}
 			else if (this->enemy[i]->isActive && !this->enemy[i]->isDeath) {
+				enemy[i]->startMovingBySamus(this->samus->getPosX(), this->samus->getPosY());
 				enemy[i]->Update(t);
 			}
 			else {
@@ -69,6 +73,7 @@ void World::Render()
 {
 	this->samus->Render();
 	maruMari->Render();
+	//energy->Render();
 	for (int i = 0; i < this->samusBullet.size(); i++) {
 		this->samusBullet[i]->Render();
 	}
@@ -105,6 +110,13 @@ void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 		this->samusBullet[i]->InitSprites(d3ddv, bulletTexture);
 	}
 
+	// Energy texture
+	/*Texture texture3;
+	LPDIRECT3DTEXTURE9 enerTexture = texture3.loadTexture(d3ddv, ITEM_ENERGY);
+	if (enerTexture == NULL)
+		trace(L"Unable to load EnergyTexture");
+	energy->InitSprites(d3ddv, enerTexture);*/
+
 	//Enemy (Zoomer) Texture
 	for (int i = 0; i < this->enemy.size(); i++) {
 		this->enemy[i]->InitSprites(d3ddv);
@@ -125,23 +137,26 @@ void World::loadEnemyPositions(string filePath) {
 			monster = new Zoomer(spriteHandler, this, ZOOMER_YELLOW);
 			monster->SetDirection(v[5]);
 			monster->setEnemyStatefromString(v[6]);
+			monster->setOrbitFromString(v[7]);
 			break;
 		}
 		case ZOOMER_PINK_CASE: {
 			monster = new Zoomer(spriteHandler, this, ZOOMER_PINK);
 			monster->SetDirection(v[5]);
 			monster->setEnemyStatefromString(v[6]);
+			monster->setOrbitFromString(v[7]);
 			break;
 		}
 		case SKREE_CASE: {
-
+			monster = new Skree(spriteHandler, this, SKREE);
 			break;
 		}
 		case RIO_CASE: {
 
-			break;
+			//break;
 		}
 		default:
+			monster = new Zoomer(spriteHandler, this, ZOOMER_PINK);
 			break;
 		}
 		monster->setPosX(stoi(v[3]));

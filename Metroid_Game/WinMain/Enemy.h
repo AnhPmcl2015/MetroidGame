@@ -22,6 +22,7 @@ public:
 
 	string direction = "";
 
+	
 
 	Enemy();
 	Enemy(LPD3DXSPRITE spriteHandler, World * manager);
@@ -40,6 +41,9 @@ public:
 	virtual void Update(float t);
 	virtual void setEnemyStatefromString(string _state);
 	virtual void startMoving();
+	virtual void startMovingBySamus(int _posX, int _posY);
+	virtual void setOrbitFromString(string _orbit);
+
 	//============== END OVERRIDE VIRTUAL METHOD ============
 
 	bool isInsideMapBound(RECT cameraBound);

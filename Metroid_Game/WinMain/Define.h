@@ -230,7 +230,7 @@ enum ENEMY_TYPE
 {
 	ZOOMER_YELLOW = 0,
 	ZOOMER_PINK = 1,
-	BIRD = 2,
+	SKREE = 2,
 	BLOCK = 3,
 	BEE = 4,
 	RIDLEY = 5,
@@ -245,6 +245,7 @@ enum ENEMY_TYPE
 #define ZOOMER_HEIGHT 32
 #define ZOOMER_SPRITE_COUNT 2
 #define ZOOMER_SPEED 75.0f
+#define ZOOMER_SPEED_DOWN 75.0f
 
 ///////ENERGY
 #define ENERGY_SPRITE_PATH L"sprites\\energy\\energy.png"
@@ -349,6 +350,30 @@ enum COLLISION_DIRECTION {
 //================== END Grid ====================
 
 #define ZOOMER_YELLOW_CASE 0
-#define ZOOMER_PINK_CASE 1
-#define SKREE_CASE 2
+#define ZOOMER_PINK_CASE 2
+#define SKREE_CASE 1
 #define RIO_CASE 3
+
+#define BRICK_SIZE 32
+
+#define SPEC_1_X 928
+#define SPEC_1_Y 128
+
+#define SPEC_2_X 1120
+#define SPEC_2_Y 320
+
+//================== SKREE  =====================
+
+#define SKREE_WIDTH 36
+#define SKREE_HEIGHT 52
+
+#define SKREE_COUNT 3
+
+#define SKREE_PATH L"enemy\\SKREE.txt"
+
+#define SKREE_STANDARD_ANIMATE_RATE 7
+#define SKREE_BOOST_ANIMATE_RATE 30
+//================== END SKREE =================
+
+#define SKREE_DISTANCE_TO_SAMUS 300.0f
+#define SKREE_SPEED 100.0f

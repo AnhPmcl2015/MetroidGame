@@ -10,6 +10,12 @@ enum ZOOMER_STATE
 	ON_ZOOMER_RIGHT,
 };
 
+enum ZOOMER_ORBIT {
+	SPEC_1,
+	SPEC_2,
+	SPEC_3
+};
+
 class Zoomer : public Enemy
 {
 protected:
@@ -27,14 +33,17 @@ public:
 
 	void setState(ZOOMER_STATE _state);
 	ZOOMER_STATE getState();
-
-
+	
+	ZOOMER_ORBIT orbit;
+	void setOrbit(ZOOMER_ORBIT _orbit);
+	ZOOMER_ORBIT getOrbit();
 
 	//============== OVERRIDE VIRTUAL METHOD ===================
 	virtual void Update(float t);
 	virtual void Render();
 	virtual void setEnemyStatefromString(string _state);
 	virtual void startMoving();
+	virtual void setOrbitFromString(string _orbit);
 	//============== END OVERRIDE VIRTUAL METHOD ===============
 	void Destroy();
 };
