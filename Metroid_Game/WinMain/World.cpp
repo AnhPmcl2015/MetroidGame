@@ -26,6 +26,7 @@ World::World(LPD3DXSPRITE spriteHandler, Metroid * metroid, int width, int heigh
 	this->samusBullet.push_back(bullet3);
 
 	maruMari = new MaruMari(spriteHandler, this);
+	//energy = new Energy(spriteHandler, this);
 	loadEnemyPositions("Monster_Room1.txt");
 
 }
@@ -42,6 +43,7 @@ void World::Update(float t)
 	int column = (int)floor(this->samus->getlastPosX() / CELL_SIZE);
 
 	maruMari->Update(t);
+	//energy->Update(t);
 
 	for (int i = 0; i < this->samusBullet.size(); i++) {
 		this->samusBullet[i]->Update(t, this->samus->getPosX(), this->samus->getPosY());
@@ -69,6 +71,7 @@ void World::Render()
 {
 	this->samus->Render();
 	maruMari->Render();
+	//energy->Render();
 	for (int i = 0; i < this->samusBullet.size(); i++) {
 		this->samusBullet[i]->Render();
 	}
@@ -106,11 +109,11 @@ void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 	}
 
 	// Energy texture
-	Texture texture3;
+	/*Texture texture3;
 	LPDIRECT3DTEXTURE9 enerTexture = texture3.loadTexture(d3ddv, ITEM_ENERGY);
 	if (enerTexture == NULL)
 		trace(L"Unable to load EnergyTexture");
-	energy->InitSprites(d3ddv, enerTexture);
+	energy->InitSprites(d3ddv, enerTexture);*/
 
 	//Enemy (Zoomer) Texture
 	for (int i = 0; i < this->enemy.size(); i++) {
