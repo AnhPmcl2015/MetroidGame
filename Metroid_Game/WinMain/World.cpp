@@ -26,7 +26,7 @@ World::World(LPD3DXSPRITE spriteHandler, Metroid * metroid, int width, int heigh
 	this->samusBullet.push_back(bullet3);
 
 	maruMari = new MaruMari(spriteHandler, this);
-	//energy = new Energy(spriteHandler, this);
+	energy = new Energy(spriteHandler, this);
 	loadEnemyPositions("Monster_Room1.txt");
 
 }
@@ -43,7 +43,7 @@ void World::Update(float t)
 	int column = (int)floor(this->samus->getlastPosX() / CELL_SIZE);
 
 	maruMari->Update(t);
-	//energy->Update(t);
+	energy->Update(t);
 
 	for (int i = 0; i < this->samusBullet.size(); i++) {
 		this->samusBullet[i]->Update(t, this->samus->getPosX(), this->samus->getPosY());
@@ -71,7 +71,7 @@ void World::Render()
 {
 	this->samus->Render();
 	maruMari->Render();
-	//energy->Render();
+	energy->Render();
 	for (int i = 0; i < this->samusBullet.size(); i++) {
 		this->samusBullet[i]->Render();
 	}
@@ -94,10 +94,11 @@ void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 	samus->InitSprites(d3ddv, samus_texture);
 
 	Texture * texture1 = new Texture();
-	LPDIRECT3DTEXTURE9 maru_texture = texture1->loadTexture(d3ddv, ITEM_SPRITE_PATH);
-	if (maru_texture == NULL)
+	LPDIRECT3DTEXTURE9 itemTexture = texture1->loadTexture(d3ddv, ITEM_SPRITE_PATH);
+	if (itemTexture == NULL)
 		trace(L"Unable to load PlayerTexture");
-	maruMari->InitSprites(d3ddv, maru_texture);
+	maruMari->InitSprites(d3ddv, itemTexture);
+	energy->InitSprites(d3ddv, itemTexture);
 
 	// Bullet Texture
 	Texture texture2;
@@ -107,13 +108,6 @@ void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 	for (int i = 0; i < this->samusBullet.size(); i++) {
 		this->samusBullet[i]->InitSprites(d3ddv, bulletTexture);
 	}
-
-	// Energy texture
-	/*Texture texture3;
-	LPDIRECT3DTEXTURE9 enerTexture = texture3.loadTexture(d3ddv, ITEM_ENERGY);
-	if (enerTexture == NULL)
-		trace(L"Unable to load EnergyTexture");
-	energy->InitSprites(d3ddv, enerTexture);*/
 
 	//Enemy (Zoomer) Texture
 	for (int i = 0; i < this->enemy.size(); i++) {
