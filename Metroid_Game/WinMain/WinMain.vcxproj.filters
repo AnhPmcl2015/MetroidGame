@@ -141,7 +141,10 @@
     <ClCompile Include="Collision.cpp">
       <Filter>Source Files\FrameWork</Filter>
     </ClCompile>
-    <ClCompile Include="Energy.cpp">
+	<ClCompile Include="Brick.cpp">
+      <Filter>Source Files\Drawable</Filter>
+    </ClCompile>
+	<ClCompile Include="Energy.cpp">
       <Filter>Source Files\Item</Filter>
     </ClCompile>
     <ClCompile Include="Missile.cpp">
@@ -221,7 +224,10 @@
     <ClInclude Include="Collision.h">
       <Filter>Header Files\FrameWork</Filter>
     </ClInclude>
-    <ClInclude Include="BombItem.h">
+  <ClInclude Include="Brick.h">
+      <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
+  <ClInclude Include="BombItem.h">
       <Filter>Header Files\Item</Filter>
     </ClInclude>
     <ClInclude Include="Energy.h">
