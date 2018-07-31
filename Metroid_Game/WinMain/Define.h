@@ -70,11 +70,24 @@ enum SAMUS_STATE {
 //================= OBJECT TYPE ================
 enum OBJECT_TYPE
 {
-	SAMUS = 0,
-	ENEMY = 1,
-	BRICK = 2,
-	BULLET = 3,
-	ITEM = 4
+	SAMUS,
+	BRICK,
+	BULLET,
+	ITEM,
+	GATE,
+	EFFECT,
+	ZOOMER_YELLOW,
+	ZOOMER_PINK,
+	SKREE,
+	GATE_BLOCK,
+	RIDLEY,
+	MOTHER_BRAIN,
+	EXPLOSION,
+	MARU_MARI,
+	ENERGY_ITEM,
+	MISSILE_ITEM,
+	BOMB_ITEM,
+	BOMB_WEAPON
 };
 //================= END OBJECT TYPE ============
 
@@ -192,13 +205,6 @@ enum OBJECT_TYPE
 
 //================ GAME ITEM ===========================
 
-enum ITEM_TYPE
-{
-	MARU_MARI,
-	ENERGY_ITEM,
-	MISSILE_ITEM
-};
-
 #define ITEM_TIME_SURVIVE 5000
 #define ITEM_SPRITE_PATH L"sprites\\item\\items_sprite_sheet.png"
 
@@ -225,20 +231,8 @@ enum ITEM_TYPE
 #define ITEM_MISSILE_GAIN 3
 //================ END GAME ITEM ===================================
 
-//================= ENEMY TYPE =================
-enum ENEMY_TYPE
-{
-	ZOOMER_YELLOW = 0,
-	ZOOMER_PINK = 1,
-	BIRD = 2,
-	BLOCK = 3,
-	BEE = 4,
-	RIDLEY = 5,
-	MOTHER_BRAIN = 6,
-};
-//================= END ENEMY TYPE =============
-
 //================== ENEMY =====================
+
 //================== ZOOMER =====================
 #define ENEMY_SPRITE_PATH L"enemy\\metroid_enemies_sheet.png"
 #define ZOOMER_WIDTH 36
@@ -347,6 +341,17 @@ enum COLLISION_DIRECTION {
 	NONE
 };
 //================== END Grid ====================
+
+
+// ================= ZOOMER ====================
+enum ZOOMER_STATE
+{
+	ON_ZOOMER_UP,
+	ON_ZOOMER_BOTTOM,
+	ON_ZOOMER_LEFT,
+	ON_ZOOMER_RIGHT,
+};
+// ================ END ZOOMER =================
 
 #define ZOOMER_YELLOW_CASE 0
 #define ZOOMER_PINK_CASE 1

@@ -27,7 +27,6 @@ World::World(LPD3DXSPRITE spriteHandler, Metroid * metroid, int width, int heigh
 
 	maruMari = new MaruMari(spriteHandler, this);
 	loadEnemyPositions("Monster_Room1.txt");
-
 }
 
 World::~World()
