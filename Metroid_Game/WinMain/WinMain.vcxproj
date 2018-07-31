@@ -147,6 +147,7 @@
     <ClCompile Include="MaruMari.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Metroid.cpp" />
+    <ClCompile Include="Missile.cpp" />
     <ClCompile Include="Samus.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="MaruMari.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Metroid.h" />
+    <ClInclude Include="Missile.h" />
     <ClInclude Include="Samus.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
