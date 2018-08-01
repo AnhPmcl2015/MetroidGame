@@ -70,11 +70,24 @@ enum SAMUS_STATE {
 //================= OBJECT TYPE ================
 enum OBJECT_TYPE
 {
-	SAMUS = 0,
-	ENEMY = 1,
-	BRICK = 2,
-	BULLET = 3,
-	ITEM = 4
+	SAMUS,
+	BRICK,
+	BULLET,
+	ITEM,
+	GATE,
+	EFFECT,
+	ZOOMER_YELLOW,
+	ZOOMER_PINK,
+	SKREE,
+	GATE_BLOCK,
+	RIDLEY,
+	MOTHER_BRAIN,
+	EXPLOSION,
+	MARU_MARI,
+	ENERGY_ITEM,
+	MISSILE_ITEM,
+	BOMB_ITEM,
+	BOMB_WEAPON
 };
 //================= END OBJECT TYPE ============
 
@@ -192,13 +205,6 @@ enum OBJECT_TYPE
 
 //================ GAME ITEM ===========================
 
-enum ITEM_TYPE
-{
-	MARU_MARI,
-	ENERGY_ITEM,
-	MISSILE_ITEM
-};
-
 #define ITEM_TIME_SURVIVE 5000
 #define ITEM_SPRITE_PATH L"sprites\\item\\items_sprite_sheet.png"
 
@@ -225,27 +231,14 @@ enum ITEM_TYPE
 #define ITEM_MISSILE_GAIN 3
 //================ END GAME ITEM ===================================
 
-//================= ENEMY TYPE =================
-enum ENEMY_TYPE
-{
-	ZOOMER_YELLOW = 0,
-	ZOOMER_PINK = 1,
-	SKREE = 2,
-	BLOCK = 3,
-	BEE = 4,
-	RIDLEY = 5,
-	MOTHER_BRAIN = 6,
-};
-//================= END ENEMY TYPE =============
-
 //================== ENEMY =====================
+
 //================== ZOOMER =====================
 #define ENEMY_SPRITE_PATH L"enemy\\metroid_enemies_sheet.png"
 #define ZOOMER_WIDTH 36
 #define ZOOMER_HEIGHT 32
 #define ZOOMER_SPRITE_COUNT 2
 #define ZOOMER_SPEED 75.0f
-#define ZOOMER_SPEED_DOWN 75.0f
 
 ///////ENERGY
 #define ENERGY_SPRITE_PATH L"sprites\\energy\\energy.png"
@@ -337,8 +330,8 @@ enum Bullet_SAMUS_Direction
 
 //================== Grid ====================
 #define CELL_SIZE 128
-#define DEFINE_ROW 50
-#define DEFINE_COLUMN 100
+#define DEFINE_ROW 8
+#define DEFINE_COLUMN 20
 #define COLLISION_DISTANCE 15
 enum COLLISION_DIRECTION {
 	TOP,
@@ -349,18 +342,16 @@ enum COLLISION_DIRECTION {
 };
 //================== END Grid ====================
 
-#define ZOOMER_YELLOW_CASE 0
-#define ZOOMER_PINK_CASE 2
-#define SKREE_CASE 1
-#define RIO_CASE 3
 
-#define BRICK_SIZE 32
-
-#define SPEC_1_X 928
-#define SPEC_1_Y 128
-
-#define SPEC_2_X 1120
-#define SPEC_2_Y 320
+// ================= ZOOMER ====================
+enum ZOOMER_STATE
+{
+	ON_ZOOMER_UP,
+	ON_ZOOMER_BOTTOM,
+	ON_ZOOMER_LEFT,
+	ON_ZOOMER_RIGHT,
+};
+// ================ END ZOOMER =================
 
 //================== SKREE  =====================
 
@@ -373,7 +364,13 @@ enum COLLISION_DIRECTION {
 
 #define SKREE_STANDARD_ANIMATE_RATE 7
 #define SKREE_BOOST_ANIMATE_RATE 30
-//================== END SKREE =================
 
-#define SKREE_DISTANCE_TO_SAMUS 300.0f
+#define ZOOMER_YELLOW_CASE 0
+#define ZOOMER_PINK_CASE 1
+#define SKREE_CASE 2
+#define RIO_CASE 3
+
+#define SKREE_DISTANCE_TO_SAMUS  300.0f
 #define SKREE_SPEED 100.0f
+
+//================== END SKREE =================

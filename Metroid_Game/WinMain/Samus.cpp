@@ -176,7 +176,9 @@ void Samus::InitPostition()
 	/*pos_x = 992;	
 	pos_y = 320;*/	
 	this->pos_x = 1140;
+	//this->pos_x = 325;
 	this->pos_y = 352;
+	//this->pos_y = 64;
 	vx = 0;
 	vx_last = 1.0f;
 	vy = 0;
@@ -250,11 +252,14 @@ void Samus::Update(float t)
 {
 	float newPosX = pos_x + vx * t;
 	float newPosY = pos_y + vy * t;
-	//vy += gravity;
+
 	if (!this->grid->updateGrid(this, newPosX, newPosY)) {
 		pos_x = newPosX;
 		pos_y = newPosY;
 	}
+
+	//pos_x = newPosX;
+	//pos_y = newPosY;
 
 	// Animate samus if he is running
 	DWORD now = GetTickCount();

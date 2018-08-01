@@ -1,4 +1,5 @@
 ﻿#pragma once
+#pragma once
 #include "Enemy.h"
 #include "Define.h"
 #include "Math.h"
@@ -17,7 +18,7 @@ protected:
 	int animate_rate;	// cần biến này vì khi dí theo Samus animate rate thay đổi
 public:
 	Skree();
-	Skree(LPD3DXSPRITE spriteHandler, World * manager, ENEMY_TYPE enemy_type);
+	Skree(LPD3DXSPRITE spriteHandler, World * manager, OBJECT_TYPE enemy_type);
 	~Skree();
 
 	SKREE_STATE state;
@@ -33,7 +34,7 @@ public:
 	virtual void Render();
 	virtual void setEnemyStatefromString(string _state);
 	virtual void startMoving();
-	virtual void startMovingBySamus(int _posX, int _posY);
+	virtual void setSamusLocation(int _posX, int _posY);
 	//============== END OVERRIDE VIRTUAL METHOD ===============
-	void Destroy();
+	virtual void Destroy();
 };

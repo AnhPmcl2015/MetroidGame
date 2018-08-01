@@ -6,10 +6,10 @@ Skree::Skree()
 {
 }
 
-Skree::Skree(LPD3DXSPRITE spriteHandler, World * manager, ENEMY_TYPE enemy_type) : Enemy(spriteHandler, manager)
+Skree::Skree(LPD3DXSPRITE spriteHandler, World * manager, OBJECT_TYPE enemy_type) : Enemy(spriteHandler, manager)
 {
-	this->setType(ENEMY);
-	this->enemy_type = enemy_type;
+	this->setType(enemy_type);
+	this->isActive = false;
 	this->isActive = false;
 
 	//Set animate rate ban đầu
@@ -49,8 +49,16 @@ void Skree::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 }
 void Skree::Update(float t)
 {
-//	grid->add(this);
+	//	grid->add(this);
 	if (!isActive) return;
+
+	float newPosX = pos_x + vx * t;
+	float newPosY = pos_y + vy * t;
+
+	if (!this->grid->updateGrid(this, newPosX, newPosY)) {
+		pos_x = newPosX;
+		pos_y = newPosY;
+	}
 
 	//tinh khoang cach voi samus bang dinh luat Pytago
 	float rs = sqrt(((abs)(pos_x - samus_PosX)) * ((abs)(pos_x - samus_PosX)) + ((abs)(pos_y - samus_PosY) * (abs)(pos_y - samus_PosY)));
@@ -65,9 +73,6 @@ void Skree::Update(float t)
 		else
 			vx = 0;
 	}
-
-	pos_x += vx * t;
-	pos_y += vy * t;
 
 	DWORD now = GetTickCount();
 	if (now - last_time > 1000 / animate_rate)
@@ -101,12 +106,12 @@ void Skree::startMoving()
 {
 }
 
-void Skree::startMovingBySamus(int _posX, int _posY)
+void Skree::setSamusLocation(int _posX, int _posY)
 {
 	samus_PosX = _posX;
 	samus_PosY = _posY;
-	//animate_rate = SKREE_BOOST_ANIMATE_RATE;
 }
+
 
 void Skree::Destroy()
 {

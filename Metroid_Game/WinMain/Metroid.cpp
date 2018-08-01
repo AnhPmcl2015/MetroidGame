@@ -15,11 +15,10 @@ void Metroid::_InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 void Metroid::_InitPositions()
 {
 	world->samus->InitPostition();
-	world->maruMari->Init(420, 352);
-	//world->energy->Init(420, 320);
 	this->world->grid->add(this->world->samus);
+	world->maruMari->Init(420, 352);
 	this->world->grid->add(this->world->maruMari);
-	//this->world->grid->add(this->world->energy);
+
 }
 
 Metroid::Metroid(HINSTANCE hInstance, LPWSTR Name, int Mode, int IsFullScreen, int FrameRate) 
@@ -31,7 +30,7 @@ Metroid::Metroid(HINSTANCE hInstance, LPWSTR Name, int Mode, int IsFullScreen, i
 	isInGame = false;
 	isFreezing = false;
 
-	//sound = new GameSound();	
+	sound = new GameSound();	
 
 	time_jump = 3 * _DeltaTime;
 	time_freezing = TIME_FREEZING;
@@ -46,8 +45,8 @@ Metroid::Metroid(HINSTANCE hInstance, LPWSTR Name, int Mode, int IsFullScreen, i
 
 Metroid::~Metroid()
 {
-	//delete(map);
-	//delete(world);
+	delete(map);
+	delete(world);
 }
 
 /*
@@ -62,7 +61,6 @@ void Metroid::LoadResources(LPDIRECT3DDEVICE9 d3ddev)
 	if (result != D3D_OK) 
 		trace(L"Unable to create SpriteHandler");
 
-	
 	_texture = texture.loadTexture(d3ddev, BRICK_TEXTURE);
 	if (_texture == NULL)
 		trace(L"Unable to load BrickTexture");
@@ -73,6 +71,10 @@ void Metroid::LoadResources(LPDIRECT3DDEVICE9 d3ddev)
 	int height = this->map->getRow();
 	int width = this->map->getColumn();
 	world = new World(spriteHandler, this, width, height);
+
+	this->map->setGrid(world->grid);
+	this->map->inputBrickToGrid();
+
 	srand((unsigned)time(NULL));
 	this->_InitSprites(d3ddev);
 	this->_InitPositions();
@@ -499,7 +501,7 @@ void Metroid::OnKeyDown(int KeyCode)
 		{
 
 		}
-		break;	
+		break;
 		// game over
 		case GAMEMODE_GAMEOVER://------------------------------------------------
 		{

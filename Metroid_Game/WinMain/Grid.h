@@ -26,4 +26,5 @@ public:
 	float getDeltaTime();
 
 	void handleSamus(GameObject*, GameObject*, COLLISION_DIRECTION, float collisionTime);
+	int handleKree(GameObject*, GameObject*, COLLISION_DIRECTION, float collisionTime);
 };

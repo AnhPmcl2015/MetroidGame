@@ -9,7 +9,6 @@
 class Enemy : public GameObject
 {
 protected:
-	ENEMY_TYPE enemy_type;
 
 public:
 	float time_freeze;	// thời gian dừng khi bị hit
@@ -22,8 +21,6 @@ public:
 
 	string direction = "";
 
-	
-
 	Enemy();
 	Enemy(LPD3DXSPRITE spriteHandler, World * manager);
 	~Enemy();
@@ -32,8 +29,6 @@ public:
 	virtual void InitPostition(int x, int y);
 	virtual void InitSprites(LPDIRECT3DDEVICE9 d3ddv);
 
-	ENEMY_TYPE GetEnemyType();
-	void SetEnemyType(ENEMY_TYPE enemy_type);
 	void SetDirection(string _direction);
 
 	//============== OVERRIDE VIRTUAL METHOD ===============
@@ -41,9 +36,8 @@ public:
 	virtual void Update(float t);
 	virtual void setEnemyStatefromString(string _state);
 	virtual void startMoving();
-	virtual void startMovingBySamus(int _posX, int _posY);
-	virtual void setOrbitFromString(string _orbit);
-
+	virtual void Destroy();
+	virtual void setSamusLocation(int _posX, int _posY);
 	//============== END OVERRIDE VIRTUAL METHOD ============
 
 	bool isInsideMapBound(RECT cameraBound);
