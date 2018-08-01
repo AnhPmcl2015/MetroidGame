@@ -234,11 +234,25 @@ enum OBJECT_TYPE
 //================== ENEMY =====================
 
 //================== ZOOMER =====================
+enum ZOOMER_STATE
+{
+	ON_ZOOMER_UP,
+	ON_ZOOMER_BOTTOM,
+	ON_ZOOMER_LEFT,
+	ON_ZOOMER_RIGHT,
+};
+
+enum ZOOMER_DIRECTION {
+	ZOOMER_UP,
+	ZOOMER_LEFT,
+	ZOOMER_RIGHT,
+	ZOOMER_DOWN
+};
 #define ENEMY_SPRITE_PATH L"enemy\\metroid_enemies_sheet.png"
 #define ZOOMER_WIDTH 36
 #define ZOOMER_HEIGHT 32
 #define ZOOMER_SPRITE_COUNT 2
-#define ZOOMER_SPEED 75.0f
+#define ZOOMER_SPEED 35.0f
 
 ///////ENERGY
 #define ENERGY_SPRITE_PATH L"sprites\\energy\\energy.png"
@@ -341,17 +355,6 @@ enum COLLISION_DIRECTION {
 	NONE
 };
 //================== END Grid ====================
-
-
-// ================= ZOOMER ====================
-enum ZOOMER_STATE
-{
-	ON_ZOOMER_UP,
-	ON_ZOOMER_BOTTOM,
-	ON_ZOOMER_LEFT,
-	ON_ZOOMER_RIGHT,
-};
-// ================ END ZOOMER =================
 
 #define ZOOMER_YELLOW_CASE 0
 #define ZOOMER_PINK_CASE 1

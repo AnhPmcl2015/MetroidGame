@@ -7,6 +7,9 @@ class Zoomer : public Enemy
 {
 protected:
 	ZOOMER_STATE state;
+	ZOOMER_DIRECTION direction;
+	ZOOMER_DIRECTION initDirection;
+
 	Sprite * top;
 	Sprite * bottom;
 	Sprite * left;
@@ -15,9 +18,17 @@ public:
 	Zoomer();
 	Zoomer(LPD3DXSPRITE spriteHandler, World * manager, OBJECT_TYPE enemy_type);
 	~Zoomer();
-	virtual void InitSprites(LPDIRECT3DDEVICE9 d3ddv);
+	void InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
 	void setState(ZOOMER_STATE _state);
 	ZOOMER_STATE getState();
+
+	void setDirection(ZOOMER_DIRECTION direction);
+	ZOOMER_DIRECTION getDirection();
+	
+	void setInitDirection(ZOOMER_DIRECTION direction);
+	ZOOMER_DIRECTION getInitDirection();
+
+	void setVelocity();
 
 	//============== OVERRIDE VIRTUAL METHOD ===================
 	virtual void Update(float t);

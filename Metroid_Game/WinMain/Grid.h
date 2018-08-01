@@ -26,4 +26,5 @@ public:
 	float getDeltaTime();
 
 	void handleSamus(GameObject*, GameObject*, COLLISION_DIRECTION, float collisionTime);
+	void handleZoomer(GameObject*, GameObject*, COLLISION_DIRECTION, float collisionTime);
 };
