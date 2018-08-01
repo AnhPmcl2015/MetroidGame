@@ -39,4 +39,6 @@ public:
 
 	void loadEnemyPositions(string filePath);
 	vector<string> World::split(string s, string c);
+
+	void setDirectionForZoomer(Enemy*, string str);
 };

@@ -1,5 +1,6 @@
 ﻿#include "Grid.h"
 #include "Samus.h"
+#include "MaruMari.h"
 // Lưu vào mảng 2 chiều
 // Height khi quy đổi ra sẽ là row -> pos_y tương ứng với row
 // Width khi quy đổi ra sẽ là column -> pos_x tương ứng column
@@ -79,7 +80,7 @@ bool Grid::handleCell(GameObject* object, int row, int column) {
 	bool isCollision = false;
 	GameObject *cell = cells[row][column];
 	if (object != NULL) {
-		if ((object->getType() != BRICK || object->getType() != ITEM) && object->isActive != false) {
+		if ((object->getType() != BRICK || object->getType() != ITEM) && object->isActive) {
 			// Đầu tiên là xét trong chính cell của nó trước
 			if (this->handleObject(object, cell))
 				isCollision = true;
@@ -126,7 +127,7 @@ bool Grid::handleCell(GameObject* object, int row, int column) {
 bool Grid::handleObject(GameObject *object, GameObject* otherObject) {
 	bool isCollision = false;
 	while (otherObject != NULL) {
-		if (object != otherObject) {
+		if (object != otherObject && otherObject->isActive) {
 			// Mình phải tính va chạm là từ khoảng cách giữa 2 điểm từ tâm của nó
 			int x1 = (int)((object->pos_x + object->width) / 2);
 			int y1 = (int)((object->pos_y + object->height) / 2);
@@ -154,6 +155,9 @@ bool Grid::handleCollision(GameObject *object, GameObject *otherObject) {
 		if (object->getType() == SAMUS) {
 			this->handleSamus(object, otherObject, collisionDirection, collisionTime);
 		}
+		else if (object->getType() == ZOOMER_PINK || object->getType() == ZOOMER_YELLOW) {
+			this->handleZoomer(object, otherObject, collisionDirection, collisionTime);
+		}
 		return true;
 	}
 	else {
@@ -163,13 +167,12 @@ bool Grid::handleCollision(GameObject *object, GameObject *otherObject) {
 
 void Grid::handleSamus(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
 	Samus* samus = dynamic_cast<Samus*>(object);
-	if (collisionDirection == LEFT) {
-		if (samus->vx < 0) {
-			samus->SetState(STAND_LEFT);
-		}
-	}
+	object->pos_x += object->vx *collisionTime*this->getDeltaTime();
+	object->pos_y += object->vy * collisionTime*this->getDeltaTime();
+}
 
-	object->pos_x += object->vx * collisionTime*this->getDeltaTime();
+void Grid::handleZoomer(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
+	object->pos_x += object->vx *collisionTime*this->getDeltaTime();
 	object->pos_y += object->vy * collisionTime*this->getDeltaTime();
 }
 
