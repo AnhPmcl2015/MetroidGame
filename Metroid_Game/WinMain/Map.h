@@ -9,25 +9,38 @@
 #include <string>
 #include <string.h>
 #include <stdio.h>
-#include <vector>
 #include "Math.h"
 #include <d3dx9.h>
-#include "TileObject.h"
+#include "Brick.h"
 #include "Grid.h"
-#include "MaruMari.h"
+#include "Loader.h"
+#include "TileObject.h"
 
 class Camera;
 
 using namespace std;
 
+enum ROOM_NUMBER {
+	ROOM1,
+	ROOM2,
+	ROOM3,
+	STAIR
+};
+
 class Map {
+	struct brick {
+		char type;
+		int x_pixel;
+		int y_pixel;
+	};
 public:
-	Map(LPD3DXSPRITE spriteHandler, string filePath, LPDIRECT3DDEVICE9 d3ddev, int left, int top);
+	//Map(LPD3DXSPRITE spriteHandler, string filePath, int left, int top);
+	Map(LPD3DXSPRITE spriteHandler, Loader * loader, int left, int top);
 
 	~Map();
 
 	void drawMap();
-	void drawBrick(TileObject * value);
+	void drawBrick(brick value);
 
 	void Update(int _roomID);
 	void UpdateMap(RECT);
@@ -37,21 +50,30 @@ public:
 	RECT getBoundary();
 
 	// Load map lên
-	bool loadMap(string filePath);
+	//bool loadMap(string filePath);
 
+	LPDIRECT3DTEXTURE9 getTexture();
 	vector<string> getStringMap();
+	void setStringMap(vector<string> value);
 
 	static const int count = 0;
-	TileObject * tileMap;
+
+	int getRow();
+	void setRow(int value);
+	int getColumn();
+	void setColumn(int value);
+
+	void setGrid(Grid*);
+	Grid* getGrid();
+
+	void inputBrickToGrid();
 private:
-	//MaruMari * marumari;
 	Grid * grid;
-	std::string filePath;
+	//std::string filePath;
 	vector<string> stringMap;
-	vector<TileObject *> drawBrickArray = vector<TileObject *> ();
+	vector<brick> drawBrickArray = vector<brick>();
 	int roomID;
-	LPDIRECT3DTEXTURE9 _texture;
-	LPDIRECT3DDEVICE9 d3ddev;
+	Sprite *sprite;
 
 	//Start coordinate of the camera
 	RECT m_boundary = RECT();
@@ -62,4 +84,9 @@ private:
 
 	int m_max_Row;
 	int m_max_Column;
+
+	Loader * loader;
+
+	LPDIRECT3DDEVICE9 d3ddv;
+	LPDIRECT3DTEXTURE9 texture;
 };

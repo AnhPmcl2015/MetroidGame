@@ -1,6 +1,4 @@
 ﻿#pragma once
-#ifndef _GAME_OBJECT_H_
-#define _GAME_OBJECT_H_
 
 #include <d3dx9.h>
 #include "Sprite.h"
@@ -9,10 +7,8 @@
 class GameObject
 {
 public:
-	friend class Grid;
-	World * manager;	// con trỏ đến world để thao tác với các object ở world khi cần thiết
 	Grid * grid;
-
+	World * manager;	// con trỏ đến world để thao tác với các object ở world khi cần thiết
 	int width;
 	int height;
 	float pos_x;		// x postition of object
@@ -21,10 +17,9 @@ public:
 	float lastPosY;
 	float friction = FRICTION;	//ma sát
 
-	Sprite * currentSprite;
+	Sprite * currentSprite = nullptr;
 	GameObject * previousUnit;
 	GameObject * nextUnit;
-
 	float vx;		// x velocity
 	float vy;		// y velocity
 
@@ -32,6 +27,7 @@ public:
 	float vy_last;
 
 	float gravity;
+	bool isOnGround = false;
 
 	LPD3DXSPRITE spriteHandler;
 
@@ -40,14 +36,17 @@ public:
 	//Sprite* sprite;
 	DWORD last_time; // this is to control the animate rate of object
 	RECT objBound;
-	D3DXVECTOR2 rigidBody;
+
 public:
 	GameObject();
 	~GameObject();
-
+	float sweptAABB(GameObject* object, COLLISION_DIRECTION& collisionDirection, float deltaTime);
 	//======================== GET - SET METHOD ================================
 	OBJECT_TYPE getType();
 	void setType(OBJECT_TYPE type);
+
+	void setOnGround(bool value) { isOnGround = value; };
+	bool getOnGround() { return isOnGround; };
 
 	bool isActivated();
 	void setActive(bool value);
@@ -81,6 +80,13 @@ public:
 	float getgravity();
 	void setgravity(float value);
 
+	/*void setNormalx(float value);
+	float getNormalx();
+	void setNormaly(float value);
+	float getNormaly();*/
+
+	void Translate(D3DXVECTOR2 vector);
+
 	RECT GetBound();
 	//===============================END GET - SET METHOD============================
 
@@ -88,6 +94,7 @@ public:
 	virtual void InitSprites();
 	virtual void Update(float t);
 	virtual void Render();
+	virtual void updateState(); //thực hiện khi xét va chạm
 
 	//Phương thức để active lại GameObject
 	virtual void Init(float posX, float posY);
@@ -97,6 +104,4 @@ public:
 
 	// ============================== END VIRTUAL METHOD =============================
 
-
 };
-#endif // !_GAME_OBJECT_
