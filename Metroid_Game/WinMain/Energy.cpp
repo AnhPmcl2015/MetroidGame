@@ -4,7 +4,7 @@
 Energy::Energy(LPD3DXSPRITE spriteHandler, World* world) : Item(spriteHandler, world)
 {
 	this->setType(ITEM);
-	item_type = MARU_MARI;
+	this->type = ENERGY_ITEM;
 	energy = NULL;
 	isActive = true;
 
