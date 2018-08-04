@@ -8,9 +8,9 @@
 Grid::Grid() {
 	numOfRow = DEFINE_ROW;
 	numOfColumn = DEFINE_COLUMN;
-	for (int i = 0; i <= numOfRow; i++)
+	for (int i = 0; i < numOfRow; i++)
 	{
-		for (int j = 0; j <= numOfColumn; j++)
+		for (int j = 0; j < numOfColumn; j++)
 			cells[i][j] = NULL;
 	}
 	this->deltaTime = 0.0f;
@@ -80,12 +80,10 @@ bool Grid::handleCell(GameObject* object, int row, int column) {
 	bool isCollision = false;
 	GameObject *cell = cells[row][column];
 	if (object != NULL) {
-		if ((object->getType() != BRICK || object->getType() != ITEM) && object->isActive != false) {
+		if ((object->getType() != BRICK || object->getType() != ITEM) && object->isActive) {
 			// Đầu tiên là xét trong chính cell của nó trước
 			if (this->handleObject(object, cell))
-			{
 				isCollision = true;
-			}
 
 			// Còn đây là xét với các cell kế bên
 			if (row > 0)
@@ -95,7 +93,7 @@ bool Grid::handleCell(GameObject* object, int row, int column) {
 				if (this->handleObject(object, cells[row + 1][column])) // phia duoi
 					isCollision = true;
 
-			if (object->vx <= 0) {    // Neu van toc dang giam thi xet ben trai
+			if (object->vx <= 0) {    // Neu van toc nang giam thi xet ben trai
 				if (row > 0 && column > 0)
 					if (this->handleObject(object, cells[row - 1][column - 1])) // trai tren
 						isCollision = true;
@@ -129,32 +127,14 @@ bool Grid::handleCell(GameObject* object, int row, int column) {
 bool Grid::handleObject(GameObject *object, GameObject* otherObject) {
 	bool isCollision = false;
 	while (otherObject != NULL) {
-		if (object != otherObject) {
+		if (object != otherObject && otherObject->isActive) {
 			// Mình phải tính va chạm là từ khoảng cách giữa 2 điểm từ tâm của nó
-			int x1 = 0, y1 = 0;
-			if (object->getType() != BRICK)
-			{
-				x1 = (int)(object->pos_x + object->currentSprite->getWidth() / 2);
-				y1 = (int)(object->pos_y + object->currentSprite->getHeight() / 2);
-			}
-			else if (object->getType() == BRICK)
-			{
-				x1 = (int)(object->pos_x + (object->width + 16) / 2);
-				y1 = (int)(object->pos_y + (object->height + 16) / 2);				
-			}
+			int x1 = (int)((object->pos_x + object->width) / 2);
+			int y1 = (int)((object->pos_y + object->height) / 2);
 			D3DXVECTOR2 objectPos(x1, y1);
 
-			int x2 = 0, y2 = 0;
-			if (otherObject->getType() != BRICK)
-			{
-				x2 = (int)(otherObject->pos_x + otherObject->currentSprite->getWidth() / 2);
-				y2 = (int)(otherObject->pos_y + otherObject->currentSprite->getHeight() / 2);
-			}
-			else if (otherObject->getType() == BRICK)
-			{
-				x2 = (int)(otherObject->pos_x + (otherObject->width + 16) / 2);
-				y2 = (int)(otherObject->pos_y + (otherObject->height + 16) / 2);
-			}
+			int x2 = (int)((otherObject->pos_x + otherObject->width) / 2);
+			int y2 = (int)((otherObject->pos_y + otherObject->height) / 2);
 			D3DXVECTOR2 otherPos(x2, y2);
 			if (Math::distance(objectPos, otherPos) < 50) {
 				if (handleCollision(object, otherObject))
@@ -175,6 +155,9 @@ bool Grid::handleCollision(GameObject *object, GameObject *otherObject) {
 		if (object->getType() == SAMUS) {
 			this->handleSamus(object, otherObject, collisionDirection, collisionTime);
 		}
+		else if (object->getType() == ZOOMER_PINK || object->getType() == ZOOMER_YELLOW) {
+			this->handleZoomer(object, otherObject, collisionDirection, collisionTime);
+		}
 		return true;
 	}
 	else {
@@ -184,7 +167,12 @@ bool Grid::handleCollision(GameObject *object, GameObject *otherObject) {
 
 void Grid::handleSamus(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
 	Samus* samus = dynamic_cast<Samus*>(object);
-	object->pos_x += object->vx * collisionTime*this->getDeltaTime();
+	object->pos_x += object->vx *collisionTime*this->getDeltaTime();
+	object->pos_y += object->vy * collisionTime*this->getDeltaTime();
+}
+
+void Grid::handleZoomer(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
+	object->pos_x += object->vx *collisionTime*this->getDeltaTime();
 	object->pos_y += object->vy * collisionTime*this->getDeltaTime();
 }
 

@@ -18,23 +18,3 @@ int Math::abs(int a, int b)
 {
 	return (a - b)*((a - b) % 1);
 }
-
-int Math::Max(int a, int b)
-{
-	int result = 0;
-	if (a > b)
-		result = a;
-	else
-		result = b;
-	return result;
-}
-
-int Math::Min(int a, int b)
-{
-	int result = 0;
-	if (a < b)
-		result = a;
-	else
-		result = b;
-	return result;
-}

@@ -17,7 +17,7 @@ public:
 	float lastPosY;
 	float friction = FRICTION;	//ma sát
 
-	Sprite * currentSprite = nullptr;
+	Sprite * currentSprite;
 	GameObject * previousUnit;
 	GameObject * nextUnit;
 	float vx;		// x velocity
@@ -27,7 +27,6 @@ public:
 	float vy_last;
 
 	float gravity;
-	bool isOnGround = false;
 
 	LPD3DXSPRITE spriteHandler;
 
@@ -36,7 +35,7 @@ public:
 	//Sprite* sprite;
 	DWORD last_time; // this is to control the animate rate of object
 	RECT objBound;
-
+	D3DXVECTOR2 rigidBody;
 public:
 	GameObject();
 	~GameObject();
@@ -44,9 +43,6 @@ public:
 	//======================== GET - SET METHOD ================================
 	OBJECT_TYPE getType();
 	void setType(OBJECT_TYPE type);
-
-	void setOnGround(bool value) { isOnGround = value; };
-	bool getOnGround() { return isOnGround; };
 
 	bool isActivated();
 	void setActive(bool value);
@@ -80,13 +76,7 @@ public:
 	float getgravity();
 	void setgravity(float value);
 
-	/*void setNormalx(float value);
-	float getNormalx();
-	void setNormaly(float value);
-	float getNormaly();*/
-
-	void Translate(D3DXVECTOR2 vector);
-
+	void SetBound(int objWidth, int objHeight);
 	RECT GetBound();
 	//===============================END GET - SET METHOD============================
 
@@ -94,7 +84,6 @@ public:
 	virtual void InitSprites();
 	virtual void Update(float t);
 	virtual void Render();
-	virtual void updateState(); //thực hiện khi xét va chạm
 
 	//Phương thức để active lại GameObject
 	virtual void Init(float posX, float posY);
@@ -103,5 +92,6 @@ public:
 	virtual void Destroy();
 
 	// ============================== END VIRTUAL METHOD =============================
+	
 
 };
