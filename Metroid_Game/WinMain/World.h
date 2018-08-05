@@ -24,7 +24,7 @@ public:
 	Grid *grid;
 	Samus * samus;
 	MaruMari * maruMari;
-	Energy * energy;
+	//Energy * energy;
 	vector<Bullet*> samusBullet;
 	vector<Enemy*> enemy;
 	LPD3DXSPRITE spriteHandler;

@@ -15,11 +15,11 @@ void Metroid::_InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 void Metroid::_InitPositions()
 {
 	world->samus->InitPostition();
-	world->maruMari->Init(420, 352);
-	world->energy->Init(420, 320);
+	world->maruMari->Init(1172, 352);
+	//world->energy->Init(420, 320);
 	this->world->grid->add(this->world->samus);
 	this->world->grid->add(this->world->maruMari);
-	this->world->grid->add(this->world->energy);
+	//this->world->grid->add(this->world->energy);
 }
 
 Metroid::Metroid(HINSTANCE hInstance, LPWSTR Name, int Mode, int IsFullScreen, int FrameRate) 
@@ -418,28 +418,31 @@ void Metroid::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta)
 		}
 	}
 	else if (_input->IsKeyDown(DIK_DOWN)) {
-		if (this->world->samus->GetState() == STAND_LEFT) {
-			this->world->samus->setPosY(this->world->samus->getPosY() + 32);
-			this->world->samus->SetState(TRANSFORM_BALL_LEFT);
-			for (int i = 0; i < this->world->samusBullet.size(); i++) {
-				if (!this->world->samusBullet[i]->getIsRendered()) {
-					this->world->samusBullet[i]->setDirection(OFF);
-					break;
+		if (this->world->samus->getCanRoll())
+		{
+			if (this->world->samus->GetState() == STAND_LEFT) {
+				this->world->samus->setPosY(this->world->samus->getPosY() + 32);
+				this->world->samus->SetState(TRANSFORM_BALL_LEFT);
+				for (int i = 0; i < this->world->samusBullet.size(); i++) {
+					if (!this->world->samusBullet[i]->getIsRendered()) {
+						this->world->samusBullet[i]->setDirection(OFF);
+						break;
+					}
 				}
-			}
 
-			this->world->samus->setIsBall(true);
-		}
-		else if(this->world->samus->GetState() == STAND_RIGHT){
-			this->world->samus->setPosY(this->world->samus->getPosY() + 32);
-			this->world->samus->SetState(TRANSFORM_BALL_RIGHT);
-			for (int i = 0; i < this->world->samusBullet.size(); i++) {
-				if (!this->world->samusBullet[i]->getIsRendered()) {
-					this->world->samusBullet[i]->setDirection(OFF);
-					break;
-				}
+				this->world->samus->setIsBall(true);
 			}
-			this->world->samus->setIsBall(true);
+			else if (this->world->samus->GetState() == STAND_RIGHT) {
+				this->world->samus->setPosY(this->world->samus->getPosY() + 32);
+				this->world->samus->SetState(TRANSFORM_BALL_RIGHT);
+				for (int i = 0; i < this->world->samusBullet.size(); i++) {
+					if (!this->world->samusBullet[i]->getIsRendered()) {
+						this->world->samusBullet[i]->setDirection(OFF);
+						break;
+					}
+				}
+				this->world->samus->setIsBall(true);
+			}
 		}
 	}
 	

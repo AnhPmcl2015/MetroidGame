@@ -150,33 +150,83 @@ bool Grid::handleObject(GameObject *object, GameObject* otherObject) {
 bool Grid::handleCollision(GameObject *object, GameObject *otherObject) {
 	COLLISION_DIRECTION collisionDirection = NONE;
 	float collisionTime = object->sweptAABB(otherObject, collisionDirection, this->getDeltaTime());
-	
-	if (collisionDirection != NONE) {
-		if (object->getType() == SAMUS) {
-			this->handleSamus(object, otherObject, collisionDirection, collisionTime);
-		}
-		else if (object->getType() == ZOOMER_PINK || object->getType() == ZOOMER_YELLOW) {
-			this->handleZoomer(object, otherObject, collisionDirection, collisionTime);
-		}
-		else if (object->getType() == SKREE) {
-			this->handleSkree(object, otherObject, collisionDirection, collisionTime);
-		}
-		return true;
-	}
-	else {
+	OBJECT_TYPE objectType = object->getType();
+	if (collisionDirection == NONE)
 		return false;
+	switch (objectType)
+	{
+		case ZOOMER_PINK:
+		case ZOOMER_YELLOW:
+		{
+			this->handleZoomer(object, otherObject, collisionDirection, collisionTime);
+			break;
+		}
+		case SKREE:
+		{
+			this->handleSkree(object, otherObject, collisionDirection, collisionTime);
+			break;
+		}
+		case SAMUS:
+		{
+			this->handleSamus(object, otherObject, collisionDirection, collisionTime);
+			break;
+		}
+		default:
+			break;
 	}
+	return true;
+
+	//if (collisionDirection != NONE) {
+	//	if (object->getType() == SAMUS) {
+	//		//this->handleSamus(object, otherObject, collisionDirection, collisionTime);
+	//	}
+	//	else if (object->getType() == ZOOMER_PINK || object->getType() == ZOOMER_YELLOW) {
+	//		
+	//	}
+	//	else if (object->getType() == SKREE) {
+	//		
+	//	}
+	//	return true;
+	//}
+	//else {
+	//	return false;
+	//}
 }
 
 void Grid::handleSamus(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
 	Samus* samus = dynamic_cast<Samus*>(object);
-	object->pos_x += object->vx *collisionTime*this->getDeltaTime();
-	object->pos_y += object->vy * collisionTime*this->getDeltaTime();
+	OBJECT_TYPE otherType = otherObject->getType();
+	switch (otherType)
+	{
+		case MARU_MARI:
+		{
+			samus->setCanRoll(true);
+			otherObject->setActive(false);
+			break;
+		}
+		case BRICK:
+		{
+			object->pos_x += object->vx * this->getDeltaTime();
+			object->pos_y += object->vy * this->getDeltaTime();
+			break;
+		}
+		case ZOOMER_PINK:
+		case ZOOMER_YELLOW:
+		{
+			break;
+		}
+		default:
+			break;
+	}
+	/*if (otherObject->getType() == BRICK) {
+		object->pos_x += object->vx *collisionTime*this->getDeltaTime();
+		object->pos_y += object->vy * collisionTime*this->getDeltaTime();
+	}*/
 }
 
 void Grid::handleZoomer(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
-	object->pos_x += object->vx *collisionTime*this->getDeltaTime();
-	object->pos_y += object->vy * collisionTime*this->getDeltaTime();
+	/*object->pos_x += object->vx *collisionTime*this->getDeltaTime();
+	object->pos_y += object->vy * collisionTime*this->getDeltaTime();*/
 }
 
 void Grid::handleSkree(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
@@ -198,39 +248,6 @@ void Grid::handleSkree(GameObject* object, GameObject* otherObject, COLLISION_DI
 	}
 }
 
-//void Grid::updateGrid(GameObject* object, float newPosX, float newPosY) {
-//	// Kiểm tra xem nó có thay đổi cell hay không
-//	int oldRow = floor(object->getlastPosY() / CELL_SIZE);
-//	int oldColumn = floor(object->getlastPosX() / CELL_SIZE);
-//
-//	int newRow = floor(newPosY / CELL_SIZE);
-//	int newColumn = floor(newPosX / CELL_SIZE);
-//
-//	// Nếu không thay đổi cell thì thoát ra
-//	if (oldRow == newRow && oldColumn == newColumn) {
-//		return; // this->handleCell(object, oldRow, oldColumn);
-//	}
-//
-//	// Xóa object ra khỏi cell hiện tại và cập nhật và cell mới
-//	if (object->previousUnit != NULL)
-//		object->previousUnit->nextUnit = object->nextUnit;
-//	if (object->nextUnit != NULL)
-//		object->nextUnit->previousUnit = object->previousUnit;
-//
-//	// Nếu object đang là đứng đầu
-//	if (cells[oldRow][oldColumn] == object)
-//		cells[oldRow][oldColumn] = object->nextUnit;
-//
-//	bool isCollision = false;
-//	isCollision = this->handleCell(object, oldRow, oldColumn);
-//
-//	this->add(object);
-//
-//	// Cập nhật lại vị trí last Post của object
-//	object->setlastPosX(object->getPosX());
-//	object->setlastPosY(object->getPosY());
-//	return;
-//}
 bool Grid::updateGrid(GameObject* object, float newPosX, float newPosY) {
 	// Kiểm tra xem nó có thay đổi cell hay không
 	int oldRow = floor(object->getlastPosY() / CELL_SIZE);

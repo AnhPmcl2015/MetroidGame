@@ -3,7 +3,7 @@
 
 MaruMari::MaruMari(LPD3DXSPRITE spriteHandler, World * manager) :Item(spriteHandler, manager)
 {
-	this->setType(ITEM);
+	//this->setType(MARU_MARI);
 	this->type = MARU_MARI;
 	maruMari = NULL;
 	isActive = true;

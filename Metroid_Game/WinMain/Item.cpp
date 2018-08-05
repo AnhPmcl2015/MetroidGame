@@ -26,6 +26,10 @@ void Item::setNumberGain(int num)
 	number_gain = num;
 }
 
+void Item::disappear()
+{
+}
+
 void Item::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 {
 }

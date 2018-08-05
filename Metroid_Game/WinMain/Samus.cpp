@@ -89,6 +89,14 @@ Samus::Samus()
 	this->isBall = false;
 
 	this->setType(SAMUS);
+
+	this->height = 64;
+	this->width = 32;
+
+	this->previousUnit = NULL;
+	this->nextUnit = NULL;
+
+	gravity = FALLDOWN_VELOCITY_DECREASE;
 }
 
 void Samus::Destroy()
@@ -99,28 +107,23 @@ void Samus::Destroy()
 	//--TO DO: Đưa Samus ra khỏi viewport
 }
 
-Samus::Samus(LPD3DXSPRITE spriteHandler, World * manager, Grid* grid)
+Samus::Samus(LPD3DXSPRITE spriteHandler, World * manager, Grid* grid) : Samus()
 {
 	this->grid = grid;
-	this->setType(SAMUS);
+	
 	this->spriteHandler = spriteHandler;
 	this->manager = manager;
-	this->isActive = true;
+	//this->isActive = true;
 
-	this->previousUnit = NULL;
-	this->nextUnit = NULL;
 
 	//Set type
-	this->type = SAMUS;
+	//this->type = SAMUS;
 
 	/*width = 40;
 	height = 50;*/
 
-	gravity = FALLDOWN_VELOCITY_DECREASE;
-	this->isBall = false;
+	//this->isBall = false;
 
-	this->height = 64;
-	this->width = 32;
 }
 
 Samus::~Samus()
@@ -248,15 +251,13 @@ bool Samus::isSamusDeath()
 // Update samus status
 void Samus::Update(float t)
 {
-	pos_x = pos_x + vx * t;
-	pos_y = pos_y + vy * t;
+	float newPosX = pos_x + vx * t;
+	float newPosY = pos_y + vy * t;
 
-	//if (!this->grid->updateGrid(this, newPosX, newPosY)) {
-	//	pos_x = newPosX;
-	//	pos_y = newPosY;
-	//}
-	//pos_x = newPosX;
-	//pos_y = newPosY;
+	if (!this->grid->updateGrid(this, newPosX, newPosY)) {
+		pos_x = newPosX;
+		pos_y = newPosY;
+	}	
 
 	// Animate samus if he is running
 	DWORD now = GetTickCount();
@@ -331,4 +332,12 @@ void Samus::setIsBall(bool isBall) {
 
 bool Samus::getIsBall() {
 	return this->isBall;
+}
+
+void Samus::setCanRoll(bool canRoll) {
+	this->canRoll = canRoll;
+}
+
+bool Samus::getCanRoll() {
+	return this->canRoll;
 }
