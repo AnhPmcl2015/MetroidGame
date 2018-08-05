@@ -248,16 +248,21 @@ bool Samus::isSamusDeath()
 // Update samus status
 void Samus::Update(float t)
 {
+	this->grid->showAllObject();
 	float newPosX = pos_x + vx * t;
 	float newPosY = pos_y + vy * t;
 
-	//if (!this->grid->updateGrid(this, newPosX, newPosY)) {
-	//	pos_x = newPosX;
-	//	pos_y = newPosY;
+	int row = (int)floor(this->pos_y / CELL_SIZE);
+	int column = (int)floor(this->pos_x / CELL_SIZE);
+	//if (!this->grid->handleCell(this, row, column)) {
+		pos_x = newPosX;
+		pos_y = newPosY;
 	//}
 
-	pos_x = newPosX;
-	pos_y = newPosY;
+	this->grid->updateGrid(this, this->pos_x, this->pos_y);
+
+	//pos_x = newPosX;
+	//pos_y = newPosY;
 
 	// Animate samus if he is running
 	DWORD now = GetTickCount();

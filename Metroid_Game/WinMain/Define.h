@@ -252,7 +252,7 @@ enum ZOOMER_DIRECTION {
 #define ZOOMER_WIDTH 36
 #define ZOOMER_HEIGHT 32
 #define ZOOMER_SPRITE_COUNT 2
-#define ZOOMER_SPEED 35.0f
+#define ZOOMER_SPEED 60.0f
 
 ///////ENERGY
 #define ENERGY_SPRITE_PATH L"sprites\\energy\\energy.png"
