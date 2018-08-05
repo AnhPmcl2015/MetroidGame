@@ -246,6 +246,19 @@ enum ENEMY_TYPE
 
 //================== ENEMY =====================
 //================== ZOOMER =====================
+enum ZOOMER_DIRECTION {
+	ZOOMER_UP,
+	ZOOMER_LEFT,
+	ZOOMER_RIGHT,
+	ZOOMER_DOWN
+};
+enum ZOOMER_STATE
+{
+	ON_ZOOMER_UP,
+	ON_ZOOMER_BOTTOM,
+	ON_ZOOMER_LEFT,
+	ON_ZOOMER_RIGHT,
+};
 #define ENEMY_SPRITE_PATH L"enemy\\metroid_enemies_sheet.png"
 #define ZOOMER_WIDTH 36
 #define ZOOMER_HEIGHT 32
@@ -354,16 +367,6 @@ enum COLLISION_DIRECTION {
 };
 //================== END Grid ====================
 
-
-// ================= ZOOMER ====================
-//enum ZOOMER_STATE
-//{
-//	ON_ZOOMER_UP,
-//	ON_ZOOMER_BOTTOM,
-//	ON_ZOOMER_LEFT,
-//	ON_ZOOMER_RIGHT,
-//};
-//// ================ END ZOOMER =================
 
 //================== SKREE  =====================
 

@@ -141,14 +141,17 @@
     <ClCompile Include="Collision.cpp">
       <Filter>Source Files\FrameWork</Filter>
     </ClCompile>
-	<ClCompile Include="Brick.cpp">
+    <ClCompile Include="Brick.cpp">
       <Filter>Source Files\Drawable</Filter>
     </ClCompile>
-	<ClCompile Include="Energy.cpp">
+    <ClCompile Include="Energy.cpp">
       <Filter>Source Files\Item</Filter>
     </ClCompile>
     <ClCompile Include="Missile.cpp">
       <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Skree.cpp">
+      <Filter>Source Files\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -224,10 +227,10 @@
     <ClInclude Include="Collision.h">
       <Filter>Header Files\FrameWork</Filter>
     </ClInclude>
-  <ClInclude Include="Brick.h">
+    <ClInclude Include="Brick.h">
       <Filter>Header Files\Drawable</Filter>
     </ClInclude>
-  <ClInclude Include="BombItem.h">
+    <ClInclude Include="BombItem.h">
       <Filter>Header Files\Item</Filter>
     </ClInclude>
     <ClInclude Include="Energy.h">
@@ -235,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="Missile.h">
       <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Skree.h">
+      <Filter>Header Files\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -382,6 +388,9 @@
       <Filter>Resource Files\sprites\item</Filter>
     </Text>
     <Text Include="enemy\Monster_Room1.txt">
+      <Filter>Resource Files\enemy</Filter>
+    </Text>
+    <Text Include="enemy\SKREE.txt">
       <Filter>Resource Files\enemy</Filter>
     </Text>
   </ItemGroup>

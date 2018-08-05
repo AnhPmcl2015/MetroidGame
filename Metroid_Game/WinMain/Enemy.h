@@ -10,7 +10,9 @@ class Enemy : public GameObject
 {
 protected:
 	ENEMY_TYPE enemy_type;
-
+	LPDIRECT3DTEXTURE9 texture;
+	float initPosX;
+	float initPosY;
 public:
 	float time_freeze;	// thời gian dừng khi bị hit
 	float health;		// Máu của object
@@ -47,12 +49,12 @@ public:
 
 	bool isInsideMapBound(RECT cameraBound);
 
-	/*void setTexture(LPDIRECT3DTEXTURE9 texture);
+	void setTexture(LPDIRECT3DTEXTURE9 texture);
 	LPDIRECT3DTEXTURE9 getTexture();
 
 	void setInitPosX(float x);
 	float getInitPosX();
 	void setInitPosY(float y);
-	float getInitPosY();*/
+	float getInitPosY();
 };
 
