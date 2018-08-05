@@ -231,23 +231,21 @@ enum OBJECT_TYPE
 #define ITEM_MISSILE_GAIN 3
 //================ END GAME ITEM ===================================
 
-//================== ENEMY =====================
-
-//================== ZOOMER =====================
-enum ZOOMER_STATE
+//================= ENEMY TYPE =================
+enum ENEMY_TYPE
 {
-	ON_ZOOMER_UP,
-	ON_ZOOMER_BOTTOM,
-	ON_ZOOMER_LEFT,
-	ON_ZOOMER_RIGHT,
+	ZOOMER_YELLOW = 0,
+	ZOOMER_PINK = 1,
+	BIRD = 2,
+	BLOCK = 3,
+	BEE = 4,
+	RIDLEY = 5,
+	MOTHER_BRAIN = 6,
 };
+//================= END ENEMY TYPE =============
 
-enum ZOOMER_DIRECTION {
-	ZOOMER_UP,
-	ZOOMER_LEFT,
-	ZOOMER_RIGHT,
-	ZOOMER_DOWN
-};
+//================== ENEMY =====================
+//================== ZOOMER =====================
 #define ENEMY_SPRITE_PATH L"enemy\\metroid_enemies_sheet.png"
 #define ZOOMER_WIDTH 36
 #define ZOOMER_HEIGHT 32
@@ -356,7 +354,35 @@ enum COLLISION_DIRECTION {
 };
 //================== END Grid ====================
 
+
+// ================= ZOOMER ====================
+//enum ZOOMER_STATE
+//{
+//	ON_ZOOMER_UP,
+//	ON_ZOOMER_BOTTOM,
+//	ON_ZOOMER_LEFT,
+//	ON_ZOOMER_RIGHT,
+//};
+//// ================ END ZOOMER =================
+
+//================== SKREE  =====================
+
+#define SKREE_WIDTH 36
+#define SKREE_HEIGHT 52
+
+#define SKREE_COUNT 3
+
+#define SKREE_PATH L"enemy\\SKREE.txt"
+
+#define SKREE_STANDARD_ANIMATE_RATE 7
+#define SKREE_BOOST_ANIMATE_RATE 30
+
 #define ZOOMER_YELLOW_CASE 0
 #define ZOOMER_PINK_CASE 1
 #define SKREE_CASE 2
 #define RIO_CASE 3
+
+#define SKREE_DISTANCE_TO_SAMUS  300.0f
+#define SKREE_SPEED 100.0f
+
+//================== END SKREE =================

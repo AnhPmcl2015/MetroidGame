@@ -9,6 +9,7 @@
 #include "Grid.h"
 #include "Bullet.h"
 #include "Energy.h"
+#include "Skree.h"
 
 using namespace std;
 

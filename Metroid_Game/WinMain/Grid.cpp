@@ -158,6 +158,9 @@ bool Grid::handleCollision(GameObject *object, GameObject *otherObject) {
 		else if (object->getType() == ZOOMER_PINK || object->getType() == ZOOMER_YELLOW) {
 			this->handleZoomer(object, otherObject, collisionDirection, collisionTime);
 		}
+		else if (object->getType() == SKREE) {
+			this->handleKree(object, otherObject, collisionDirection, collisionTime);
+		}
 		return true;
 	}
 	else {
@@ -174,6 +177,31 @@ void Grid::handleSamus(GameObject* object, GameObject* otherObject, COLLISION_DI
 void Grid::handleZoomer(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
 	object->pos_x += object->vx *collisionTime*this->getDeltaTime();
 	object->pos_y += object->vy * collisionTime*this->getDeltaTime();
+}
+
+int Grid::handleKree(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
+	if (otherObject->getType() == SAMUS) {
+		//Neu dung SAMUS van tiep tuc di chuyen
+
+	}
+	else if (otherObject->getType() == BULLET) {
+		//TO-DO: health
+		//TO-DO: on hit sprite change
+		//freeze a moment
+		object->pos_x += object->vx * collisionTime*this->getDeltaTime(); 
+		object->pos_y += object->vy * collisionTime*this->getDeltaTime();
+	}
+	else if (otherObject->getType() == BRICK) {
+		if (collisionDirection = TOP) {
+			//if not, stay still
+			object->pos_x += object->vx * collisionTime*this->getDeltaTime();
+			object->pos_y += object->vy * collisionTime*this->getDeltaTime();
+		}
+		else if (collisionDirection == BOTTOM) {
+			otherObject->Destroy();
+		}
+	}
+	return 0;
 }
 
 bool Grid::updateGrid(GameObject* object, float newPosX, float newPosY) {

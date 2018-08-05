@@ -28,12 +28,24 @@ void Enemy::InitPostition(int x, int y)
 	this->pos_y = y;
 }
 
-void Enemy::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
+void Enemy::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 {
 	if (d3ddv == NULL) return;
 	//Create sprite handler
 	HRESULT result = D3DXCreateSprite(d3ddv, &spriteHandler);
 	if (result != D3D_OK) return;
+}
+//ENEMY_TYPE Enemy::GetEnemyType()
+//{
+//	return enemy_type;
+//}
+//void Enemy::SetEnemyType(ENEMY_TYPE enemy_type)
+//{
+//	this->enemy_type = enemy_type;
+//}
+void Enemy::SetDirection(string _direction)
+{
+	direction = _direction;
 }
 void Enemy::Update(float t)
 {
@@ -51,6 +63,14 @@ void Enemy::startMoving()
 {
 }
 
+void Enemy::Destroy()
+{
+}
+
+void Enemy::setSamusLocation(int _posX, int _posY)
+{
+}
+
 bool Enemy::isInsideMapBound(RECT cameraBound)
 {
 	RECT bound = cameraBound;
@@ -61,27 +81,27 @@ bool Enemy::isInsideMapBound(RECT cameraBound)
 	}
 	return false;
 }
-
-void Enemy::setTexture(LPDIRECT3DTEXTURE9 texture) {
-	this->texture = texture;
-}
-
-LPDIRECT3DTEXTURE9 Enemy::getTexture() {
-	return this->texture;
-}
-
-void Enemy::setInitPosX(float x) {
-	this->initPosX = x;
-}
-
-float Enemy::getInitPosX() {
-	return this->initPosX;
-}
-
-void Enemy::setInitPosY(float y) {
-	this->initPosY = y;
-}
-
-float Enemy::getInitPosY() {
-	return this->initPosY;
-}
+//
+//void Enemy::setTexture(LPDIRECT3DTEXTURE9 texture) {
+//	this->texture = texture;
+//}
+//
+//LPDIRECT3DTEXTURE9 Enemy::getTexture() {
+//	return this->texture;
+//}
+//
+//void Enemy::setInitPosX(float x) {
+//	this->initPosX = x;
+//}
+//
+//float Enemy::getInitPosX() {
+//	return this->initPosX;
+//}
+//
+//void Enemy::setInitPosY(float y) {
+//	this->initPosY = y;
+//}
+//
+//float Enemy::getInitPosY() {
+//	return this->initPosY;
+//}
