@@ -22,29 +22,26 @@ public:
 	bool isActive = false;
 	bool isDeath = false;
 
-	string direction = "";
-
-
 	Enemy();
 	Enemy(LPD3DXSPRITE spriteHandler, World * manager);
 	~Enemy();
 
 	virtual void InitPostition();
 	virtual void InitPostition(int x, int y);
-	virtual void InitSprites(LPDIRECT3DDEVICE9 d3ddv);
+	virtual void InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
 
 	ENEMY_TYPE GetEnemyType();
 	void SetEnemyType(ENEMY_TYPE enemy_type);
-	void SetDirection(string _direction);
 
 	//============== OVERRIDE VIRTUAL METHOD ===============
 	virtual void Render();
 	virtual void Update(float t);
 	virtual void setEnemyStatefromString(string _state);
 	virtual void startMoving();
-
 	virtual void Destroy();
 	virtual void setSamusLocation(int _posX, int _posY);
+	virtual void startMovingBySamus(int _posX, int _posY);
+	virtual void handleBullet(int bulletType);
 	//============== END OVERRIDE VIRTUAL METHOD ============
 
 	bool isInsideMapBound(RECT cameraBound);

@@ -184,9 +184,7 @@ void Grid::handleSkree(GameObject* object, GameObject* otherObject, COLLISION_DI
 		Skree* skree = dynamic_cast<Skree*>(object);
 		skree->pos_x += skree->vx *collisionTime*this->getDeltaTime();
 		skree->pos_y += skree->vy * collisionTime*this->getDeltaTime();
-		skree->setVelocityX(0);
-		skree->setVelocityY(0);
-		skree->setState(LANDED);
+		skree->setState(FINISH);
 	}
 	else if (otherObject->getType() == SAMUS) {
 		//ko lam gi het
@@ -198,40 +196,7 @@ void Grid::handleSkree(GameObject* object, GameObject* otherObject, COLLISION_DI
 	}
 }
 
-//void Grid::updateGrid(GameObject* object, float newPosX, float newPosY) {
-//	// Kiểm tra xem nó có thay đổi cell hay không
-//	int oldRow = floor(object->getlastPosY() / CELL_SIZE);
-//	int oldColumn = floor(object->getlastPosX() / CELL_SIZE);
-//
-//	int newRow = floor(newPosY / CELL_SIZE);
-//	int newColumn = floor(newPosX / CELL_SIZE);
-//
-//	// Nếu không thay đổi cell thì thoát ra
-//	if (oldRow == newRow && oldColumn == newColumn) {
-//		return; // this->handleCell(object, oldRow, oldColumn);
-//	}
-//
-//	// Xóa object ra khỏi cell hiện tại và cập nhật và cell mới
-//	if (object->previousUnit != NULL)
-//		object->previousUnit->nextUnit = object->nextUnit;
-//	if (object->nextUnit != NULL)
-//		object->nextUnit->previousUnit = object->previousUnit;
-//
-//	// Nếu object đang là đứng đầu
-//	if (cells[oldRow][oldColumn] == object)
-//		cells[oldRow][oldColumn] = object->nextUnit;
-//
-//	bool isCollision = false;
-//	isCollision = this->handleCell(object, oldRow, oldColumn);
-//
-//	this->add(object);
-//
-//	// Cập nhật lại vị trí last Post của object
-//	object->setlastPosX(object->getPosX());
-//	object->setlastPosY(object->getPosY());
-//	return;
-//}
-bool Grid::updateGrid(GameObject* object, float newPosX, float newPosY) {
+void Grid::updateGrid(GameObject* object, float newPosX, float newPosY) {
 	// Kiểm tra xem nó có thay đổi cell hay không
 	int oldRow = floor(object->getlastPosY() / CELL_SIZE);
 	int oldColumn = floor(object->getlastPosX() / CELL_SIZE);
@@ -241,7 +206,7 @@ bool Grid::updateGrid(GameObject* object, float newPosX, float newPosY) {
 
 	// Nếu không thay đổi cell thì thoát ra
 	if (oldRow == newRow && oldColumn == newColumn) {
-		return this->handleCell(object, oldRow, oldColumn);
+		return; // this->handleCell(object, oldRow, oldColumn);
 	}
 
 	// Xóa object ra khỏi cell hiện tại và cập nhật và cell mới
@@ -262,7 +227,7 @@ bool Grid::updateGrid(GameObject* object, float newPosX, float newPosY) {
 	// Cập nhật lại vị trí last Post của object
 	object->setlastPosX(object->getPosX());
 	object->setlastPosY(object->getPosY());
-	return isCollision;
+	return;
 }
 
 void Grid::setDeltaTime(float deltaTime) {

@@ -8,7 +8,7 @@ enum SKREE_STATE
 {
 	ON_HANGING,
 	ON_FALLING,
-	LANDED,
+	LANDED, 
 	SHOT
 };
 
@@ -30,9 +30,6 @@ public:
 
 	int samus_PosX = 0;
 	int samus_PosY = 0;
-
-	float range;
-	float liveTime = 0;
 
 	vector<Bullet*> skreeBullet;
 

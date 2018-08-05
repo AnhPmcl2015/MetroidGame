@@ -53,11 +53,11 @@ void World::Update(float t)
 		if (this->enemy[i]->isInsideMapBound(this->metroid->camera->getBoundary())) {
 			if (!this->enemy[i]->isActive && !this->enemy[i]->isDeath) {
 				enemy[i]->isActive = true;
+				enemy[i]->startMovingBySamus(this->samus->getPosX(), this->samus->getPosY());
 				enemy[i]->startMoving();
-				enemy[i]->setSamusLocation(this->samus->getPosX(), this->samus->getPosY());
 			}
 			else if (this->enemy[i]->isActive && !this->enemy[i]->isDeath) {
-				enemy[i]->setSamusLocation(this->samus->getPosX(), this->samus->getPosY());
+				enemy[i]->startMovingBySamus(this->samus->getPosX(), this->samus->getPosY());
 				enemy[i]->Update(t);
 			}
 			else {
@@ -130,15 +130,15 @@ void World::loadEnemyPositions(string filePath) {
 		{
 		case ZOOMER_YELLOW_CASE: {
 			monster = new Zoomer(spriteHandler, this, ZOOMER_YELLOW);
-			//this->setDirectionForZoomer(monster, v[5]);
-			monster->SetDirection(v[5]);
+			this->setDirectionForZoomer(monster, v[5]);
+			//monster->SetDirection(v[5]);
 			monster->setEnemyStatefromString(v[6]);
 			break;
 		}
 		case ZOOMER_PINK_CASE: {
 			monster = new Zoomer(spriteHandler, this, ZOOMER_PINK);
-			//this->setDirectionForZoomer(monster, v[5]);
-			monster->SetDirection(v[5]);
+			this->setDirectionForZoomer(monster, v[5]);
+			//monster->SetDirection(v[5]);
 			monster->setEnemyStatefromString(v[6]);
 			break;
 		}
@@ -155,17 +155,16 @@ void World::loadEnemyPositions(string filePath) {
 			break;
 		}
 		monster->setPosX(stoi(v[3]));
-		//monster->setInitPosX(stoi(v[3]));
+		monster->setInitPosX(stoi(v[3]));
 		monster->setPosY(stoi(v[4]));
-		//monster->setInitPosY(stoi(v[4]));
+		monster->setInitPosY(stoi(v[4]));
 		monster->setActive(false);
 		monster->setVelocityX(0);
 		monster->setVelocityY(0);
 		this->enemy.push_back(monster);
-		this->grid->add(monster);
 		v.clear();
-		//if(monster != NULL)
-			//this->grid->add(monster);
+		if(monster != NULL)
+			this->grid->add(monster);
 	}
 	if (v.size() != NULL)
 		trace(L"Unable to load EnemyPosition");

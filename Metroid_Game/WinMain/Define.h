@@ -234,30 +234,31 @@ enum OBJECT_TYPE
 //================= ENEMY TYPE =================
 enum ENEMY_TYPE
 {
-	ZOOMER_YELLOW = 0,
+	/*ZOOMER_YELLOW = 0,
 	ZOOMER_PINK = 1,
 	BIRD = 2,
 	BLOCK = 3,
 	BEE = 4,
 	RIDLEY = 5,
-	MOTHER_BRAIN = 6,
+	MOTHER_BRAIN = 6,*/
 };
 //================= END ENEMY TYPE =============
 
 //================== ENEMY =====================
 //================== ZOOMER =====================
-enum ZOOMER_DIRECTION {
-	ZOOMER_UP,
-	ZOOMER_LEFT,
-	ZOOMER_RIGHT,
-	ZOOMER_DOWN
-};
 enum ZOOMER_STATE
 {
 	ON_ZOOMER_UP,
 	ON_ZOOMER_BOTTOM,
 	ON_ZOOMER_LEFT,
 	ON_ZOOMER_RIGHT,
+};
+
+enum ZOOMER_DIRECTION {
+	ZOOMER_UP,
+	ZOOMER_LEFT,
+	ZOOMER_RIGHT,
+	ZOOMER_DOWN
 };
 #define ENEMY_SPRITE_PATH L"enemy\\metroid_enemies_sheet.png"
 #define ZOOMER_WIDTH 36
@@ -341,6 +342,7 @@ enum ZOOMER_STATE
 #define BULLET_COUNT 8
 #define WIDTH_BULLET 12
 #define HEIGHT_BULLET 14
+#define BULLET_DAMGE 8
 
 enum Bullet_SAMUS_Direction
 {
@@ -367,6 +369,10 @@ enum COLLISION_DIRECTION {
 };
 //================== END Grid ====================
 
+#define ZOOMER_YELLOW_CASE 0
+#define ZOOMER_PINK_CASE 1
+#define SKREE_CASE 2
+#define RIO_CASE 3
 
 //================== SKREE  =====================
 
@@ -387,5 +393,10 @@ enum COLLISION_DIRECTION {
 
 #define SKREE_DISTANCE_TO_SAMUS  300.0f
 #define SKREE_SPEED 100.0f
+
+#define SKREE_BULLET_SPEED 125.0f
+#define SKREE_BULLET_DISTANCE 75.0f
+
+#define SKREE_LIVE_TIME 50.0f
 
 //================== END SKREE =================
