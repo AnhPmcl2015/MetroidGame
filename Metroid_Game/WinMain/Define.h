@@ -234,11 +234,25 @@ enum OBJECT_TYPE
 //================== ENEMY =====================
 
 //================== ZOOMER =====================
+enum ZOOMER_STATE
+{
+	ON_ZOOMER_UP,
+	ON_ZOOMER_BOTTOM,
+	ON_ZOOMER_LEFT,
+	ON_ZOOMER_RIGHT,
+};
+
+enum ZOOMER_DIRECTION {
+	ZOOMER_UP,
+	ZOOMER_LEFT,
+	ZOOMER_RIGHT,
+	ZOOMER_DOWN
+};
 #define ENEMY_SPRITE_PATH L"enemy\\metroid_enemies_sheet.png"
 #define ZOOMER_WIDTH 36
 #define ZOOMER_HEIGHT 32
 #define ZOOMER_SPRITE_COUNT 2
-#define ZOOMER_SPEED 75.0f
+#define ZOOMER_SPEED 35.0f
 
 ///////ENERGY
 #define ENERGY_SPRITE_PATH L"sprites\\energy\\energy.png"
@@ -316,6 +330,7 @@ enum OBJECT_TYPE
 #define BULLET_COUNT 8
 #define WIDTH_BULLET 12
 #define HEIGHT_BULLET 14
+#define BULLET_DAMGE 8
 
 enum Bullet_SAMUS_Direction
 {
@@ -342,16 +357,10 @@ enum COLLISION_DIRECTION {
 };
 //================== END Grid ====================
 
-
-// ================= ZOOMER ====================
-enum ZOOMER_STATE
-{
-	ON_ZOOMER_UP,
-	ON_ZOOMER_BOTTOM,
-	ON_ZOOMER_LEFT,
-	ON_ZOOMER_RIGHT,
-};
-// ================ END ZOOMER =================
+#define ZOOMER_YELLOW_CASE 0
+#define ZOOMER_PINK_CASE 1
+#define SKREE_CASE 2
+#define RIO_CASE 3
 
 //================== SKREE  =====================
 
@@ -372,5 +381,10 @@ enum ZOOMER_STATE
 
 #define SKREE_DISTANCE_TO_SAMUS  300.0f
 #define SKREE_SPEED 100.0f
+
+#define SKREE_BULLET_SPEED 125.0f
+#define SKREE_BULLET_DISTANCE 75.0f
+
+#define SKREE_LIVE_TIME 50.0f
 
 //================== END SKREE =================

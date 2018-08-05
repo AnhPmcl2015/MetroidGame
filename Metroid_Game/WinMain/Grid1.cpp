@@ -184,9 +184,7 @@ void Grid::handleSkree(GameObject* object, GameObject* otherObject, COLLISION_DI
 		Skree* skree = dynamic_cast<Skree*>(object);
 		skree->pos_x += skree->vx *collisionTime*this->getDeltaTime();
 		skree->pos_y += skree->vy * collisionTime*this->getDeltaTime();
-		skree->setVelocityX(0);
-		skree->setVelocityY(0);
-		skree->setState(LANDED);
+		skree->setState(FINISH);
 	}
 	else if (otherObject->getType() == SAMUS) {
 		//ko lam gi het

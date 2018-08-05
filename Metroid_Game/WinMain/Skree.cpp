@@ -10,11 +10,22 @@ Skree::Skree(LPD3DXSPRITE spriteHandler, World * manager, OBJECT_TYPE enemy_type
 {
 	this->setType(enemy_type);
 	this->isActive = false;
-	this->isActive = false;
-
+	this->width = SKREE_WIDTH;
+	this->height = SKREE_HEIGHT;
+	this->grid = manager->grid;
 	//Set animate rate ban đầu
 	animate_rate = SKREE_STANDARD_ANIMATE_RATE;
 	setState(ON_HANGING);
+
+	Bullet* bullet1 = new Bullet(spriteHandler);
+	Bullet* bullet2 = new Bullet(spriteHandler);
+	Bullet* bullet3 = new Bullet(spriteHandler);
+	Bullet* bullet4 = new Bullet(spriteHandler);
+
+	skreeBullet.push_back(bullet1);
+	skreeBullet.push_back(bullet2);
+	skreeBullet.push_back(bullet3);
+	skreeBullet.push_back(bullet4);
 }
 
 Skree::~Skree()
@@ -32,69 +43,138 @@ SKREE_STATE Skree::getState()
 	return state;
 }
 
-void Skree::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
+void Skree::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 {
 	if (d3ddv == NULL) return;
 	//Create sprite handler
 	HRESULT result = D3DXCreateSprite(d3ddv, &spriteHandler);
 	if (result != D3D_OK) return;
 
-	Texture texture3;
-	LPDIRECT3DTEXTURE9 texture = texture3.loadTexture(d3ddv, ENEMY_SPRITE_PATH);
+	this->texture = texture;
 	if (texture == NULL)
 		trace(L"Unable to load skreeTexture");
 
 	// Khởi tạo sprite
 	skree = new Sprite(spriteHandler, texture, SKREE_PATH, SKREE_WIDTH, SKREE_HEIGHT, SKREE_COUNT);
+
+	Texture * texture1 = new Texture();
+	// Bullet Texture
+	LPDIRECT3DTEXTURE9 bulletTexture = texture1->loadTexture(d3ddv, SAMUS_BULLET_PATH);
+	if (bulletTexture == NULL)
+		trace(L"Unable to load BulletTexture");
+	for (int i = 0; i < this->skreeBullet.size(); i++) {
+		this->skreeBullet[i]->InitSprites(d3ddv, bulletTexture);
+	}
 }
 void Skree::Update(float t)
 {
 	//	grid->add(this);
 	if (!isActive) return;
 
-	float newPosX = pos_x + vx * t;
-	float newPosY = pos_y + vy * t;
+	
 
-	if (!this->grid->updateGrid(this, newPosX, newPosY)) {
-		pos_x = newPosX;
-		pos_y = newPosY;
+	if (getState() != LANDED && getState() != SHOT) {
+		//tinh khoang cach voi samus bang dinh luat Pytago
+		float rs = sqrt(((abs)(pos_x - samus_PosX)) * ((abs)(pos_x - samus_PosX)) + ((abs)(pos_y - samus_PosY) * (abs)(pos_y - samus_PosY)));
+		
+		if (rs < SKREE_DISTANCE_TO_SAMUS && getState() != LANDED) {
+			animate_rate = SKREE_BOOST_ANIMATE_RATE;
+			setState(ON_FALLING);
+			setActive(true);
+			vy = SKREE_SPEED;
+			if (samus_PosX < pos_x)
+				vx = -SKREE_SPEED;
+			else if (samus_PosX > pos_x)
+				vx = SKREE_SPEED;
+			else
+				vx = 0;
+		}
+
+		pos_x = this->pos_x + vx * t;
+		pos_y = this->pos_y + vy * t;
+
+		int oldRow = floor(this->pos_y / CELL_SIZE);
+		int oldColumn = floor(this->pos_x / CELL_SIZE);
+
+		this->grid->handleCell(this, oldRow, oldColumn);
+		this->grid->updateGrid(this, this->pos_x, this->pos_y);
+		DWORD now = GetTickCount();
+		if (now - last_time > 1000 / animate_rate)
+		{
+			skree->updateSprite();
+			last_time = now;
+		}
+	}
+	else if (getState() == LANDED) {
+		liveTime += t*75;
+		if (liveTime > SKREE_LIVE_TIME) {
+			for (int i = 0; i < skreeBullet.size(); i++) {
+				skreeBullet[i]->isActive = true;
+				skreeBullet[i]->pos_x = this->pos_x;
+				skreeBullet[i]->pos_y = this->pos_y;
+			}
+			range = this->pos_x + SKREE_BULLET_DISTANCE;
+			setState(SHOT);
+		}
+		else {
+			DWORD now = GetTickCount();
+			if (now - last_time > 1000 / animate_rate)
+			{
+				skree->updateSprite();
+				last_time = now;
+			}
+		}
+	}
+	else if (getState() == SHOT){
+		
+		skreeBullet[0]->pos_x = skreeBullet[0]->getPosX() - SKREE_BULLET_SPEED * t;
+
+		skreeBullet[1]->pos_x = skreeBullet[1]->getPosX() - SKREE_BULLET_SPEED * t;
+		skreeBullet[1]->pos_y = skreeBullet[1]->getPosY() - SKREE_BULLET_SPEED * t;
+
+		skreeBullet[2]->pos_x = skreeBullet[2]->getPosX() + SKREE_BULLET_SPEED * t;
+		skreeBullet[2]->pos_y = skreeBullet[2]->getPosY() - SKREE_BULLET_SPEED * t;
+
+		skreeBullet[3]->pos_x = skreeBullet[3]->getPosX() + SKREE_BULLET_SPEED * t;
+
+		if (skreeBullet[3]->pos_x > range) {
+			isDeath = true;
+			isActive = false;
+		}
 	}
 
-	//tinh khoang cach voi samus bang dinh luat Pytago
-	float rs = sqrt(((abs)(pos_x - samus_PosX)) * ((abs)(pos_x - samus_PosX)) + ((abs)(pos_y - samus_PosY) * (abs)(pos_y - samus_PosY)));
-
-	if (rs < SKREE_DISTANCE_TO_SAMUS) {
-		animate_rate = SKREE_BOOST_ANIMATE_RATE;
-		vy = SKREE_SPEED;
-		if (samus_PosX < pos_x)
-			vx = -SKREE_SPEED;
-		else if (samus_PosX > pos_x)
-			vx = SKREE_SPEED;
-		else
-			vx = 0;
-	}
-
-	DWORD now = GetTickCount();
-	if (now - last_time > 1000 / animate_rate)
-	{
-		skree->updateSprite();
-		last_time = now;
-	}
+	
 }
 
 void Skree::Render()
 {
-	D3DXVECTOR3 position;
-	position.x = pos_x;
-	position.y = pos_y;
-	position.z = 0;
+	if (isActive && !isDeath) {
+		if (getState() != SHOT) {
+			D3DXVECTOR3 position;
+			position.x = pos_x;
+			position.y = pos_y;
+			position.z = 0;
 
-	// Nếu không active thì không render
-	if (!isActive)
-		return;
-	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
-	skree->drawSprite(skree->getWidth(), skree->getHeight(), position);
-	spriteHandler->End();
+			// Nếu không active thì không render
+			if (!isActive)
+				return;
+			spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
+			skree->drawSprite(skree->getWidth(), skree->getHeight(), position);
+			spriteHandler->End();
+		}
+		else if (getState() == SHOT) {
+			for (int i = 0; i < skreeBullet.size(); i++) {
+				D3DXVECTOR3 position;
+				position.x = skreeBullet[i]->pos_x;
+				position.y = skreeBullet[i]->pos_y;
+				position.z = 0;
+				D3DXVECTOR3 pos = D3DXVECTOR3(skreeBullet[i]->pos_x, skreeBullet[i]->pos_y, 0);
+				skreeBullet[i]->bulletSprite->drawSprite(0, 0, WIDTH_BULLET, HEIGHT_BULLET, pos);
+			}
+		}
+	}
+	
+
 }
 
 void Skree::setEnemyStatefromString(string _state)
@@ -110,6 +190,22 @@ void Skree::setSamusLocation(int _posX, int _posY)
 {
 	samus_PosX = _posX;
 	samus_PosY = _posY;
+}
+
+void Skree::startMovingBySamus(int _posX, int _posY)
+{
+	samus_PosX = _posX;
+	samus_PosY = _posY;
+}
+
+void Skree::handleBullet(int bulletType)
+{
+	switch (bulletType) {
+	case 1: {
+		health -= BULLET_DAMGE;
+		break;
+	}
+	}
 }
 
 

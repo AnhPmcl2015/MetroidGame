@@ -18,7 +18,6 @@ void Metroid::_InitPositions()
 	this->world->grid->add(this->world->samus);
 	world->maruMari->Init(420, 352);
 	this->world->grid->add(this->world->maruMari);
-
 }
 
 Metroid::Metroid(HINSTANCE hInstance, LPWSTR Name, int Mode, int IsFullScreen, int FrameRate) 

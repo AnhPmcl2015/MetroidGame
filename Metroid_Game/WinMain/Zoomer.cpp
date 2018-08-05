@@ -14,6 +14,10 @@ Zoomer::Zoomer(LPD3DXSPRITE spriteHandler, World * manager, OBJECT_TYPE enemy_ty
 	//Set vận tốc
 	vx = 0.0f;
 	vy = 0.0f;
+	this->width = ZOOMER_WIDTH;
+	this->height = ZOOMER_HEIGHT;
+
+	this->grid = manager->grid;
 }
 
 
@@ -25,13 +29,13 @@ Zoomer::~Zoomer()
 	delete(right);
 }
 
-void Zoomer::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
+void Zoomer::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 {
 	LPWSTR top_path = NULL, bottom_path = NULL, left_path = NULL, right_path = NULL;
-	Texture texture2, texture3;
-	LPDIRECT3DTEXTURE9 texture = texture2.loadTexture(d3ddv, ENEMY_SPRITE_PATH);
 	if (texture == NULL)
 		trace(L"Unable to load zoomerTexture");
+	this->texture = texture;
+
 	switch (this->type)
 	{
 	case ZOOMER_YELLOW:
@@ -91,37 +95,64 @@ ZOOMER_STATE Zoomer::getState() {
 	return state;
 }
 
+
+// Bắt đầu di chuyển khi camera đi tới
 void Zoomer::startMoving()
 {
-	if (direction == "RIGHT") {
+	this->setPosX(this->getInitPosX());
+	this->setPosY(this->getInitPosY());
+	this->setDirection(this->getInitDirection());
+	this->isActive = true;
+}
+
+void Zoomer::setVelocity() {
+	if (direction == ZOOMER_RIGHT) {
 		setVelocityX(ZOOMER_SPEED);
 		setVelocityY(0);
 	}
-	else if (direction == "LEFT") {
+	else if (direction == ZOOMER_LEFT) {
 		setVelocityX(-ZOOMER_SPEED);
 		setVelocityY(0);
 	}
-	else if (direction == "UP") {
+	else if (direction == ZOOMER_UP) {
 		setVelocityY(-ZOOMER_SPEED);
 		setVelocityX(0);
 	}
-	else if (direction == "DOWN") {
+	else if (direction == ZOOMER_DOWN) {
 		setVelocityY(ZOOMER_SPEED);
 		setVelocityX(0);
 	}
 }
 
-void Zoomer::setSamusLocation(int _posX, int _posY)
-{
-}
-
-
 void Zoomer::Update(float t)
 {
-	if (!isActive) return;
+	if (!this->isActive) return;
+	this->setVelocity();
 
-	pos_x += vx * t;
-	pos_y += vy * t;
+	float newPosX = pos_x + vx * t;
+	float newPosY = pos_y + vy * t;
+
+	GameObject* object = static_cast<GameObject*>(this);
+	object->isActive = true;
+
+	//if (!this->grid->updateGrid(object, newPosX, newPosY)) {
+	//	float a = newPosX / 32;
+	//	float b = newPosY / 32;
+	//	a = newPosX - a * 32;
+	//	b = newPosY - b * 32;
+
+	//	pos_x = newPosX - a;
+	//	pos_y = newPosY - b;
+
+	//	if (this->getDirection() == ZOOMER_RIGHT && this->getState() == ON_ZOOMER_UP) {
+	//		this->setState(ON_ZOOMER_RIGHT);
+	//		this->setDirection(ZOOMER_DOWN);
+	//		pos_y += 32;
+	//	}
+	//	else if (this->getDirection() == ZOOMER_DOWN && this->getState() == ON_ZOOMER_RIGHT) {
+	//		
+	//	}
+	//}
 
 	DWORD now = GetTickCount();
 	if (now - last_time > 1000 / ANIMATE_ENEMY_RATE)
@@ -176,4 +207,20 @@ void Zoomer::Render()
 void Zoomer::Destroy()
 {
 	this->isActive = false;
+}
+
+void Zoomer::setDirection(ZOOMER_DIRECTION direction) {
+	this->direction = direction;
+}
+
+ZOOMER_DIRECTION Zoomer::getDirection() {
+	return this->direction;
+}
+
+void Zoomer::setInitDirection(ZOOMER_DIRECTION direction) {
+	this->initDirection = direction;
+}
+
+ZOOMER_DIRECTION Zoomer::getInitDirection() {
+	return this->initDirection;
 }

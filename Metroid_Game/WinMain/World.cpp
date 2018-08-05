@@ -26,8 +26,7 @@ World::World(LPD3DXSPRITE spriteHandler, Metroid * metroid, int width, int heigh
 	this->samusBullet.push_back(bullet3);
 
 	maruMari = new MaruMari(spriteHandler, this);
-
-	this->loadEnemyPositions("Monster_Room1.txt");
+	loadEnemyPositions("Monster_Room1.txt");
 }
 
 World::~World()
@@ -52,11 +51,11 @@ void World::Update(float t)
 		if (this->enemy[i]->isInsideMapBound(this->metroid->camera->getBoundary())) {
 			if (!this->enemy[i]->isActive && !this->enemy[i]->isDeath) {
 				enemy[i]->isActive = true;
+				enemy[i]->startMovingBySamus(this->samus->getPosX(), this->samus->getPosY());
 				enemy[i]->startMoving();
-				enemy[i]->setSamusLocation(this->samus->getPosX(), this->samus->getPosY());
 			}
 			else if (this->enemy[i]->isActive && !this->enemy[i]->isDeath) {
-				enemy[i]->setSamusLocation(this->samus->getPosX(), this->samus->getPosY());
+				enemy[i]->startMovingBySamus(this->samus->getPosX(), this->samus->getPosY());
 				enemy[i]->Update(t);
 			}
 			else {
@@ -99,17 +98,19 @@ void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 	maruMari->InitSprites(d3ddv, maru_texture);
 
 	// Bullet Texture
-	Texture texture2;
-	LPDIRECT3DTEXTURE9 bulletTexture = texture2.loadTexture(d3ddv, SAMUS_BULLET_PATH);
+	LPDIRECT3DTEXTURE9 bulletTexture = texture1->loadTexture(d3ddv, SAMUS_BULLET_PATH);
 	if (bulletTexture == NULL)
 		trace(L"Unable to load BulletTexture");
 	for (int i = 0; i < this->samusBullet.size(); i++) {
 		this->samusBullet[i]->InitSprites(d3ddv, bulletTexture);
 	}
 
+	
+	// Enemy Texture
+	LPDIRECT3DTEXTURE9 enemyTexture = texture1->loadTexture(d3ddv, ENEMY_SPRITE_PATH);
 	//Enemy (Zoomer) Texture
 	for (int i = 0; i < this->enemy.size(); i++) {
-		this->enemy[i]->InitSprites(d3ddv);
+		this->enemy[i]->InitSprites(d3ddv, enemyTexture);
 	}
 }
 
@@ -125,13 +126,13 @@ void World::loadEnemyPositions(string filePath) {
 		{
 		case ZOOMER_YELLOW_CASE: {
 			monster = new Zoomer(spriteHandler, this, ZOOMER_YELLOW);
-			monster->SetDirection(v[5]);
+			this->setDirectionForZoomer(monster, v[5]);
 			monster->setEnemyStatefromString(v[6]);
 			break;
 		}
 		case ZOOMER_PINK_CASE: {
 			monster = new Zoomer(spriteHandler, this, ZOOMER_PINK);
-			monster->SetDirection(v[5]);
+			this->setDirectionForZoomer(monster, v[5]);
 			monster->setEnemyStatefromString(v[6]);
 			break;
 		}
@@ -147,13 +148,16 @@ void World::loadEnemyPositions(string filePath) {
 			break;
 		}
 		monster->setPosX(stoi(v[3]));
+		monster->setInitPosX(stoi(v[3]));
 		monster->setPosY(stoi(v[4]));
+		monster->setInitPosY(stoi(v[4]));
 		monster->setActive(false);
 		monster->setVelocityX(0);
 		monster->setVelocityY(0);
 		this->enemy.push_back(monster);
-		this->grid->add(monster);
 		v.clear();
+		if(monster != NULL)
+			this->grid->add(monster);
 	}
 	if (v.size() != NULL)
 		trace(L"Unable to load EnemyPosition");
@@ -172,4 +176,20 @@ vector<string> World::split(string s, string c) {
 			v.push_back(s.substr(i, s.length()));
 	}
 	return v;
+}
+
+void World::setDirectionForZoomer(Enemy* enemy, string str) {
+	Zoomer* zoomer = dynamic_cast<Zoomer*>(enemy);
+	if (str == "RIGHT") {
+		zoomer->setInitDirection(ZOOMER_RIGHT);
+	}
+	else if (str == "LEFT") {
+		zoomer->setInitDirection(ZOOMER_LEFT);
+	}
+	else if (str == "UP") {
+		zoomer->setInitDirection(ZOOMER_UP);
+	}
+	else if (str == "DOWN") {
+		zoomer->setInitDirection(ZOOMER_DOWN);
+	}
 }
