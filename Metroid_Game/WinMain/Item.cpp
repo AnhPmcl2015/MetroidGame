@@ -8,12 +8,19 @@ Item::Item(LPD3DXSPRITE sprietHandler, World * manager)
 	this->manager = manager;
 	this->time_survive = ITEM_TIME_SURVIVE;
 
+	item = NULL;
+	isActive = true;
+
+	this->previousUnit = NULL;
+	this->nextUnit = NULL;
+
 	vx = 0;
 	vy = 0;
 }
 
 Item::~Item()
 {
+	delete(item);
 }
 
 int Item::getNumberGain()
@@ -35,7 +42,12 @@ void Item::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 }
 
 void Item::Init(float posX, float posY)
-{}
+{
+	this->pos_x = posX;
+	this->pos_y = posY;
+	this->isActive = true;
+	time_survive = ITEM_TIME_SURVIVE;
+}
 
 void Item::Update(float t)
 {
@@ -54,4 +66,20 @@ void Item::Update(float t)
 
 void Item::Render()
 {
+	D3DXVECTOR3 position;
+	position.x = pos_x;
+	position.y = pos_y;
+	position.z = 0;
+
+	if (!isActive)
+		return;
+
+	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
+	item->drawSprite(item->getWidth(), item->getHeight(), position);
+	spriteHandler->End();
+}
+
+void Item::Destroy()
+{
+	this->setActive(false);
 }

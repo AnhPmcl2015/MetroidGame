@@ -91,6 +91,10 @@ enum OBJECT_TYPE
 };
 //================= END OBJECT TYPE ============
 
+//================= ITEM TYPE =================
+
+//
+
 //================= GAME SCENE ================
 #define STARTSCREEN_FILE L"scene\\start_background.png"
 #define INTROSCREEN_FILE L"scene\\intro_background.png"

@@ -150,9 +150,9 @@ bool Grid::handleObject(GameObject *object, GameObject* otherObject) {
 bool Grid::handleCollision(GameObject *object, GameObject *otherObject) {
 	COLLISION_DIRECTION collisionDirection = NONE;
 	float collisionTime = object->sweptAABB(otherObject, collisionDirection, this->getDeltaTime());
-	OBJECT_TYPE objectType = object->getType();
 	if (collisionDirection == NONE)
 		return false;
+	OBJECT_TYPE objectType = object->getType();
 	switch (objectType)
 	{
 		case ZOOMER_PINK:
@@ -198,20 +198,21 @@ void Grid::handleSamus(GameObject* object, GameObject* otherObject, COLLISION_DI
 	OBJECT_TYPE otherType = otherObject->getType();
 	switch (otherType)
 	{
-		case MARU_MARI:
+		case ITEM:
 		{
-			samus->setCanRoll(true);
-			otherObject->setActive(false);
+			Item* item = dynamic_cast<Item*>(otherObject);
+			item->touchedBySamus(samus);
 			break;
 		}
 		case BRICK:
 		{
-			object->pos_x += object->vx * this->getDeltaTime();
-			object->pos_y += object->vy * this->getDeltaTime();
+			object->pos_x += object->vx * collisionTime * this->getDeltaTime();
+			object->pos_y += object->vy * collisionTime * this->getDeltaTime();
 			break;
 		}
 		case ZOOMER_PINK:
 		case ZOOMER_YELLOW:
+		case SKREE:
 		{
 			break;
 		}
@@ -222,7 +223,6 @@ void Grid::handleSamus(GameObject* object, GameObject* otherObject, COLLISION_DI
 		object->pos_x += object->vx *collisionTime*this->getDeltaTime();
 		object->pos_y += object->vy * collisionTime*this->getDeltaTime();
 	}*/
-}
 	/*object->pos_y += object->vy * collisionTime *this->getDeltaTime();
 	if (collisionDirection == LEFT) {
 		object->pos_x += object->vx * collisionTime * this->getDeltaTime();
@@ -236,43 +236,43 @@ void Grid::handleZoomer(GameObject* object, GameObject* otherObject, COLLISION_D
 
 	OBJECT_TYPE type = otherObject->getType();
 	switch (collisionDirection) {
-	case BOTTOM: {
-		zoomer->setIsBottomCollided(true);
-		if (type != SAMUS && type != BULLET) {
-			object->pos_y += object->vy * collisionTime * deltaTime;
+		case BOTTOM: {
+			zoomer->setIsBottomCollided(true);
+			if (type != SAMUS && type != BULLET) {
+				object->pos_y += object->vy * collisionTime * deltaTime;
+			}
+
+			break;
 		}
 
-		break;
-	}
+		case TOP: {
+			zoomer->setIsTopCollided(true);
+			if (type != SAMUS && type != BULLET) {
+				object->pos_y += object->vy * collisionTime * deltaTime;
+			}
 
-	case TOP: {
-		zoomer->setIsTopCollided(true);
-		if (type != SAMUS && type != BULLET) {
-			object->pos_y += object->vy * collisionTime * deltaTime;
+			break;
 		}
 
-		break;
-	}
+		case LEFT: {
+			zoomer->setIsLeftCollided(true);
+			if (type != SAMUS && type != BULLET) {
+				object->pos_x += object->vx * collisionTime *deltaTime;
+			}
+			else if (type == SAMUS) {
+				object->pos_x += object->vx * deltaTime;
+				zoomer->setIsLeftCollided(false);
+			}
+			break;
+		}
 
-	case LEFT: {
-		zoomer->setIsLeftCollided(true);
-		if (type != SAMUS && type != BULLET) {
-			object->pos_x += object->vx * collisionTime *deltaTime;
+		case RIGHT: {
+			zoomer->setIsRightCollided(true);
+			if (type != SAMUS && type != BULLET) {
+				object->pos_x += object->vx * collisionTime *deltaTime;
+			}
+			break;
 		}
-		else if (type == SAMUS) {
-			object->pos_x += object->vx * deltaTime;
-			zoomer->setIsLeftCollided(false);
-		}
-		break;
-	}
-
-	case RIGHT: {
-		zoomer->setIsRightCollided(true);
-		if (type != SAMUS && type != BULLET) {
-			object->pos_x += object->vx * collisionTime *deltaTime;
-		}
-		break;
-	}
 	}
 	/*object->pos_x += object->vx *collisionTime*this->getDeltaTime();
 	object->pos_y += object->vy * collisionTime*this->getDeltaTime();*/

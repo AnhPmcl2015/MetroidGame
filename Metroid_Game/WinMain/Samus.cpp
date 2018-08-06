@@ -97,6 +97,7 @@ Samus::Samus()
 	this->nextUnit = NULL;
 
 	gravity = FALLDOWN_VELOCITY_DECREASE;
+	state = STAND_RIGHT;
 }
 
 void Samus::Destroy()
@@ -104,7 +105,7 @@ void Samus::Destroy()
 	//Ngưng active
 	this->isActive = false;
 
-	//--TO DO: Đưa Samus ra khỏi viewport
+	// TODO: Đưa Samus ra khỏi viewport
 }
 
 Samus::Samus(LPD3DXSPRITE spriteHandler, World * manager, Grid* grid) : Samus()
@@ -175,17 +176,14 @@ void Samus::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 
 void Samus::InitPostition()
 {
-	//--TO DO: This code will be edited soon
+	// TODO: This code will be edited soon
 	/*pos_x = 992;	
 	pos_y = 320;*/	
 	this->pos_x = 1140;
-	this->pos_y = 352; //352
+	this->pos_y = 352;
 	vx = 0;
 	vx_last = 1.0f;
 	vy = 0.0f;
-
-	//Init state of samus
-	state = STAND_RIGHT;
 }
 
 SAMUS_STATE Samus::GetState()
@@ -244,8 +242,7 @@ void Samus::Reset(float x, float y)
 
 bool Samus::isSamusDeath()
 {
-	if (isDeath == true)
-		return true;
+	return isDeath;
 }
 
 // Update samus status
@@ -257,10 +254,11 @@ void Samus::Update(float t)
 
 	int row = (int)floor(this->pos_y / CELL_SIZE);
 	int column = (int)floor(this->pos_x / CELL_SIZE);
-	//if (!this->grid->handleCell(this, row, column)) {
+
+	if (!this->grid->handleCell(this, row, column)) {
 		pos_x = newPosX;
 		pos_y = newPosY;
-	//}
+	}
 
 	this->grid->updateGrid(this, this->pos_x, this->pos_y);
 
