@@ -216,7 +216,7 @@ enum OBJECT_TYPE
 #define MARU_MARI_WIDTH 24
 #define MARU_MARI_HEIGHT 26
 #define MARU_MARI_PATH L"sprites\\item\\MARU_MARI.txt"
-#define MARU_MARI_COUNT 1
+#define MARU_MARI_COUNT 2
 
 //========= ITEM ENERGY
 #define ITEM_ENERGY_WIDTH 16
