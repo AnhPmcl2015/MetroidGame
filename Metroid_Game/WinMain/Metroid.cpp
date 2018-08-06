@@ -260,6 +260,7 @@ void Metroid::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta)
 	}
 	else
 	{
+		world->samus->checkpoint = world->samus->getVelocityX();
 		world->samus->setVelocityX(0);
 		if (!this->world->samus->getIsBall()) {
 			if (world->samus->getVelocityXLast() > 0)

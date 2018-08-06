@@ -32,9 +32,12 @@ protected:
 	int tempX;
 	bool isBall;
 public:
-	bool isJumping;	// Trạng thái đang nhảy của Samus
+	bool isJumping = false;	// Trạng thái đang nhảy của Samus
+	bool isFalling = false;
 	bool canMorph = true;
 	bool isMorphing = false;
+	bool isCollideLeft = false;
+	bool isCollideRight = false;
 
 	float health;	// Máu của Samus
 	bool isDeath = false;	// Trạng thái chết của Samus
@@ -64,6 +67,11 @@ public:
 	void Destroy();
 	//================= END OVERRIDE VIRTUAL METHOD =============
 
+	float collideDistanceX = 0;
+	float collideDistanceY = 0;
+	bool canControl = true;
+	float checkpoint = 0;
+	void collideEnemy();
 };
 
 

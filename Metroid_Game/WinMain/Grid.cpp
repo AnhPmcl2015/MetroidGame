@@ -170,8 +170,13 @@ bool Grid::handleCollision(GameObject *object, GameObject *otherObject) {
 
 void Grid::handleSamus(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
 	Samus* samus = dynamic_cast<Samus*>(object);
-	object->pos_x += object->vx *collisionTime*this->getDeltaTime();
-	object->pos_y += object->vy * collisionTime*this->getDeltaTime();
+	if (otherObject->getType() == BRICK) {
+		object->pos_x += object->vx *collisionTime*this->getDeltaTime();
+		object->pos_y += object->vy * collisionTime*this->getDeltaTime();
+	}
+	else  {
+		samus->collideEnemy();
+	}
 }
 
 void Grid::handleZoomer(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
@@ -190,6 +195,8 @@ void Grid::handleSkree(GameObject* object, GameObject* otherObject, COLLISION_DI
 	}
 	else if (otherObject->getType() == SAMUS) {
 		//ko lam gi het
+		Samus* samus = dynamic_cast<Samus*>(otherObject);
+		samus->collideEnemy();
 	}
 	else if (otherObject->getType() == BULLET) {
 		//dua ve xu li bullet se hay hon

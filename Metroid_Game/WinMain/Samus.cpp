@@ -99,6 +99,21 @@ void Samus::Destroy()
 	//--TO DO: Đưa Samus ra khỏi viewport
 }
 
+void Samus::collideEnemy()
+{
+	collideDistanceY = this->pos_y - collideHeight;
+	if (getVelocityXLast() > 0) {		
+		isCollideRight = true;
+		collideDistanceX = this->pos_x - collideHeight * 2;
+	}
+	else {
+		isCollideLeft = true;
+		collideDistanceX = this->pos_x + collideHeight * 2;
+	}
+	isJumping = true;
+	isFalling = false;
+}
+
 Samus::Samus(LPD3DXSPRITE spriteHandler, World * manager, Grid* grid)
 {
 	this->grid = grid;
@@ -248,16 +263,77 @@ bool Samus::isSamusDeath()
 // Update samus status
 void Samus::Update(float t)
 {
-	pos_x = pos_x + vx * t;
-	pos_y = pos_y + vy * t;
+	if (checkpoint != 0) {
+		pos_x = this->pos_x + checkpoint * t;
+		pos_y = this->pos_y + vy * t;
+	}
+	else {
+		pos_x = this->pos_x + vx * t;
+		pos_y = this->pos_y + vy * t;
+	}
 
-	//if (!this->grid->updateGrid(this, newPosX, newPosY)) {
-	//	pos_x = newPosX;
-	//	pos_y = newPosY;
-	//}
-	//pos_x = newPosX;
-	//pos_y = newPosY;
 
+	int oldRow = floor(this->pos_y / CELL_SIZE);
+	int oldColumn = floor(this->pos_x / CELL_SIZE);
+
+	this->grid->handleCell(this, oldRow, oldColumn);
+	this->grid->updateGrid(this, this->pos_x, this->pos_y);
+
+	//dang bi va cham vang ra, ben phai va ben trai
+	if (isCollideRight) {
+		if (pos_x > collideDistanceX) {
+			vx = -SAMUS_SPEED;
+			if (isJumping == true && isFalling == false) {
+				if (pos_y > collideDistanceY) {
+					vy = -100;
+				}
+				else {
+					isJumping = false;
+					isFalling = true;
+				}				
+			}
+			else if (isJumping == false && isFalling == true) {
+				if (pos_y < collideDistanceY + collideHeight) {
+					vy = 100;
+				}
+				else {
+					isJumping = false;
+					isFalling = false;
+				}
+			}
+		}
+		else {
+			isCollideRight = false;
+		}
+	}
+	if (isCollideLeft) {
+		if (pos_x < collideDistanceX) {
+			vx = +SAMUS_SPEED;
+			if (isJumping == true && isFalling == false) {
+				if (pos_y > collideDistanceY) {
+					vy = -100;
+				}
+				else {
+					isJumping = false;
+					isFalling = true;
+				}
+			}
+			else if (isJumping == false && isFalling == true) {
+				if (pos_y < collideDistanceY + collideHeight) {
+					vy = 100;
+				}
+				else {
+					isJumping = false;
+					isFalling = false;
+				}
+			}
+		}
+		else {
+			isCollideLeft = false;
+		}
+	}
+
+	
 	// Animate samus if he is running
 	DWORD now = GetTickCount();
 	if (now - last_time > 1000 / ANIMATE_RATE)

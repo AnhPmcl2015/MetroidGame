@@ -9,14 +9,16 @@ enum SKREE_STATE
 	ON_HANGING,
 	ON_FALLING,
 	LANDED,
-	SHOT
+	SHOT,
+	EXPLOSION_STATE,
+	KILLED
 };
 
 class Skree : public Enemy
 {
 protected:
 	Sprite * skree;
-
+	Sprite * explosion;
 	int animate_rate;	// cần biến này vì khi dí theo Samus animate rate thay đổi
 public:
 	Skree();
