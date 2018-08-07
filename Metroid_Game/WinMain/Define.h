@@ -28,6 +28,8 @@ class GameObject;
 #define FRICTION 1.0f
 #define TEXTURE_GAME_CHARACTERS L"sprites\\Player_32x16.png"
 
+#define collideHeight 64
+
 //================ SCREEN RESOLUTION ================
 #define GAME_SCREEN_RESOLUTION_640_480_24   0
 #define GAME_SCREEN_RESOLUTION_800_600_24   1
@@ -63,6 +65,8 @@ enum SAMUS_STATE {
 	TRANSFORM_BALL_RIGHT,
 	JUMP_SHOOT_UP_LEFT,
 	JUMP_SHOOT_UP_RIGHT,
+	COLLIDE_RIGHT,
+	COLLIDE_LEFT
 };
 
 //================END SAMUS ====================
@@ -396,7 +400,7 @@ enum COLLISION_DIRECTION {
 #define RIO_CASE 3
 
 #define SKREE_DISTANCE_TO_SAMUS  300.0f
-#define SKREE_SPEED 100.0f
+#define SKREE_SPEED 150.0f
 
 #define SKREE_BULLET_SPEED 125.0f
 #define SKREE_BULLET_DISTANCE 75.0f
@@ -404,3 +408,12 @@ enum COLLISION_DIRECTION {
 #define SKREE_LIVE_TIME 50.0f
 
 //================== END SKREE =================
+
+//================== EXPLOSION =================
+#define EXPLOSION L"enemy\\ENEMY_DETROYED.txt"
+#define EXPLOSION_PATH L"enemy\\explosion.png"
+#define EXPLOSION_COUNT 1
+#define EXPLOSION_WIDTH 48
+#define EXPLOSION_HEIGHT 48
+
+//================== END EXPLOSION =================

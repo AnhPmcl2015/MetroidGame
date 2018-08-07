@@ -176,22 +176,6 @@ bool Grid::handleCollision(GameObject *object, GameObject *otherObject) {
 	}
 	return true;
 
-	//if (collisionDirection != NONE) {
-	//	if (object->getType() == SAMUS) {
-	//		//this->handleSamus(object, otherObject, collisionDirection, collisionTime);
-	//	}
-	//	else if (object->getType() == ZOOMER_PINK || object->getType() == ZOOMER_YELLOW) {
-	//		
-	//	}
-	//	else if (object->getType() == SKREE) {
-	//		
-	//	}
-	//	return true;
-	//}
-	//else {
-	//	return false;
-	//}
-}
 
 void Grid::handleSamus(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
 	Samus* samus = dynamic_cast<Samus*>(object);
@@ -214,6 +198,7 @@ void Grid::handleSamus(GameObject* object, GameObject* otherObject, COLLISION_DI
 		case ZOOMER_YELLOW:
 		case SKREE:
 		{
+			samus->
 			break;
 		}
 		default:
@@ -289,6 +274,8 @@ void Grid::handleSkree(GameObject* object, GameObject* otherObject, COLLISION_DI
 	}
 	else if (otherObject->getType() == SAMUS) {
 		//ko lam gi het
+		/*Samus* samus = dynamic_cast<Samus*>(otherObject);
+		samus->collideEnemy();*/
 	}
 	else if (otherObject->getType() == BULLET) {
 		//dua ve xu li bullet se hay hon

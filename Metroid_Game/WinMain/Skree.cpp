@@ -65,6 +65,12 @@ void Skree::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 	for (int i = 0; i < this->skreeBullet.size(); i++) {
 		this->skreeBullet[i]->InitSprites(d3ddv, bulletTexture);
 	}
+	
+	Texture * texture2 = new Texture();
+	LPDIRECT3DTEXTURE9 explosionTexture = texture2->loadTexture(d3ddv, EXPLOSION);
+	if (explosionTexture == NULL)
+		trace(L"Unable to load explosion texture");
+	explosion = new Sprite(spriteHandler, explosionTexture, EXPLOSION_PATH, EXPLOSION_WIDTH, EXPLOSION_HEIGHT, EXPLOSION_COUNT);
 }
 void Skree::Update(float t)
 {
@@ -111,7 +117,7 @@ void Skree::Update(float t)
 			for (int i = 0; i < skreeBullet.size(); i++) {
 				skreeBullet[i]->isActive = true;
 				skreeBullet[i]->pos_x = this->pos_x;
-				skreeBullet[i]->pos_y = this->pos_y;
+				skreeBullet[i]->pos_y = this->pos_y + 32;
 			}
 			range = this->pos_x + SKREE_BULLET_DISTANCE;
 			setState(SHOT);
@@ -140,15 +146,25 @@ void Skree::Update(float t)
 		if (skreeBullet[3]->pos_x > range) {
 			isDeath = true;
 			isActive = false;
+			setState(EXPLOSION_STATE);
 		}
 	}
-
-	
 }
 
 void Skree::Render()
 {
-	if (isActive && !isDeath) {
+	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
+	if (getState() == EXPLOSION_STATE) {
+		D3DXVECTOR3 position;
+		position.x = pos_x;
+		position.y = pos_y;
+		position.z = 0;
+		
+		explosion->drawSprite(explosion->getWidth(), explosion->getHeight(), position);
+
+		setState(KILLED);
+	}
+	else if (isActive && !isDeath) {
 		if (getState() != SHOT) {
 			D3DXVECTOR3 position;
 			position.x = pos_x;
@@ -158,9 +174,7 @@ void Skree::Render()
 			// Nếu không active thì không render
 			if (!isActive)
 				return;
-			spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
 			skree->drawSprite(skree->getWidth(), skree->getHeight(), position);
-			spriteHandler->End();
 		}
 		else if (getState() == SHOT) {
 			for (int i = 0; i < skreeBullet.size(); i++) {
@@ -173,8 +187,7 @@ void Skree::Render()
 			}
 		}
 	}
-	
-
+	spriteHandler->End();
 }
 
 void Skree::setEnemyStatefromString(string _state)
