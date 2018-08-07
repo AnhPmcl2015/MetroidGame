@@ -3,13 +3,23 @@
 #include <d3dx9.h>
 #include "Define.h"
 #include "Samus.h"
+<<<<<<< HEAD
+=======
+#include "Skree.h"
+>>>>>>> HLong
 #include "Zoomer.h"
 #include <vector>
 #include "Texture.h"
 #include "Grid.h"
+<<<<<<< HEAD
 #include "Bullet.h"
+=======
+#include "Gate.h"
+#include "GateBlock.h"
 #include "ExplodeEffect.h"
+#include "Bomb.h"
 #include "BombWeapon.h"
+>>>>>>> HLong
 
 using namespace std;
 
@@ -21,16 +31,29 @@ Các class khác chứa con trỏ đến class này để thao tác với các �
 class World
 {
 public:
+	Grid * grid;
 	Metroid * metroid;
+<<<<<<< HEAD
 	Grid *grid;
 	Samus * samus;
 	MaruMari * maruMari;
-	ExplodeEffect* explodeEffect;
-	BombWeapon* bombWeapon;
-
 	vector<Bullet*> samusBullet;
 	vector<Enemy*> enemy;
+=======
+	Gate * gateRight;
+	Gate * gateLeft;
+	GateBlock * gateBlock;
+	Samus * samus;
+	MaruMari * maruMari;
+	Skree * skree;
+	ExplodeEffect * explode;
+	Bomb * bomb;
+	ItemBomb * itemBomb;
+	//Manager * bulletManager;
+>>>>>>> HLong
 	LPD3DXSPRITE spriteHandler;
+	vector<Zoomer*> zoomerYellow = vector<Zoomer*>(3);
+	vector<Zoomer*> zoomerPink = vector<Zoomer*>(3);
 
 	World();
 	World(LPD3DXSPRITE spriteHandler, Metroid * metroid, int width, int height);
@@ -40,8 +63,9 @@ public:
 	void Render();
 	void InitSprites(LPDIRECT3DDEVICE9 d3ddv);
 
+<<<<<<< HEAD
 	void loadEnemyPositions(string filePath);
 	vector<string> World::split(string s, string c);
-
-	void setDirectionForZoomer(Enemy*, string str);
+=======
+>>>>>>> HLong
 };
