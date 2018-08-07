@@ -129,17 +129,6 @@ Samus::Samus(LPD3DXSPRITE spriteHandler, World * manager, Grid* grid) : Samus()
 	
 	this->spriteHandler = spriteHandler;
 	this->manager = manager;
-	//this->isActive = true;
-
-
-	//Set type
-	//this->type = SAMUS;
-
-	/*width = 40;
-	height = 50;*/
-
-	//this->isBall = false;
-
 }
 
 Samus::~Samus()

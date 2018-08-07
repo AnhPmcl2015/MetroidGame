@@ -175,7 +175,7 @@ bool Grid::handleCollision(GameObject *object, GameObject *otherObject) {
 			break;
 	}
 	return true;
-
+}
 
 void Grid::handleSamus(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
 	Samus* samus = dynamic_cast<Samus*>(object);
@@ -198,7 +198,7 @@ void Grid::handleSamus(GameObject* object, GameObject* otherObject, COLLISION_DI
 		case ZOOMER_YELLOW:
 		case SKREE:
 		{
-			samus->
+			samus->collideEnemy();
 			break;
 		}
 		default:
