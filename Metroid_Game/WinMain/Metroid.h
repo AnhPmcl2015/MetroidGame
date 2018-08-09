@@ -68,6 +68,8 @@ public:
 
 	ROOM_NUMBER getRoomNum();
 	void setRoomNum(ROOM_NUMBER value);
+
+	void setSamusBulletDirection(Bullet*);
 };
 
 #endif // !_METROID_

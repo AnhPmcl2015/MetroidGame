@@ -171,35 +171,77 @@ bool Grid::handleCollision(GameObject *object, GameObject *otherObject) {
 void Grid::handleSamus(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
 	Samus* samus = dynamic_cast<Samus*>(object);
 	//object->pos_y += object->vy * collisionTime *this->getDeltaTime();
-
-	if (collisionDirection == LEFT)
-	{
-		samus->isLeft = true;
-		object->pos_x += object->vx * collisionTime * this->getDeltaTime();
-	}
-
-	else if (collisionDirection == RIGHT)
-	{
-		samus->isRight = true;
-		object->pos_x += object->vx * collisionTime * this->getDeltaTime();
-	}
-
-	else if (collisionDirection == TOP)
-	{
-		samus->isTop = true;
-		samus->setVelocityY(-samus->getVelocityY());
-	}
-
-	else if (collisionDirection == BOTTOM)
+	OBJECT_TYPE otherObjectType = otherObject->getType();
+	if (collisionDirection == BOTTOM)
 	{
 		samus->isBottom = true;
-		object->setFall(false);
-		object->setJump(true);
-		samus->isOnGround = true;
-		object->pos_y += object->vy * collisionTime *this->getDeltaTime();
-	}
-}
+		switch (otherObjectType) {
+		case BRICK: {
 
+			object->pos_y += object->vy * collisionTime *this->getDeltaTime();
+
+			if (samus->isJumping) {
+				samus->isJumping = false;
+				samus->isOnGround = true;
+				samus->isFalling = false;
+				samus->pos_y -= (64 - samus->getHeight());
+				samus->setWidth(32);
+				samus->setHeight(64);
+				switch (samus->GetState()) {
+				case JUMP_RIGHT: case MORPH_RIGHT: {
+					samus->SetState(STAND_RIGHT);
+					samus->isMorphing = false;
+					break;
+				}
+				case JUMP_LEFT: case MORPH_LEFT: {
+					samus->SetState(STAND_LEFT);
+					samus->isMorphing = false;
+					break;
+				}
+				case JUMP_SHOOT_UP_LEFT: {
+					samus->SetState(STAND_SHOOT_UP_LEFT);
+					break;
+				}
+
+				case JUMP_SHOOT_UP_RIGHT: {
+					samus->SetState(STAND_SHOOT_UP_RIGHT);
+					break;
+				}
+				}
+			}
+		}
+		}
+	}
+	else if (collisionDirection == TOP) {
+		samus->isTop = true;
+		switch (otherObjectType) {
+		case BRICK: {
+			object->pos_y += object->vy * collisionTime*this->getDeltaTime();
+
+			break;
+		}
+		}
+	}
+	else if (collisionDirection == RIGHT) {
+		samus->isRight = true;
+		switch (otherObjectType) {
+		case BRICK: {
+			object->pos_x += object->vx * collisionTime*this->getDeltaTime();
+			break;
+		}
+		}
+	}
+	else if (collisionDirection == LEFT) {
+		samus->isLeft = true;
+		switch (otherObjectType) {
+		case BRICK: {
+			object->pos_x += object->vx * collisionTime*this->getDeltaTime();
+			break;
+		}
+		}
+	}
+
+}
 
 // Xử lý zoomer khi va chạm với các thể loại object
 void Grid::handleZoomer(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {

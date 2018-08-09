@@ -21,11 +21,12 @@ class GameObject;
 #define JUMP_VELOCITY_BOOST_FIRST 28.0f
 #define FALLDOWN_VELOCITY_DECREASE 295.0f
 #define MAX_FALLING 600.0f
-#define GRAVITY_VELOCITY 0.5f
+
 #define ANIMATE_RATE 30
 #define LIVE_TIME 3000
-
-#define SAMUS_SPEED 200.0f
+#define SAMUS_MAX_JUMP 160.0f
+#define SAMUS_MIN_JUMP 64.0f
+#define SAMUS_SPEED 150.0f
 #define FRICTION 1.0f
 #define TEXTURE_GAME_CHARACTERS L"sprites\\Player_32x16.png"
 
@@ -33,6 +34,9 @@ class GameObject;
 #define MAP_ROOM2 "map\\fieldBossRidley.txt"
 #define MAP_ROOM3 "map\\fieldBossMB.txt"
 #define MAP_STAIR "map\\fieldStair.txt"
+
+#define JUMP_VELOCITY 200.0f
+#define GRAVITY_VELOCITY 150.0f
 
 enum ROOM_NUMBER {
 	ROOM1,
