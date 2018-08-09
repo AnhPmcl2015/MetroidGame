@@ -24,7 +24,7 @@ Loader::~Loader()
 void Loader::loadFile()
 {
 	ifstream file_txt(this->filePath);
-	string str;
+	string str = "";
 	int row = 0, column = 0;
 	while (getline(file_txt, str)) {
 		row++;

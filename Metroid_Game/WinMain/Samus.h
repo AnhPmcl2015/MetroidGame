@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "trace.h"
 #include "World.h"
-
+#include <vector>
 
 class Samus : public GameObject
 {
@@ -29,12 +29,23 @@ protected:
 
 	SAMUS_STATE state;	
 
+	bool isInRoom1 = true;
+	bool isInRoom2 = false;
+	bool isInBoss1 = false;
+	bool isInBoss2 = false;
+
 	int tempX;
 	bool isBall;
 public:
 	bool isJumping;	// Trạng thái đang nhảy của Samus
 	bool canMorph = true;
 	bool isMorphing = false;
+
+	bool isOnGround = false;
+	bool isTop = false;
+	bool isBottom = false;
+	bool isLeft = false;
+	bool isRight = false;
 
 	float health;	// Máu của Samus
 	bool isDeath = false;	// Trạng thái chết của Samus

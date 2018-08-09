@@ -67,6 +67,21 @@
     <Filter Include="Source Files\Item">
       <UniqueIdentifier>{3a286a5a-2c87-4c65-ad2e-8e733602fe84}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Effect">
+      <UniqueIdentifier>{52fa9a98-7600-4a9c-82e3-266121ff0e2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Effect">
+      <UniqueIdentifier>{176e7ab7-e272-4947-bcef-1bd2f6cbfd3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\map">
+      <UniqueIdentifier>{2c293248-f8b4-4c72-88b9-4a71772e92b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\sprites\gate">
+      <UniqueIdentifier>{9c5159d1-4ee3-41c7-95e5-7fd041281b7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\sprites\explode_effect">
+      <UniqueIdentifier>{71c1e7f3-9220-4799-b72b-0e04b96797fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -157,6 +172,21 @@
       <Filter>Source Files\FrameWork</Filter>
     </ClCompile>
     <ClCompile Include="Brick.cpp">
+      <Filter>Source Files\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="BombWeapon.cpp">
+      <Filter>Source Files\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Source Files\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplodeEffect.cpp">
+      <Filter>Source Files\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Gate.cpp">
+      <Filter>Source Files\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="GateBlock.cpp">
       <Filter>Source Files\Drawable</Filter>
     </ClCompile>
   </ItemGroup>
@@ -251,6 +281,24 @@
     <ClInclude Include="Brick.h">
       <Filter>Header Files\Drawable</Filter>
     </ClInclude>
+    <ClInclude Include="BombWeapon.h">
+      <Filter>Header Files\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Header Files\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplodeEffect.h">
+      <Filter>Header Files\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Gate.h">
+      <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="GateBlock.h">
+      <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="brick_16x16.png">
@@ -285,6 +333,15 @@
     </Image>
     <Image Include="sprites\item\items_sprite_sheet.png">
       <Filter>Resource Files\sprites\item</Filter>
+    </Image>
+    <Image Include="map\brick_32x32.png">
+      <Filter>Resource Files\map</Filter>
+    </Image>
+    <Image Include="sprites\gate\GATE_32.png">
+      <Filter>Resource Files\sprites\gate</Filter>
+    </Image>
+    <Image Include="sprites\explode_effect\explosion.png">
+      <Filter>Resource Files\sprites\explode_effect</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -399,6 +456,27 @@
     <Text Include="Monster_Room1.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="map\fieldFullRoom.txt">
+      <Filter>Resource Files\map</Filter>
+    </Text>
+    <Text Include="sprites\gate\GATE_BLOCK.txt">
+      <Filter>Resource Files\sprites\gate</Filter>
+    </Text>
+    <Text Include="sprites\gate\GATE_LEFT_DESTROYING.txt">
+      <Filter>Resource Files\sprites\gate</Filter>
+    </Text>
+    <Text Include="sprites\gate\GATE_LEFT_EXISTS.txt">
+      <Filter>Resource Files\sprites\gate</Filter>
+    </Text>
+    <Text Include="sprites\gate\GATE_RIGHT_DESTROYING.txt">
+      <Filter>Resource Files\sprites\gate</Filter>
+    </Text>
+    <Text Include="sprites\gate\GATE_RIGHT_EXISTS.txt">
+      <Filter>Resource Files\sprites\gate</Filter>
+    </Text>
+    <Text Include="sprites\explode_effect\EFFECT_EXPLOSION.txt">
+      <Filter>Resource Files\sprites\explode_effect</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Media Include="sound\bullet.wav">
@@ -446,5 +524,10 @@
     <Media Include="sound\background\samus_death.wav">
       <Filter>Resource Files\sound\background</Filter>
     </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="WinMain.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
