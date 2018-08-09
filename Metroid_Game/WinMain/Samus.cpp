@@ -101,14 +101,15 @@ void Samus::Destroy()
 
 void Samus::collideEnemy()
 {
+	isControlled = false;
 	collideDistanceY = this->pos_y - collideHeight;
 	if (getVelocityXLast() > 0) {		
 		isCollideRight = true;
-		collideDistanceX = this->pos_x - collideHeight * 2;
+		collideDistanceX = this->pos_x - collideHeight * 4;
 	}
 	else {
 		isCollideLeft = true;
-		collideDistanceX = this->pos_x + collideHeight * 2;
+		collideDistanceX = this->pos_x + collideHeight * 4;
 	}
 	isJumping = true;
 	isFalling = false;
@@ -297,12 +298,15 @@ void Samus::Update(float t)
 					vy = 100;
 				}
 				else {
-					isJumping = false;
-					isFalling = false;
+					
 				}
 			}
 		}
 		else {
+			vy = 0;
+			isJumping = false;
+			isFalling = false;
+			isControlled = true;
 			isCollideRight = false;
 		}
 	}
@@ -323,12 +327,15 @@ void Samus::Update(float t)
 					vy = 100;
 				}
 				else {
-					isJumping = false;
-					isFalling = false;
+
 				}
 			}
 		}
 		else {
+			vy = 0;
+			isJumping = false;
+			isFalling = false;
+			isControlled = true;
 			isCollideLeft = false;
 		}
 	}

@@ -174,8 +174,9 @@ void Grid::handleSamus(GameObject* object, GameObject* otherObject, COLLISION_DI
 		object->pos_x += object->vx *collisionTime*this->getDeltaTime();
 		object->pos_y += object->vy * collisionTime*this->getDeltaTime();
 	}
-	else  {
-		samus->collideEnemy();
+	else if (otherObject->isActive){
+		if (samus->isControlled)
+			samus->collideEnemy();
 	}
 }
 
@@ -193,10 +194,11 @@ void Grid::handleSkree(GameObject* object, GameObject* otherObject, COLLISION_DI
 		skree->setVelocityY(0);
 		skree->setState(LANDED);
 	}
-	else if (otherObject->getType() == SAMUS) {
+	else if (otherObject->getType() == SAMUS && otherObject->isActive) {
 		//ko lam gi het
 		Samus* samus = dynamic_cast<Samus*>(otherObject);
-		samus->collideEnemy();
+		if (samus->isControlled)
+			samus->collideEnemy();
 	}
 	else if (otherObject->getType() == BULLET) {
 		//dua ve xu li bullet se hay hon

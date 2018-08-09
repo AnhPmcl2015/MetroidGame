@@ -38,6 +38,7 @@ public:
 	bool isMorphing = false;
 	bool isCollideLeft = false;
 	bool isCollideRight = false;
+	bool isControlled = true;
 
 	float health;	// Máu của Samus
 	bool isDeath = false;	// Trạng thái chết của Samus
