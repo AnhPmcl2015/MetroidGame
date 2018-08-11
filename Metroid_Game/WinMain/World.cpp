@@ -28,9 +28,12 @@ World::World(LPD3DXSPRITE spriteHandler, Metroid * metroid)
 	explodeEffect = new ExplodeEffect(spriteHandler, this, metroid->getGrid());
 	bombWeapon = new BombWeapon(spriteHandler, this);
 
-	//gateRight = new Gate(spriteHandler, this);
+	gateRight = new Gate(spriteHandler, this);
 	gateLeft = new Gate(spriteHandler, this);
 	gateBlock = new GateBlock(spriteHandler, this, metroid->getGrid());
+
+	kraid = new Kraid(spriteHandler, this);
+	ridley = new Ridley(spriteHandler, this);
 
 	loadEnemyPositions("Monster_Room1.txt");
 }
@@ -43,8 +46,10 @@ World::~World()
 	delete(explodeEffect);
 	delete(bombWeapon);
 	delete(gateLeft);
-	//delete(gateRight);
+	delete(gateRight);
 	delete(gateBlock);
+	delete(ridley);
+	delete(kraid);
 }
 
 void World::Update(float t)
@@ -80,7 +85,10 @@ void World::Update(float t)
 	explodeEffect->Update(t);
 	gateBlock->Update(t);
 	gateLeft->Update(t);
-	//gateRight->Update(t);
+	gateRight->Update(t);
+
+	kraid->Update(t);
+	ridley->Update(t);
 
 	//if (gateLeft->getGateState() == DESTROYING)
 		//gateRight->setGateState(OPEN);
@@ -107,8 +115,11 @@ void World::Render()
 	bombWeapon->Render();
 	explodeEffect->Render();
 	gateBlock->Render();
-	//gateRight->Render();
+	gateRight->Render();
 	gateLeft->Render();
+
+	kraid->Render();
+	ridley->Render();
 }
 
 void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
@@ -159,9 +170,17 @@ void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 	LPDIRECT3DTEXTURE9 gate_texture = textureGate->loadTexture(d3ddv, GATE_SPRITES_PATH);
 	if (gate_texture == NULL)
 		trace(L"Unable to load Gate Texture");
-	//gateRight->InitSprites(d3ddv, gate_texture, GATE_RIGHT);
+	gateRight->InitSprites(d3ddv, gate_texture, GATE_RIGHT);
 	gateLeft->InitSprites(d3ddv, gate_texture, GATE_LEFT);
 	gateBlock->InitSprites(d3ddv, gate_texture);
+
+	// Boss Texture
+	Texture * textureBoss = new Texture();
+	LPDIRECT3DTEXTURE9 boss_texture = textureBoss->loadTexture(d3ddv, BOSS_TEXTURE);
+	if (boss_texture == NULL)
+		trace(L"Unable to load Boss Texture");
+	kraid->InitSprites(d3ddv, boss_texture);
+	ridley->InitSprites(d3ddv, boss_texture);
 }
 
 void World::loadEnemyPositions(string filePath) {

@@ -54,19 +54,10 @@ void Camera::Update(float t)
 				eye.x = m_map_bound.left + CAMERA_FOLLOW_POINT_LEFT_RATIO * width;
 			else if (Camera_bound.right > WIDTH_ROOM1)
 				eye.x = WIDTH_ROOM1 - CAMERA_FOLLOW_POINT_RIGHT_RATIO * width;
-
-			if (m_following->pos_x > WIDTH_ROOM1)
-			{
-				eye.x = WIDTH_ROOM1 + CAMERA_FOLLOW_POINT_LEFT_RATIO * width;
-			}
 			break;
 		case ROOM2:
 			if (Camera_bound.left < WIDTH_ROOM1)
-			{			
-				//eye.x += 64;
-				//if (eye.x == WIDTH_ROOM1)
-					eye.x = WIDTH_ROOM1 + CAMERA_FOLLOW_POINT_LEFT_RATIO * width;
-			}
+				eye.x = WIDTH_ROOM1 + CAMERA_FOLLOW_POINT_LEFT_RATIO * width;
 			else if (Camera_bound.right > WIDTH_ROOM1 + WIDTH_ROOM2)
 				eye.x = WIDTH_ROOM1 + WIDTH_ROOM2 - CAMERA_FOLLOW_POINT_RIGHT_RATIO * width;
 			break;
@@ -105,7 +96,6 @@ void Camera::Update(float t)
 		//	//	
 		//	//	//m_following->isActive = true;
 		//	//}
-
 		//	if (m_following->pos_x >= WIDTH_ROOM1 - GATE_BLOCK_WIDTH / 2
 		//		&& Camera_bound.left <= WIDTH_ROOM1)
 		//	{
@@ -125,16 +115,19 @@ void Camera::Update(float t)
 		else
 			Camera_bound.right = eye.x + CAMERA_FOLLOW_POINT_RIGHT_RATIO * width;
 
-		if (m_following->pos_x > WIDTH_ROOM1)
+		if (m_following->pos_x > WIDTH_ROOM1 && Camera_bound.left < WIDTH_ROOM1)
 		{
-			int leftCamera = eye.x - CAMERA_FOLLOW_POINT_LEFT_RATIO * width;
-			leftCamera += m_following->getCurrentTime();
-			if (leftCamera == WIDTH_ROOM1)
-				leftCamera = WIDTH_ROOM1;
+			m_following->isActive = false;
+			//int leftCamera = eye.x - CAMERA_FOLLOW_POINT_LEFT_RATIO * width;
+			//if (leftCamera < WIDTH_ROOM1)
+			Camera_bound.left += 128;
+			if (Camera_bound.left >= WIDTH_ROOM1 - CAMERA_FOLLOW_POINT_LEFT_RATIO * width)
+				Camera_bound.left = WIDTH_ROOM1 - CAMERA_FOLLOW_POINT_LEFT_RATIO * width;
+			m_following->isActive = true;
 
 			Camera_bound.top = eye.y - CAMERA_FOLLOW_POINT_TOP_RATIO * height;
 			Camera_bound.bottom = eye.y + CAMERA_FOLLOW_POINT_BOTTOM_RATIO * height;
-			Camera_bound.left = leftCamera;
+			//Camera_bound.left = leftCamera;
 			Camera_bound.right = m_following->pos_x + CAMERA_FOLLOW_POINT_RIGHT_RATIO * width;
 		}
 	}

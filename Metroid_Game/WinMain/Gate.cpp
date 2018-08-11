@@ -79,6 +79,28 @@ void Gate::Update(float t)
 	if (!isActive)
 		return;
 
+	/*if (manager->samus->getRoomNum() == ROOM2)
+	{
+		if (this->GetGateType() == GATE_LEFT)
+			this->pos_x += WIDTH_ROOM2;
+		if (this->GetGateType() == GATE_RIGHT && manager->samus->pos_x >= WIDTH_ROOM1 + 10 * BRICK_SIZE)
+			this->pos_x += WIDTH_ROOM2;
+	}
+	else if (manager->samus->getRoomNum() == BOSS1)
+	{
+		if (this->GetGateType() == GATE_LEFT)
+			this->pos_x += WIDTH_ROOM_BOSS;
+		if (this->GetGateType() == GATE_RIGHT && manager->samus->pos_x >= WIDTH_ROOM_BOSS + 10 * BRICK_SIZE)
+			this->pos_x += WIDTH_ROOM_BOSS;
+	}
+	else if (manager->samus->getRoomNum() == BOSS2)
+	{
+		if (this->GetGateType() == GATE_LEFT)
+			this->pos_x += WIDTH_ROOM_BOSS;
+		if (this->GetGateType() == GATE_RIGHT && manager->samus->pos_x >= WIDTH_ROOM1 + 10 * BRICK_SIZE)
+			this->pos_x += WIDTH_ROOM_BOSS;
+	}*/
+
 	this->isRight = false;
 	this->isLeft = false;
 
@@ -86,6 +108,14 @@ void Gate::Update(float t)
 	int column = (int)floor(this->pos_x / CELL_SIZE);
 	// Xet va cham va cap nhat vi tri
 	manager->getMetroid()->getGrid()->handleCell(this, row, column);
+
+	if (this->getGateState() == OPEN && (isLeft == true || isRight == true))
+	{
+		float time = 0.3f;
+		time -= t;
+		if (time <= 0.0f)
+			this->setGateState(CLOSE);
+	}
 
 	manager->getMetroid()->getGrid()->updateGrid(this, this->pos_x, this->pos_y);
 

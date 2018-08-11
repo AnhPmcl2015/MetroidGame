@@ -189,6 +189,21 @@
     <ClCompile Include="GateBlock.cpp">
       <Filter>Source Files\Drawable</Filter>
     </ClCompile>
+    <ClCompile Include="Kraid.cpp">
+      <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Ridley.cpp">
+      <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="RidleyBullet.cpp">
+      <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="KraidBomerang.cpp">
+      <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="KraidBullet.cpp">
+      <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -299,6 +314,21 @@
     <ClInclude Include="GateBlock.h">
       <Filter>Header Files\Drawable</Filter>
     </ClInclude>
+    <ClInclude Include="Kraid.h">
+      <Filter>Header Files\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Ridley.h">
+      <Filter>Header Files\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="KraidBomerang.h">
+      <Filter>Header Files\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="KraidBullet.h">
+      <Filter>Header Files\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="RidleyBullet.h">
+      <Filter>Header Files\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="brick_16x16.png">
@@ -342,6 +372,9 @@
     </Image>
     <Image Include="sprites\explode_effect\explosion.png">
       <Filter>Resource Files\sprites\explode_effect</Filter>
+    </Image>
+    <Image Include="enemy\boss_sheet.png">
+      <Filter>Resource Files\enemy</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -476,6 +509,33 @@
     </Text>
     <Text Include="sprites\explode_effect\EFFECT_EXPLOSION.txt">
       <Filter>Resource Files\sprites\explode_effect</Filter>
+    </Text>
+    <Text Include="enemy\KRAID_BOMERANG.txt">
+      <Filter>Resource Files\enemy</Filter>
+    </Text>
+    <Text Include="enemy\KRAID_BULLET.txt">
+      <Filter>Resource Files\enemy</Filter>
+    </Text>
+    <Text Include="enemy\KRAID_LEFT.txt">
+      <Filter>Resource Files\enemy</Filter>
+    </Text>
+    <Text Include="enemy\KRAID_RIGHT.txt">
+      <Filter>Resource Files\enemy</Filter>
+    </Text>
+    <Text Include="enemy\RIDLEY_BULLET.txt">
+      <Filter>Resource Files\enemy</Filter>
+    </Text>
+    <Text Include="enemy\RIDLEY_FLY_LEFT.txt">
+      <Filter>Resource Files\enemy</Filter>
+    </Text>
+    <Text Include="enemy\RIDLEY_FLY_RIGHT.txt">
+      <Filter>Resource Files\enemy</Filter>
+    </Text>
+    <Text Include="enemy\RIDLEY_SIT_LEFT.txt">
+      <Filter>Resource Files\enemy</Filter>
+    </Text>
+    <Text Include="enemy\RIDLEY_SIT_RIGHT.txt">
+      <Filter>Resource Files\enemy</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

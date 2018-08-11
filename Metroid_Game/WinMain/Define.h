@@ -13,6 +13,9 @@ class CSound;
 class GameSound;
 class Map;
 class Gate;
+class KraidBomerang;
+class KraidBullet;
+class RidleyBullet;
 
 #define KEYBOARD_BUFFER_SIZE	1024
 #define KEY_DOWN(code) ( IsKeyDown(code) )
@@ -21,13 +24,16 @@ class Gate;
 #define TIME_FREEZING 5000
 #define TIME_IN_GAME 7000
 
+#define JUMP_VELOCITY 150.0f
 #define JUMP_VELOCITY_BOOST 0.5f
 #define JUMP_VELOCITY_BOOST_FIRST 28.0f
 #define FALLDOWN_VELOCITY_DECREASE 295.0f
 #define MAX_FALLING 600.0f
-#define GRAVITY_VELOCITY 0.5f
+#define GRAVITY_VELOCITY 180.0f
 #define ANIMATE_RATE 30
 #define LIVE_TIME 3000
+#define SAMUS_MAX_JUMP 182
+#define SAMUS_MIN_JUMP 64
 
 #define SAMUS_SPEED 200.0f
 #define FRICTION 1.0f
@@ -36,7 +42,7 @@ class Gate;
 #define MAP_FULL_ROOM "map\\fieldFullRoom.txt"
 #define WIDTH_ROOM1 2272
 #define WIDTH_ROOM2 2048
-#define WIDTH_ROOM_BOSS 512
+#define WIDTH_ROOM_BOSS 640
 #define HEIGHT_ROOM	480
 
 enum ROOM_NUMBER {
@@ -98,13 +104,16 @@ enum OBJECT_TYPE
 	SKREE,
 	GATE_BLOCK,
 	RIDLEY,
-	MOTHER_BRAIN,
+	KRAID,
 	EXPLOSION_BOMB,
 	MARU_MARI,
 	ENERGY_ITEM,
 	MISSILE_ITEM,
 	BOMB_ITEM,
-	BOMB_WEAPON
+	BOMB_WEAPON,
+	RIDLEY_BULLET,
+	KRAID_BOMERANG,
+	KRAID_BULLET
 };
 //================= END OBJECT TYPE ============
 
@@ -457,4 +466,45 @@ enum COLLISION_DIRECTION {
 #define ZOOMER_PINK_CASE 1
 #define SKREE_CASE 2
 #define RIO_CASE 3
+
+//================== BOSS ====================
+#define BOSS_TEXTURE L"enemy\\boss_sheet.png"
+//---------RIDLEY------------
+#define WIDTH_RIDLEY 31
+#define HEIGHT_RIDLEY_SIT 40
+#define HEIGHT_RIDLEY_FLY 46
+#define RIDLEY_COUNT 2
+#define RIDLEY_SIT_LEFT_PATH L"enemy\\RIDLEY_SIT_LEFT.txt"
+#define RIDLEY_SIT_RIGHT_PATH L"enemy\\RIDLEY_SIT_RIGHT.txt"
+#define RIDLEY_FLY_LEFT_PATH L"enemy\\RIDLEY_FLY_RIGHT.txt"
+#define RIDLEY_FLY_RIGHT_PATH L"enemy\\RIDLEY_FLY_RIGHT.txt"
+
+#define WIDTH_RIDLEY_BULLET 7
+#define HEIGHT_RIDLEY_BULLET 8
+#define RIDLEY_BULLET_COUNT 4
+#define RIDLEY_BULLET_PATH L"enemy\\RIDLEY_BULLET.txt"
+
+enum RIDLEY_STATE {
+	SITTING,
+	FLYING
+};
+//---------END RIDLEY--------
+
+//---------KRAID-------------
+#define WIDTH_KRAID 24
+#define HEIGHT_KRAID 32
+#define KRAID_COUNT 2
+#define KRAID_RIGHT_PATH L"enemy\\KRAID_RIGHT.txt"
+#define KRAID_LEFT_PATH L"enemy\\KRAID_LEFT.txt"
+
+#define SIZE_KRAID_BOMERANG 8
+#define COUNT_KRAID_BOMERANG 4
+#define KRAID_BOMERANG_PATH L"enemy\\KRAID_BOMERANG.txt"
+
+#define WIDTH_KRAID_BULLET 8
+#define HEIGHT_KRAID_BULLET 3
+#define COUNT_KRAID_BULLET 1
+#define KRAID_BULLET_PATH L"enemy\\KRAID_BULLET.txt"
+//---------END KRAID---------
+//================== END BOSS ====================
 
