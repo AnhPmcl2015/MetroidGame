@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "trace.h"
 #include "World.h"
-
+#include <vector>
 
 class Samus : public GameObject
 {
@@ -31,14 +31,27 @@ protected:
 
 	int tempX;
 	bool isBall;
+	float startPosJump;
+	float endPosJump;
+private:
+	vector<string> stringMapSamus;
 public:
-	bool isJumping = false;	// Trạng thái đang nhảy của Samus
-	bool isFalling = false;
+	bool isJumping;	// Trạng thái đang nhảy của Samus
 	bool canMorph = true;
 	bool isMorphing = false;
+
+	bool isOnGround = false;
+	bool isTop = false;
+	bool isBottom = false;
+	bool isLeft = false;
+	bool isRight = false;
+	bool isColisionHandled = false;
+
 	bool isCollideLeft = false;
 	bool isCollideRight = false;
 	bool isControlled = true;
+	float collideDistanceX = 0;
+	float collideDistanceY = 0;
 
 	float health;	// Máu của Samus
 	bool isDeath = false;	// Trạng thái chết của Samus
@@ -68,10 +81,15 @@ public:
 	void Destroy();
 	//================= END OVERRIDE VIRTUAL METHOD =============
 
-	float collideDistanceX = 0;
-	float collideDistanceY = 0;
-	bool canControl = true;
-	float checkpoint = 0;
+	void setStartPosJump(float posY) { this->startPosJump = posY; }
+	float getStartPosJump() { return this->startPosJump; }
+	void setEndPosJump(float currentPosY) { this->endPosJump = currentPosY; }
+	float getEndPosJump() { return this->endPosJump; }
+
+	void setDimension();
+	void setStringMap(vector<string> stringMap) { this->stringMapSamus = stringMap; }
+	vector<string> getStringMap() { return this->stringMapSamus; }
+
 	void collideEnemy();
 };
 

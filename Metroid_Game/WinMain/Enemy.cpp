@@ -51,11 +51,7 @@ void Enemy::startMoving()
 {
 }
 
-void Enemy::startMovingBySamus(int _posX, int _posY)
-{
-}
-
-void Enemy::handleBullet(int bulletType)
+void Enemy::setSamusLocation(int _posX, int _posY)
 {
 }
 

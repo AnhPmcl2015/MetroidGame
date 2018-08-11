@@ -17,12 +17,12 @@ Grid::Grid() {
 }
 
 Grid::Grid(int height, int width) {
-	this->numOfRow = (int)ceil(height * BRICK_SIZE / CELL_SIZE);
-	this->numOfColumn = (int)ceil(width * BRICK_SIZE / CELL_SIZE);
+	this->numOfRow = (int)ceil((float)height * BRICK_SIZE / CELL_SIZE);
+	this->numOfColumn = (int)ceil((float)width * BRICK_SIZE / CELL_SIZE);
 
-	for (int i = 0; i <= numOfRow; i++)
+	for (int i = 0; i < numOfRow; i++)
 	{
-		for (int j = 0; j <= numOfColumn; j++)
+		for (int j = 0; j < numOfColumn; j++)
 			cells[i][j] = NULL;
 	}
 	this->deltaTime = 0.0f;
@@ -80,7 +80,7 @@ bool Grid::handleCell(GameObject* object, int row, int column) {
 	bool isCollision = false;
 	GameObject *cell = cells[row][column];
 	if (object != NULL) {
-		if ((object->getType() != BRICK || object->getType() != ITEM) && object->isActivated() ) {
+		if ((object->getType() != BRICK || object->getType() != ITEM) && object->isActive) {
 			// Đầu tiên là xét trong chính cell của nó trước
 			if (this->handleObject(object, cell))
 				isCollision = true;
@@ -129,14 +129,14 @@ bool Grid::handleObject(GameObject *object, GameObject* otherObject) {
 	while (otherObject != NULL) {
 		if (object != otherObject && otherObject->isActive) {
 			// Mình phải tính va chạm là từ khoảng cách giữa 2 điểm từ tâm của nó
-			int x1 = (int)((object->pos_x + object->width) / 2);
-			int y1 = (int)((object->pos_y + object->height) / 2);
+			int x1 = (int)((object->pos_x + object->width/2));
+			int y1 = (int)((object->pos_y + object->height/2));
 			D3DXVECTOR2 objectPos(x1, y1);
 
-			int x2 = (int)((otherObject->pos_x + otherObject->width) / 2);
-			int y2 = (int)((otherObject->pos_y + otherObject->height) / 2);
+			int x2 = (int)((otherObject->pos_x + otherObject->width/2));
+			int y2 = (int)((otherObject->pos_y + otherObject->height/2));
 			D3DXVECTOR2 otherPos(x2, y2);
-			if (Math::distance(objectPos, otherPos) < 50) {
+			if (Math::distance(objectPos, otherPos) < 100) {
 				if (handleCollision(object, otherObject))
 					isCollision = true;
 			}
@@ -158,8 +158,14 @@ bool Grid::handleCollision(GameObject *object, GameObject *otherObject) {
 		else if (object->getType() == ZOOMER_PINK || object->getType() == ZOOMER_YELLOW) {
 			this->handleZoomer(object, otherObject, collisionDirection, collisionTime);
 		}
+		else if (object->getType() == BULLET) {
+			this->handleSamusBullet(object, otherObject, collisionDirection, collisionTime);
+		}
 		else if (object->getType() == SKREE) {
 			this->handleSkree(object, otherObject, collisionDirection, collisionTime);
+		}
+		else if (object->getType() == BULLET_SKREE) {
+			this->handleBulletSkree(object, otherObject, collisionDirection, collisionTime);
 		}
 		return true;
 	}
@@ -168,22 +174,6 @@ bool Grid::handleCollision(GameObject *object, GameObject *otherObject) {
 	}
 }
 
-void Grid::handleSamus(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
-	Samus* samus = dynamic_cast<Samus*>(object);
-	if (otherObject->getType() == BRICK) {
-		object->pos_x += object->vx *collisionTime*this->getDeltaTime();
-		object->pos_y += object->vy * collisionTime*this->getDeltaTime();
-	}
-	else if (otherObject->isActive){
-		if (samus->isControlled)
-			samus->collideEnemy();
-	}
-}
-
-void Grid::handleZoomer(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
-	object->pos_x += object->vx *collisionTime*this->getDeltaTime();
-	object->pos_y += object->vy * collisionTime*this->getDeltaTime();
-}
 
 void Grid::handleSkree(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
 	if (otherObject->getType() == BRICK && collisionDirection == BOTTOM) {
@@ -195,19 +185,327 @@ void Grid::handleSkree(GameObject* object, GameObject* otherObject, COLLISION_DI
 		skree->setState(LANDED);
 	}
 	else if (otherObject->getType() == SAMUS && otherObject->isActive) {
-		//ko lam gi het
+		//xử lí samus bị văng ra
 		Samus* samus = dynamic_cast<Samus*>(otherObject);
 		if (samus->isControlled)
 			samus->collideEnemy();
 	}
-	else if (otherObject->getType() == BULLET) {
-		//dua ve xu li bullet se hay hon
-		Skree* skree = dynamic_cast<Skree*>(object);
-		skree->handleBullet(1);
+
+}
+
+void Grid::handleBulletSkree(GameObject * object, GameObject * otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime)
+{
+	if (otherObject->getType() == SAMUS) {
+		Samus* samus = dynamic_cast<Samus*>(otherObject);
+		if (samus->isControlled)
+			samus->collideEnemy();
+	}
+}
+
+
+void Grid::handleSamus(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
+	Samus* samus = dynamic_cast<Samus*>(object);
+	//object->pos_y += object->vy * collisionTime *this->getDeltaTime();
+	OBJECT_TYPE otherObjectType = otherObject->getType();
+	if (collisionDirection == BOTTOM)
+	{
+		samus->isBottom = true;
+		switch (otherObjectType) {
+		case BRICK: {
+
+			object->pos_y += object->vy * collisionTime *this->getDeltaTime();
+			if (samus->isJumping) {
+				samus->isJumping = false;
+				samus->isOnGround = true;
+				samus->isFalling = false;
+				if (!samus->getIsBall()) {
+					samus->pos_y -= (64 - samus->getHeight());
+					samus->setWidth(32);
+					samus->setHeight(64);
+					switch (samus->GetState()) {
+					case JUMP_RIGHT: case MORPH_RIGHT: {
+						samus->SetState(STAND_RIGHT);
+						samus->isMorphing = false;
+						break;
+					}
+					case JUMP_LEFT: case MORPH_LEFT: {
+						samus->SetState(STAND_LEFT);
+						samus->isMorphing = false;
+						break;
+					}
+					case JUMP_SHOOT_UP_LEFT: {
+						samus->SetState(STAND_SHOOT_UP_LEFT);
+						break;
+					}
+
+					case JUMP_SHOOT_UP_RIGHT: {
+						samus->SetState(STAND_SHOOT_UP_RIGHT);
+						break;
+					}
+				}
+				
+				}
+			}
+		}
+		}
+	}
+	else if (collisionDirection == TOP) {
+		samus->isTop = true;
+		switch (otherObjectType) {
+		case BRICK: {
+			object->pos_y += object->vy * collisionTime*this->getDeltaTime();
+
+			break;
+		}
+		}
+	}
+	else if (collisionDirection == RIGHT) {
+		samus->isRight = true;
+		switch (otherObjectType) {
+		case BRICK: {
+			object->pos_x += object->vx * collisionTime*this->getDeltaTime();
+			break;
+		}
+		}
+	}
+	else if (collisionDirection == LEFT) {
+		samus->isLeft = true;
+		switch (otherObjectType) {
+		case BRICK: {
+			object->pos_x += object->vx * collisionTime*this->getDeltaTime();
+			break;
+		}
+		
+		}
+	}
+
+}
+
+// Xử lý zoomer khi va chạm với các thể loại object
+void Grid::handleZoomer(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
+	Zoomer* zoomer = dynamic_cast<Zoomer*>(object);
+
+	OBJECT_TYPE type = otherObject->getType();
+	switch (collisionDirection) {
+	case BOTTOM: {
+		zoomer->setIsBottomCollided(true);
+		if (type != SAMUS && type != BULLET && type!=EXPLOSION_BOMB) {
+			object->pos_y += object->vy * collisionTime * deltaTime;
+		}
+		else if (type == BULLET) {
+			zoomer->setHealth(zoomer->getHealth() - 20);
+			zoomer->setIsBottomCollided(false);
+			if (zoomer->getHealth() == 0)
+			{
+				zoomer->isActive = false;
+				zoomer->Destroy(zoomer->pos_x, zoomer->pos_y);
+			}
+			else {
+				zoomer->setIsEnemyFreezed(true);
+			}
+			Bullet* bullet = dynamic_cast<Bullet*>(otherObject);
+			bullet->Reset();
+		}
+		else if (type == EXPLOSION_BOMB) {
+			object->pos_y += object->vy * deltaTime;
+			zoomer->setIsBottomCollided(false);
+		}
+		break;
+
+	}
+
+	case TOP: {
+		zoomer->setIsTopCollided(true);
+		if (type != SAMUS && type != BULLET && type != EXPLOSION_BOMB) {
+			object->pos_y += object->vy * collisionTime * deltaTime;
+		}
+		else if (type == BULLET) {
+
+			zoomer->setHealth(zoomer->getHealth() - 20);
+			zoomer->setIsTopCollided(false);
+			if (zoomer->getHealth() == 0)
+			{
+				zoomer->isActive = false;
+				zoomer->Destroy(zoomer->pos_x, zoomer->pos_y);
+			}
+			else {
+				zoomer->setIsEnemyFreezed(true);
+			}
+			Bullet* bullet = dynamic_cast<Bullet*>(otherObject);
+			bullet->Reset();
+		}
+		else if (type == EXPLOSION_BOMB) {
+			object->pos_y += object->vy * deltaTime;
+			zoomer->setIsTopCollided(false);
+		}
+		break;
+	}
+
+	case LEFT: {
+		zoomer->setIsLeftCollided(true);
+		if (type != SAMUS && type != BULLET && type != EXPLOSION_BOMB) {
+			object->pos_x += object->vx * collisionTime *deltaTime;
+		}
+		else if (type == SAMUS) {
+			object->pos_x += object->vx * deltaTime;
+			zoomer->setIsLeftCollided(false);
+		}
+		else if (type == BULLET) {
+
+			zoomer->setHealth(zoomer->getHealth() - 20);
+			zoomer->setIsLeftCollided(false);
+			if (zoomer->getHealth() == 0)
+			{
+				zoomer->isActive = false;
+				zoomer->Destroy(zoomer->pos_x, zoomer->pos_y);
+			}
+			else {
+				zoomer->setIsEnemyFreezed(true);
+			}
+			Bullet* bullet = dynamic_cast<Bullet*>(otherObject);
+			bullet->Reset();
+		}
+		else if (type == EXPLOSION_BOMB) {
+			object->pos_y += object->vy * deltaTime;
+			zoomer->setIsLeftCollided(false);
+		}
+		break;
+	}
+
+	case RIGHT: {
+		zoomer->setIsRightCollided(true);
+		if (type != SAMUS && type != BULLET && type != EXPLOSION_BOMB) {
+			object->pos_x += object->vx * collisionTime *deltaTime;
+		}
+		else if (type == BULLET) {
+
+			zoomer->setHealth(zoomer->getHealth() - 20);
+			zoomer->setIsRightCollided(false);
+			if (zoomer->getHealth() == 0)
+			{
+				zoomer->isActive = false;
+				zoomer->Destroy(zoomer->pos_x, zoomer->pos_y);
+			}
+			else {
+				zoomer->setIsEnemyFreezed(true);
+			}
+			Bullet* bullet = dynamic_cast<Bullet*>(otherObject);
+			bullet->Reset();
+		}
+		else if (type == EXPLOSION_BOMB) {
+			object->pos_y += object->vy * deltaTime;
+			zoomer->setIsRightCollided(false);
+		}
+		break;
+	}
+	}
+}
+
+
+void Grid::handleSamusBullet(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
+	if (!object->isActive)
+		return;
+
+	Bullet* bullet = dynamic_cast<Bullet*>(object);
+	OBJECT_TYPE type = otherObject->getType();
+
+	switch (collisionDirection) {
+	case TOP: {
+		bullet->setIsTop(true);
+		if (type == BRICK || type == BULLET || type == ITEM || type == EFFECT 
+			|| type == BOMB_ITEM || type == MARU_MARI
+			|| type == ENERGY_ITEM || type == MISSILE_ITEM) {
+			object->pos_y += object->vy * collisionTime * this->getDeltaTime();
+			bullet->Reset();
+		}
+		else if (type == ZOOMER_YELLOW || type == ZOOMER_PINK)
+		{
+			Zoomer* zoomer = dynamic_cast<Zoomer*>(otherObject);
+
+			zoomer->setHealth(zoomer->getHealth() - 20);
+
+			if (zoomer->getHealth() == 0)
+			{
+				zoomer->isActive = false;
+				zoomer->Destroy(zoomer->pos_x, zoomer->pos_y);
+			}
+			else {
+				zoomer->setIsEnemyFreezed(true);
+			}
+			bullet->Reset();
+		}
+		break;
+	}
+
+	case BOTTOM: {
+		bullet->setIsBottom(true);
+		// Khong lam gi ca
+		break;
+	}
+
+	case LEFT: {
+		bullet->setIsLeft(true);
+		if (type == BRICK || type == BULLET || type == ITEM || type == EFFECT
+			|| type == BOMB_ITEM || type == MARU_MARI || type == ENERGY_ITEM || type == MISSILE_ITEM) {
+			object->pos_x += object->vx * collisionTime * this->getDeltaTime();
+			bullet->Reset();
+		}
+		else if (type == ZOOMER_YELLOW || type == ZOOMER_PINK)
+		{
+			Zoomer* zoomer = dynamic_cast<Zoomer*>(otherObject);
+
+			zoomer->setHealth(zoomer->getHealth() - 20);
+			if (zoomer->getHealth() == 0)
+			{
+				zoomer->isActive = false;
+				zoomer->Destroy(zoomer->pos_x, zoomer->pos_y);
+			}
+			else {
+				zoomer->setIsEnemyFreezed(true);
+			}
+			bullet->Reset();
+		}
+		break;
+	}
+
+	case RIGHT: {
+		bullet->setIsRight(true);
+		if (type == BRICK || type == BULLET || type == ITEM || type == EFFECT
+			|| type == BOMB_ITEM || type == MARU_MARI
+			|| type == ENERGY_ITEM || type == MISSILE_ITEM) {
+			object->pos_x += object->vx * collisionTime * this->getDeltaTime();
+			bullet->Reset();
+		}
+		else if (type == ZOOMER_YELLOW || type == ZOOMER_PINK)
+		{
+			Zoomer* zoomer = dynamic_cast<Zoomer*>(otherObject);
+
+			zoomer->setHealth(zoomer->getHealth() - 20);
+
+			if (zoomer->getHealth() == 0)
+			{
+				zoomer->isActive = false;
+				zoomer->Destroy(zoomer->pos_x, zoomer->pos_y);
+			}
+			else {
+				zoomer->setIsEnemyFreezed(true);
+			}
+			bullet->Reset();
+		}
+		break;
+	}
+	}
+
+	if (type == SAMUS) {
+		bullet->setIsTop(false);
+		bullet->setIsLeft(false);
+		bullet->setIsBottom(false);
+		bullet->setIsRight(false);
 	}
 }
 
 void Grid::updateGrid(GameObject* object, float newPosX, float newPosY) {
+
 	// Kiểm tra xem nó có thay đổi cell hay không
 	int oldRow = floor(object->getlastPosY() / CELL_SIZE);
 	int oldColumn = floor(object->getlastPosX() / CELL_SIZE);
@@ -217,7 +515,7 @@ void Grid::updateGrid(GameObject* object, float newPosX, float newPosY) {
 
 	// Nếu không thay đổi cell thì thoát ra
 	if (oldRow == newRow && oldColumn == newColumn) {
-		return; // this->handleCell(object, oldRow, oldColumn);
+		return; 
 	}
 
 	// Xóa object ra khỏi cell hiện tại và cập nhật và cell mới
@@ -230,15 +528,11 @@ void Grid::updateGrid(GameObject* object, float newPosX, float newPosY) {
 	if (cells[oldRow][oldColumn] == object)
 		cells[oldRow][oldColumn] = object->nextUnit;
 
-	bool isCollision = false;
-	isCollision = this->handleCell(object, oldRow, oldColumn);
-
 	this->add(object);
 
 	// Cập nhật lại vị trí last Post của object
 	object->setlastPosX(object->getPosX());
 	object->setlastPosY(object->getPosY());
-	return;
 }
 
 void Grid::setDeltaTime(float deltaTime) {
@@ -247,4 +541,18 @@ void Grid::setDeltaTime(float deltaTime) {
 
 float Grid::getDeltaTime() {
 	return this->deltaTime;
+}
+
+void Grid::showAllObject() {
+	GameObject * object = nullptr;
+	for (int i = 0; i <= numOfRow; i++)
+	{
+		for (int j = 0; j <= numOfColumn; j++)
+			if (cells[i][j] != NULL) {
+				object = cells[i][j];
+				while (object->nextUnit != NULL) {
+					object = object->nextUnit;
+				}
+			}
+	}
 }

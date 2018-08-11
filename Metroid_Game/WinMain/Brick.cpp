@@ -16,8 +16,8 @@ Brick::Brick(float x, float y, int width, int height){
 	this->type = BRICK;
 	this->pos_x = x;
 	this->pos_y = y;
-	this->width = width;
-	this->height = height;
+	this->width = 32;
+	this->height = 32;
 	this->isActive = true;
 }
 
@@ -31,4 +31,20 @@ void Brick::Update(float t) {
 
 void Brick::Render() {
 
+}
+
+void Brick::setIndexX(int x) {
+	this->indexX = x;
+}
+
+int Brick::getIndexX() {
+	return this->indexX;
+}
+
+void Brick::setIndexY(int y) {
+	this->indexY = y;
+}
+
+int Brick::getIndexY() {
+	return this->indexY;
 }
