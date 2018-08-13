@@ -3,13 +3,13 @@
 #include "Sprite.h"
 #include "Define.h"
 
-class Bomb : public Item
+class BombItem : public Item
 {
 private:
 	Sprite * bomb;
 public:
-	Bomb(LPD3DXSPRITE spriteHandler, World* world);
-	~Bomb();
+	BombItem(LPD3DXSPRITE spriteHandler, World* world);
+	~BombItem();
 	void InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
 	//void Init(float posX, float posY);
 	void Update(float t);

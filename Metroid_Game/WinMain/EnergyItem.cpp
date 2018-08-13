@@ -1,7 +1,7 @@
-#include "Energy.h"
+#include "EnergyItem.h"
 #include "World.h"
 
-Energy::Energy(LPD3DXSPRITE spriteHandler, World* world) : Item(spriteHandler, world)
+EnergyItem::EnergyItem(LPD3DXSPRITE spriteHandler, World* world) : Item(spriteHandler, world)
 {
 	//item = NULL;
 	//isActive = true;
@@ -12,12 +12,12 @@ Energy::Energy(LPD3DXSPRITE spriteHandler, World* world) : Item(spriteHandler, w
 	this->height = 16;
 }
 
-Energy::~Energy()
+EnergyItem::~EnergyItem()
 {
 	delete(item);
 }
 
-void Energy::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
+void EnergyItem::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 {
 	if (d3ddv == NULL) return;
 	HRESULT result = D3DXCreateSprite(d3ddv, &spriteHandler);
@@ -25,7 +25,7 @@ void Energy::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 	item = new Sprite(spriteHandler, texture, ITEM_ENERGY, ITEM_ENERGY_WIDTH, ITEM_ENERGY_HEIGHT, ITEM_ENERGY_COUNT);
 }
 
-//void Energy::Init(float posX, float posY)
+//void EnergyItem::Init(float posX, float posY)
 //{
 //	this->pos_x = posX;
 //	this->pos_y = posY;
@@ -33,7 +33,7 @@ void Energy::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 //	time_survive = ITEM_TIME_SURVIVE;
 //}
 
-//void Energy::Render()
+//void EnergyItem::Render()
 //{
 //	D3DXVECTOR3 position;
 //	position.x = pos_x;
@@ -48,7 +48,7 @@ void Energy::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 //	spriteHandler->End();
 //}
 
-void Energy::Update(float t)
+void EnergyItem::Update(float t)
 {
 	DWORD now = GetTickCount();
 	if (now - last_time > 1000 / ANIMATE_RATE)
@@ -58,12 +58,12 @@ void Energy::Update(float t)
 	}
 }
 
-//void Energy::Destroy()
+//void EnergyItem::Destroy()
 //{
 //	isActive = false;
 //}
 
-void Energy::touchedBySamus(Samus * samus)
+void EnergyItem::touchedBySamus(Samus * samus)
 {
 	// TODO: plus health
 	this->Destroy();

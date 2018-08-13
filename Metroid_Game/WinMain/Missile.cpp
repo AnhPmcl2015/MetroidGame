@@ -1,65 +1,142 @@
-#include "Missile.h"
-#include "World.h"
+﻿#include "Missile.h"
 
-Missile::Missile(LPD3DXSPRITE spriteHandler, World* world) : Item(spriteHandler, world)
-{
-	//item = NULL;
-	//isActive = true;
-
-	//this->previousUnit = NULL;
-	//this->nextUnit = NULL;
-	this->width = 16;
-	this->height = 16;
+Missile::Missile() {
+	this->isActive = false;
+	this->isRendered = false;
+	this->count = 0;
+	this->setType(BULLET);
 }
 
-Missile::~Missile()
-{
-	delete(item);
+// isActive và isRendered khi nhận sự kiện bắn đạn sẽ = true, sự khác nhau là:
+// isActive: Dùng để xác định đạn có được khởi tạo rồi hay chưa.
+// isRendered: Dùng để xác định và tính toán khoản cách thời gian các viên đạn
+// được bắn ra theo trình tự (ở đây là 3 viên đạn).
+Missile::Missile(LPD3DXSPRITE spriteHandler) {
+	this->spriteHandler = spriteHandler;
+	this->isActive = false;
+	this->isRendered = false;
+	this->count = 0;
+	this->direction = OFF;
+	pos_x = -100.0f;
+	pos_y = -100.0f;
+	this->setType(MISSILE);
 }
 
-void Missile::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
-{
-	if (d3ddv == NULL) return;
-	HRESULT result = D3DXCreateSprite(d3ddv, &spriteHandler);
-	if (result != D3D_OK) return;
-	item = new Sprite(spriteHandler, texture, ITEM_MISSILE, ITEM_MISSILE_WIDTH, ITEM_MISSILE_HEIGHT, ITEM_MISSILE_COUNT);
+Missile::~Missile() {
+	delete(this->sprite);
 }
 
-//void Missile::Init(float posX, float posY)
-//{
-//	this->pos_x = posX;
-//	this->pos_y = posY;
-//	this->isActive = true;
-//	time_survive = ITEM_TIME_SURVIVE;
-//}
-
-//void Missile::Render()
-//{
-//	D3DXVECTOR3 position;
-//	position.x = pos_x;
-//	position.y = pos_y;
-//	position.z = 0;
-//
-//	if (!isActive)
-//		return;
-//
-//	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
-//	item->drawSprite(item->getWidth(), item->getHeight(), position);
-//	spriteHandler->End();
-//}
-
-void Missile::Update(float t)
-{
-	DWORD now = GetTickCount();
-	if (now - last_time > 1000 / ANIMATE_RATE)
-	{
-		item->updateSprite();
-		last_time = now;
+void Missile::initMissile(float posX, float posY) {
+	if (this->direction == SHOOT_RIGHT) {
+		this->pos_x = posX + 32 + 12;
+		this->pos_y = posY + 13;
+	}
+	else if (this->direction == SHOOT_UP_RIGHT) {
+		this->pos_x = posX + 16;
+		this->pos_y = posY - 22;
+	}
+	else if (this->direction == SHOOT_UP_LEFT) {
+		this->pos_x = posX + 6;
+		this->pos_y = posY - 22;
+	}
+	else if (this->direction == SHOOT_LEFT) {
+		this->pos_x = posX - 12;
+		this->pos_y = posY + 13;
+	}
+	else {
+		this->pos_x = posX;
+		this->pos_y = posY;
 	}
 }
-void Missile::touchedBySamus(Samus *)
-{
-	// TODO: can use missile
-	this->Destroy();
+
+void Missile::Reset(float posX, float posY) {
+	this->initMissile(posX, posY);
+	this->count = 0;
+	this->isRendered = false;
+	this->setActive(false);
 }
 
+void Missile::Update(float delta) {
+
+}
+
+// Cập nhật lại vị trí của viên đạn theo con samus khi đã đi hết quãng đường bắn.
+// Được cập nhật theo tình trạng của viên đạn
+void Missile::Update(float t, float posX, float posY) {
+	if (this->direction == OFF && this->tempDirection == OFF)
+	{
+		return;
+	}
+	else if (this->direction == OFF && this->tempDirection != OFF || this->direction != this->tempDirection && this->count == 0) {
+		this->direction = this->tempDirection;
+	}
+
+	if (this->count == BULLET_COUNT) {
+		this->Reset(posX, posY);
+	}
+
+	if (this->isActive == true && this->count == 0) {
+		if (this->direction == OFF)
+			this->isActive = false;
+		if (this->isActive) {
+			this->initMissile(posX, posY);
+			this->isRendered = true;
+		}
+	}
+
+	if (this->isActive == false && this->count == 0 || this->direction == OFF)
+		return;
+
+	if (this->direction == SHOOT_RIGHT) {
+		this->pos_x += X_VELOCITY_BULLET;
+	}
+	else if (this->direction == SHOOT_LEFT) {
+		this->pos_x -= X_VELOCITY_BULLET;
+	}
+	else if (this->direction == SHOOT_UP_RIGHT || this->direction == SHOOT_UP_LEFT) {
+		this->pos_y -= Y_VELOCITY_BULLET;
+	}
+	count++;
+
+
+}
+
+
+void Missile::Render() {
+	if (this->isActive == false && this->count == 0 || this->direction == OFF)
+		return;
+	if (this->count == 3 || this->count == 4 || this->count == 7)
+		return;
+	D3DXVECTOR3 pos = D3DXVECTOR3(this->pos_x, this->pos_y, 0);
+	this->sprite->drawSprite(0, 0, WIDTH_BULLET, HEIGHT_BULLET, pos);
+}
+
+void Missile::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture) {
+	if (d3ddv == NULL) return;
+	this->sprite = new Sprite(this->spriteHandler, texture, WIDTH_BULLET, HEIGHT_BULLET, 1, 1);
+}
+
+void Missile::setDirection(Bullet_SAMUS_Direction direction) {
+	this->tempDirection = direction;
+}
+
+
+Bullet_SAMUS_Direction Missile::getDirection() {
+	return this->direction;
+}
+
+void Missile::setIsRendered(bool isRendered) {
+	this->isRendered = isRendered;
+}
+
+bool Missile::getIsRendered() {
+	return this->isRendered;
+}
+
+void Missile::setCount(int count) {
+	this->count = count;
+}
+
+int Missile::getCount() {
+	return this->count;
+}

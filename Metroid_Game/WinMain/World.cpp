@@ -26,9 +26,9 @@ World::World(LPD3DXSPRITE spriteHandler, Metroid * metroid, int width, int heigh
 	this->samusBullet.push_back(bullet3);
 
 	maruMari = new MaruMari(spriteHandler, this);
-	energy = new Energy(spriteHandler, this);
-	missile = new Missile(spriteHandler, this);
-	bomb = new Bomb(spriteHandler, this);
+	energy = new EnergyItem(spriteHandler, this);
+	missile = new MissileItem(spriteHandler, this);
+	bomb = new BombItem(spriteHandler, this);
 	loadEnemyPositions("Monster_Room1.txt");
 }
 
@@ -118,6 +118,9 @@ void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 		this->samusBullet[i]->InitSprites(d3ddv, bulletTexture);
 	}
 
+	/*for (Missile* m : samusMissile)	{
+		m->InitSprites(d3ddv, itemTexture);
+	}*/
 	
 	// Enemy Texture
 	LPDIRECT3DTEXTURE9 enemyTexture = texture1->loadTexture(d3ddv, ENEMY_SPRITE_PATH);

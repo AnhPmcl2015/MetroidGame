@@ -8,10 +8,11 @@
 #include "Texture.h"
 #include "Grid.h"
 #include "Bullet.h"
-#include "Energy.h"
-#include "Skree.h"
 #include "Missile.h"
-#include "Bomb.h"
+#include "EnergyItem.h"
+#include "MissileItem.h"
+#include "BombItem.h"
+#include "Skree.h"
 using namespace std;
 
 /*
@@ -26,10 +27,11 @@ public:
 	Grid *grid;
 	Samus * samus;
 	MaruMari * maruMari;
-	Energy * energy;
-	Missile * missile;
-	Bomb * bomb;
+	EnergyItem * energy;
+	MissileItem * missile;
+	BombItem * bomb;
 	vector<Bullet*> samusBullet;
+	//vector<Missile*> samusMissile;
 	vector<Enemy*> enemy;
 	LPD3DXSPRITE spriteHandler;
 
