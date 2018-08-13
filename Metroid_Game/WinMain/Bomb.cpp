@@ -18,7 +18,7 @@ void Bomb::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 	HRESULT result = D3DXCreateSprite(d3ddv, &spriteHandler);
 	if (result != D3D_OK) return;
 	// TODO: Bomb sprite
-	//item = new Sprite(spriteHandler, texture, MARU_MARI_PATH, MARU_MARI_WIDTH, MARU_MARI_HEIGHT, MARU_MARI_COUNT);
+	item = new Sprite(spriteHandler, texture, ITEM_BOMB_PATH, ITEM_BOMB_WIDTH, ITEM_BOMB_HEIGHT, ITEM_BOMB_COUNT);
 }
 
 void Bomb::Update(float t)

@@ -94,7 +94,7 @@ void MaruMari::Update(float t)
 
 void MaruMari::touchedBySamus(Samus * samus)
 {
-	samus->setCanRoll(true);
+	samus->setCanMorph(true);
 	this->Destroy();
 }
 

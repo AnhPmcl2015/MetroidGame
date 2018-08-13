@@ -10,6 +10,8 @@
 #include "Bullet.h"
 #include "Energy.h"
 #include "Skree.h"
+#include "Missile.h"
+#include "Bomb.h"
 using namespace std;
 
 /*
@@ -24,7 +26,9 @@ public:
 	Grid *grid;
 	Samus * samus;
 	MaruMari * maruMari;
-	//Energy * energy;
+	Energy * energy;
+	Missile * missile;
+	Bomb * bomb;
 	vector<Bullet*> samusBullet;
 	vector<Enemy*> enemy;
 	LPD3DXSPRITE spriteHandler;

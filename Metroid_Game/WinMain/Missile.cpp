@@ -22,7 +22,7 @@ void Missile::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 	if (d3ddv == NULL) return;
 	HRESULT result = D3DXCreateSprite(d3ddv, &spriteHandler);
 	if (result != D3D_OK) return;
-	item = new Sprite(spriteHandler, texture, ITEM_MISSILE, ITEM_MISSILE_WIDTH, ITEM_MISSILE_HEIGHT, ITEM_ENERGY_COUNT);
+	item = new Sprite(spriteHandler, texture, ITEM_MISSILE, ITEM_MISSILE_WIDTH, ITEM_MISSILE_HEIGHT, ITEM_MISSILE_COUNT);
 }
 
 //void Missile::Init(float posX, float posY)
@@ -57,8 +57,9 @@ void Missile::Update(float t)
 		last_time = now;
 	}
 }
-//
-//void Missile::Destroy()
-//{
-//	isActive = false;
-//}
+void Missile::touchedBySamus(Samus *)
+{
+	// TODO: can use missile
+	this->Destroy();
+}
+

@@ -16,10 +16,14 @@ void Metroid::_InitPositions()
 {
 	world->samus->InitPostition();
 	world->maruMari->Init(1204, 352);
-	//world->energy->Init(420, 320);
+	world->energy->Init(1300, 352);
+	world->missile->Init(1300, 384);
+	world->bomb->Init(1300, 320);
 	this->world->grid->add(this->world->samus);
 	this->world->grid->add(this->world->maruMari);
-	//this->world->grid->add(this->world->energy);
+	this->world->grid->add(this->world->energy);
+	this->world->grid->add(this->world->missile);
+	this->world->grid->add(this->world->bomb);
 }
 
 Metroid::Metroid(HINSTANCE hInstance, LPWSTR Name, int Mode, int IsFullScreen, int FrameRate) 
@@ -419,7 +423,7 @@ void Metroid::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta)
 		}
 	}
 	else if (_input->IsKeyDown(DIK_DOWN)) {
-		if (this->world->samus->getCanRoll())
+		if (this->world->samus->getCanMorph())
 		{
 			if (this->world->samus->GetState() == STAND_LEFT) {
 				this->world->samus->setPosY(this->world->samus->getPosY() + 32);

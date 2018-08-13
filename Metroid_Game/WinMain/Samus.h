@@ -31,12 +31,11 @@ protected:
 
 	int tempX;
 	bool isBall;
-	bool canRoll = false;
+	bool canMorph = true;
 public:
 	bool isJumping = false;	// Trạng thái đang nhảy của Samus
 	bool isFalling = false;
-	//bool canMorph = true;
-	//bool isMorphing = false;
+	bool isMorphing = false;
 	bool isCollideLeft = false;
 	bool isCollideRight = false;
 
@@ -61,8 +60,8 @@ public:
 	void setIsBall(bool isBall);
 	bool getIsBall();
 
-	void setCanRoll(bool canRoll);
-	bool getCanRoll();
+	void setCanMorph(bool canRoll);
+	bool getCanMorph();
 	//================ OVERRIDE VIRTUAL METHOD ==================
 	void Reset(float  x, float y);
 	void Update(float t);

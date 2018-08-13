@@ -417,10 +417,10 @@ bool Samus::getIsBall() {
 	return this->isBall;
 }
 
-void Samus::setCanRoll(bool canRoll) {
-	this->canRoll = canRoll;
+void Samus::setCanMorph(bool canMorph) {
+	this->canMorph = canMorph;
 }
 
-bool Samus::getCanRoll() {
-	return this->canRoll;
+bool Samus::getCanMorph() {
+	return this->canMorph;
 }

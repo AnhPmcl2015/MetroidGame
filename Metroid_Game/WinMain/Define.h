@@ -234,9 +234,14 @@ enum OBJECT_TYPE
 #define ITEM_MISSILE_WIDTH 16
 #define ITEM_MISSILE_HEIGHT 24
 #define ITEM_MISSILE L"sprites\\item\\ITEM_MISSILE.txt"
-#define ITEM_MISSILE_COUNT 1
+#define ITEM_MISSILE_COUNT 2
 
 #define ITEM_MISSILE_GAIN 3
+//========= ITEM BOMB
+#define ITEM_BOMB_WIDTH 27
+#define ITEM_BOMB_HEIGHT 31
+#define ITEM_BOMB_PATH L"sprites\\item\\ITEM_BOMB.txt"
+#define ITEM_BOMB_COUNT 1
 //================ END GAME ITEM ===================================
 
 //================= ENEMY TYPE =================

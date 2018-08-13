@@ -13,4 +13,5 @@ public:
 	void Update(float t);
 	//void Render();
 	//void Destroy();
+	void touchedBySamus(Samus*);
 };
