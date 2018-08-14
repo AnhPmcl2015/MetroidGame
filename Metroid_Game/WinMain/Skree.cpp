@@ -3,6 +3,7 @@
 
 Skree::Skree()
 {
+
 }
 
 Skree::Skree(LPD3DXSPRITE spriteHandler, World * manager, OBJECT_TYPE enemy_type) : Enemy(spriteHandler, manager)
