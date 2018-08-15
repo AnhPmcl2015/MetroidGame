@@ -12,7 +12,7 @@
 #include "Gate.h"
 #include "GateBlock.h"
 #include "Ridley.h"
-//#include "Kraid.h"
+#include "Kraid.h"
 
 using namespace std;
 
@@ -39,7 +39,7 @@ public:
 	GateBlock * gateBlockRoom1;
 	GateBlock * gateBlockRoom2;
 	GateBlock * gateBlockBoss1;
-	//Kraid * kraid;
+	Kraid * kraid;
 	Ridley * ridley;
 
 	vector<Bullet*> samusBullet;

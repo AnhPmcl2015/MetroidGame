@@ -501,6 +501,11 @@ enum RIDLEY_STATE {
 //---------END RIDLEY--------
 
 //---------KRAID-------------
+enum KraidState {
+	KRAID_LEFT,
+	KRAID_RIGHT
+};
+#define KRAID_ANIMATE_RATE 15
 #define WIDTH_KRAID 70
 #define HEIGHT_KRAID 96
 #define KRAID_COUNT 2

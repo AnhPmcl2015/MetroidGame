@@ -38,6 +38,7 @@ World::World(LPD3DXSPRITE spriteHandler, Metroid * metroid)
 	loadEnemyPositions("Monster_Room1.txt");
 
 	ridley = new Ridley(spriteHandler, this);
+	kraid = new Kraid(spriteHandler, this);
 }
 
 World::~World()
@@ -57,7 +58,7 @@ World::~World()
 	delete(gateBlockRoom2);
 	delete(gateBlockBoss1);
 	delete(ridley);
-	//delete(kraid);
+	delete(kraid);
 }
 
 void World::Update(float t)
@@ -113,7 +114,7 @@ void World::Update(float t)
 	gateLeftBoss1->Update(t);
 	gateRightBoss1->Update(t);
 
-	//kraid->Update(t);
+	kraid->Update(t);
 	ridley->Update(t);
 }
 
@@ -151,6 +152,7 @@ void World::Render()
 	gateRightBoss1->Render();
 	gateLeftBoss1->Render();
 	ridley->Render();
+	kraid->Render();
 }
 
 void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
@@ -198,6 +200,7 @@ void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 	// boss texture
 	LPDIRECT3DTEXTURE9 boss_texture = texture->loadTexture(d3ddv, BOSS_TEXTURE);
 	ridley->InitSprites(d3ddv, boss_texture);
+	kraid->InitSprites(d3ddv, boss_texture);
 }
 
 void World::loadEnemyPositions(string filePath) {

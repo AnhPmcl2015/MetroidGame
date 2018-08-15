@@ -2,6 +2,7 @@
 #include "Samus.h"
 #include "MaruMari.h"
 #include "Ridley.h"
+#include "Kraid.h"
 // Lưu vào mảng 2 chiều
 // Height khi quy đổi ra sẽ là row -> pos_y tương ứng với row
 // Width khi quy đổi ra sẽ là column -> pos_x tương ứng column
@@ -168,11 +169,14 @@ bool Grid::handleCollision(GameObject *object, GameObject *otherObject) {
 		else if (object->getType() == RIDLEY) {
 			this->handleRidley(object, otherObject, collisionDirection, collisionTime);
 		}
+		else if (object->getType() == KRAID) {
+			this->handleKraid(object, otherObject, collisionDirection, collisionTime);
+		}
 		return true;
 	}
 	else {
 		return false;
-	}
+	} 
 }
 
 void Grid::handleSamus(GameObject* object, GameObject* otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime) {
@@ -563,6 +567,32 @@ void Grid::handleRidley(GameObject *object, GameObject *otherObject, COLLISION_D
 
 	case RIGHT: {
 
+		break;
+	}
+	}
+}
+
+void Grid::handleKraid(GameObject *object, GameObject *otherObject, COLLISION_DIRECTION collisionDirection, float collisionTime)
+{
+	Kraid *kraid = dynamic_cast<Kraid*>(object);
+	switch (collisionDirection) {
+	case BOTTOM: {
+		kraid->setIsBottom(true);
+		kraid->pos_y += kraid->vy *this->deltaTime *collisionTime;
+		break;
+	}
+	case TOP: {
+
+		break;
+	}
+	case RIGHT: {
+		kraid->setIsRight(true);
+		kraid->pos_x += kraid->vy *this->deltaTime  *collisionTime;
+		break;
+	}
+	case LEFT: {
+		kraid->setIsLeft(true);
+		kraid->pos_x += kraid->vy *this->deltaTime  *collisionTime;
 		break;
 	}
 	}
