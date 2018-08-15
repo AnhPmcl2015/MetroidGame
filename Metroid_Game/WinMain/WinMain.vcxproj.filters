@@ -174,19 +174,16 @@
     <ClCompile Include="ExplodeEffect.cpp">
       <Filter>Source Files\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="GateBlock.cpp">
+      <Filter>Source Files\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="Gate.cpp">
+      <Filter>Source Files\Drawable</Filter>
+    </ClCompile>
     <ClCompile Include="Skree.cpp">
       <Filter>Source Files\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="BulletSkree.cpp">
-      <Filter>Source Files\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="BulletRidley.cpp">
-      <Filter>Source Files\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="BulletKraid.cpp">
-      <Filter>Source Files\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="BulletKraidMissle.cpp">
       <Filter>Source Files\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
@@ -293,19 +290,16 @@
     <ClInclude Include="ExplodeEffect.h">
       <Filter>Header Files\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Gate.h">
+      <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="GateBlock.h">
+      <Filter>Header Files\Drawable</Filter>
+    </ClInclude>
     <ClInclude Include="Skree.h">
       <Filter>Header Files\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="BulletSkree.h">
-      <Filter>Header Files\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletKraidMissle.h">
-      <Filter>Header Files\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletKraid.h">
-      <Filter>Header Files\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletRidley.h">
       <Filter>Header Files\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
@@ -456,10 +450,7 @@
     <Text Include="Monster_Room1.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="enemy\SKREE.txt">
-      <Filter>Resource Files\enemy</Filter>
-    </Text>
-    <Text Include="..\..\..\..\BULLET_SKREE.txt">
+    <Text Include="enemy\BULLET_SKREE.txt">
       <Filter>Resource Files\enemy</Filter>
     </Text>
   </ItemGroup>
