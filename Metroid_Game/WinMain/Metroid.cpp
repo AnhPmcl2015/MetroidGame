@@ -457,8 +457,7 @@ void Metroid::ProcessInput(LPDIRECT3DDEVICE9 d3ddv, float Delta)
 	{
 		if (world->samus->canJump) {
 			world->samus->isOnGround = false;
-			this->world->samus->setVelocityY(-JUMP_VELOCITY);
-			this->world->samus->setVelocityYLast(-JUMP_VELOCITY);
+			this->world->samus->setVelocityY(-GRAVITY_VELOCITY);
 			this->world->samus->isJumping = true;
 			this->world->samus->isFalling = false;
 			
