@@ -19,15 +19,27 @@ World::World(LPD3DXSPRITE spriteHandler, Metroid * metroid)
 	this->samusBullet.push_back(bullet2);
 	this->samusBullet.push_back(bullet3);
 
-	BulletSkree *bulletSkree1 = new BulletSkree(spriteHandler, this->getMetroid()->getGrid());
-	BulletSkree *bulletSkree2 = new BulletSkree(spriteHandler, this->getMetroid()->getGrid());
-	BulletSkree *bulletSkree3 = new BulletSkree(spriteHandler, this->getMetroid()->getGrid());
-	BulletSkree *bulletSkree4 = new BulletSkree(spriteHandler, this->getMetroid()->getGrid());
+	BulletKraidMissle *bulletKraidMissle1 = new BulletKraidMissle(spriteHandler, this->getMetroid()->getGrid());
+	BulletKraidMissle *bulletKraidMissle2 = new BulletKraidMissle(spriteHandler, this->getMetroid()->getGrid());
+	BulletKraidMissle *bulletKraidMissle3 = new BulletKraidMissle(spriteHandler, this->getMetroid()->getGrid());
+	this->kraidMissle.push_back(bulletKraidMissle1);
+	this->kraidMissle.push_back(bulletKraidMissle2);
+	this->kraidMissle.push_back(bulletKraidMissle3);
 
-	this->bulletSkree.push_back(bulletSkree1);
-	this->bulletSkree.push_back(bulletSkree2);
-	this->bulletSkree.push_back(bulletSkree3);
-	this->bulletSkree.push_back(bulletSkree4);
+	BulletKraid *bulletKraid1 = new BulletKraid(spriteHandler, this->getMetroid()->getGrid());
+	BulletKraid *bulletKraid2 = new BulletKraid(spriteHandler, this->getMetroid()->getGrid());
+	this->bulletKraid.push_back(bulletKraid1);
+	this->bulletKraid.push_back(bulletKraid2);
+
+	BulletRidley *bulletRidley1 = new BulletRidley(spriteHandler, this->getMetroid()->getGrid());
+	BulletRidley *bulletRidley2 = new BulletRidley(spriteHandler, this->getMetroid()->getGrid());
+	BulletRidley *bulletRidley3 = new BulletRidley(spriteHandler, this->getMetroid()->getGrid());
+	BulletRidley *bulletRidley4 = new BulletRidley(spriteHandler, this->getMetroid()->getGrid());
+
+	this->bulletRidley.push_back(bulletRidley1);
+	this->bulletRidley.push_back(bulletRidley2);
+	this->bulletRidley.push_back(bulletRidley3);
+	this->bulletRidley.push_back(bulletRidley4);
 
 	maruMari = new MaruMari(spriteHandler, this);
 
@@ -45,10 +57,10 @@ World::World(LPD3DXSPRITE spriteHandler, Metroid * metroid)
 	gateBlockRoom2 = new GateBlock(spriteHandler, this, metroid->getGrid());
 	gateBlockBoss1 = new GateBlock(spriteHandler, this, metroid->getGrid());
 
-	//kraid = new Kraid(spriteHandler, this);
-	//ridley = new Ridley(spriteHandler, this);
-
 	loadEnemyPositions("Monster_Room1.txt");
+
+	ridley = new Ridley(spriteHandler, this);
+	kraid = new Kraid(spriteHandler, this);
 }
 
 World::~World()
@@ -67,8 +79,8 @@ World::~World()
 	delete(gateBlockRoom1);
 	delete(gateBlockRoom2);
 	delete(gateBlockBoss1);
-	/*delete(ridley);
-	delete(kraid);*/
+	delete(ridley);
+	delete(kraid);
 }
 
 void World::Update(float t)
@@ -124,14 +136,49 @@ void World::Update(float t)
 	gateLeftBoss1->Update(t);
 	gateRightBoss1->Update(t);
 
-	for (int i = 0; i < bulletSkree.size(); i++) {
-		if (bulletSkree[i]->isActive) {
-			bulletSkree[i]->Update(t);
+	kraid->Update(t);
+	ridley->Update(t);
+
+	if (this->kraid->isActive) {
+		for (int i = 0; i < this->kraidMissle.size(); i++) {
+			if (kraidMissle[i]->isActive) {
+				kraidMissle[i]->Update(t);
+			}
+			else {
+				kraidMissle[i]->initBullet(this->kraid->pos_x, this->kraidMissle[i]->pos_y, this->samus->pos_x);
+			}
+		}
+
+		for (int i = 0; i < this->bulletKraid.size(); i++) {
+			if (bulletKraid[i]->isActive) {
+				bulletKraid[i]->Kraid_posX = this->kraid->pos_x;
+				bulletKraid[i]->Kraid_posY = this->kraid->pos_y;
+				bulletKraid[i]->Update(t);
+			}
+			else {
+				if (i == 0)
+					bulletKraid[i]->initBullet(this->kraid->pos_x, this->kraid->pos_y, this->samus->pos_x);
+				else 
+					bulletKraid[i]->initBullet(this->kraid->pos_x + 16, this->kraid->pos_y, this->samus->pos_x);
+			}
 		}
 	}
 
-	//kraid->Update(t);
-	//ridley->Update(t);
+	if (this->ridley->isActive) {
+		for (int i = 0; i < this->bulletRidley.size(); i++) {
+			if (bulletRidley[i]->isActive) {
+				bulletRidley[i]->Ridley_posX = this->ridley->pos_x;
+				bulletRidley[i]->Ridley_posY = this->ridley->pos_y;
+				bulletRidley[i]->Update(t);
+			}
+			else {
+				if (i % 2 == 0)
+					bulletRidley[i]->initBullet(this->ridley->pos_x, this->ridley->pos_y, this->samus->pos_x);
+				else
+					bulletRidley[i]->initBullet(this->ridley->pos_x + 16, this->ridley->pos_y, this->samus->pos_x);
+			}
+		}
+	}
 }
 
 void World::Render()
@@ -146,18 +193,13 @@ void World::Render()
 	for (int i = 0; i < this->enemy.size(); i++) {
 		if (this->enemy[i]->isInsideMapBound(this->metroid->camera->getBoundary())) {
 			if (this->enemy[i]->isActive && !this->enemy[i]->isDeath) {
-
 				this->enemy[i]->Render();
 
 			}
 		}
 	}
 
-	for (int i = 0; i < bulletSkree.size(); i++) {
-		if (bulletSkree[i]->isActive) {
-			bulletSkree[i]->Render();
-		}
-	}
+
 
 	bombWeapon->Render();
 	explodeEffect->Render();
@@ -172,57 +214,78 @@ void World::Render()
 	gateLeftRoom2->Render();
 	gateRightBoss1->Render();
 	gateLeftBoss1->Render();
+	ridley->Render();
+	kraid->Render();
 
-	//kraid->Render();
-	//ridley->Render();
+	if (this->kraid->isActive) {
+		for (int i = 0; i < this->kraidMissle.size(); i++) {
+			if (kraidMissle[i]->isActive) {
+				kraidMissle[i]->Render();
+			}
+		}
+		for (int i = 0; i < this->bulletKraid.size(); i++) {
+			if (bulletKraid[i]->isActive) {
+				bulletKraid[i]->Render();
+			}
+		}
+	}
+
+	if (this->ridley->isActive) {
+		for (int i = 0; i < this->bulletRidley.size(); i++) {
+			if (bulletRidley[i]->isActive) {
+				bulletRidley[i]->Render();
+			}
+		}
+	}
+
 }
 
 void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 {
 	Texture * texture = new Texture();
 	LPDIRECT3DTEXTURE9 samus_texture = texture->loadTexture(d3ddv, TEXTURE_GAME_CHARACTERS);
-	if (samus_texture == NULL)
-		trace(L"Unable to load PlayerTexture");
 	samus->InitSprites(d3ddv, samus_texture);
 
 	LPDIRECT3DTEXTURE9 maru_texture = texture->loadTexture(d3ddv, ITEM_SPRITE_PATH);
-	if (maru_texture == NULL)
-		trace(L"Unable to load PlayerTexture");
 	maruMari->InitSprites(d3ddv, maru_texture);
 
 	// Bullet Texture
 	LPDIRECT3DTEXTURE9 bulletTexture = texture->loadTexture(d3ddv, SAMUS_BULLET_PATH);
-	if (bulletTexture == NULL)
-		trace(L"Unable to load BulletTexture");
 	for (int i = 0; i < this->samusBullet.size(); i++) {
 		this->samusBullet[i]->InitSprites(d3ddv, bulletTexture);
 	}
 
+	//texture for kraid missle <- change here
+	for (int i = 0; i < this->kraidMissle.size(); i++) {
+		this->kraidMissle[i]->InitSprites(d3ddv, bulletTexture);
+	}
+
+	//texture for kraid bullet <- change here
+	for (int i = 0; i < this->bulletKraid.size(); i++) {
+		this->bulletKraid[i]->InitSprites(d3ddv, bulletTexture);
+	}
+	//texture for ridley bullet <- change here
+	for (int i = 0; i < this->bulletRidley.size(); i++) {
+		this->bulletRidley[i]->InitSprites(d3ddv, bulletTexture);
+	}
+
+
 	// Explode Texture
 	LPDIRECT3DTEXTURE9 explode_texture = texture->loadTexture(d3ddv, EFFECT_SPRITE_PATH);
-	if (explode_texture == NULL)
-		trace(L"Unable to load Explode Texture");
 	explodeEffect->InitSprites(d3ddv, explode_texture);
 
 	// Bomb Texture
 	LPDIRECT3DTEXTURE9 bomb_texture = texture->loadTexture(d3ddv, BOMB_TEXTURE);
-	if (bomb_texture == NULL)
-		trace(L"Unable to load Bomb Texture");
 	bombWeapon->InitSprites(d3ddv, bomb_texture);
 	
 	// Enemy Texture
 	LPDIRECT3DTEXTURE9 enemyTexture = texture->loadTexture(d3ddv, ENEMY_SPRITE_PATH);
-	//Enemy (Zoomer) Texture
 	for (int i = 0; i < this->enemy.size(); i++) {
-		if (this->enemy[i] != NULL) {
-			this->enemy[i]->InitSprites(d3ddv, enemyTexture);
-		}
+		enemy[i]->InitSprites(d3ddv, enemyTexture);
 	}
 
 	// Gate Texture
 	LPDIRECT3DTEXTURE9 gate_texture = texture->loadTexture(d3ddv, GATE_SPRITES_PATH);
-	if (gate_texture == NULL)
-		trace(L"Unable to load Gate Texture");
 	gateRightRoom1->InitSprites(d3ddv, gate_texture, GATE_RIGHT);
 	gateLeftRoom1->InitSprites(d3ddv, gate_texture, GATE_LEFT);
 	gateRightRoom2->InitSprites(d3ddv, gate_texture, GATE_RIGHT);
@@ -234,22 +297,10 @@ void World::InitSprites(LPDIRECT3DDEVICE9 d3ddv)
 	gateBlockRoom2->InitSprites(d3ddv, gate_texture);
 	gateBlockBoss1->InitSprites(d3ddv, gate_texture);
 
-	// Boss Texture
-	//Texture * textureBoss = new Texture();
-	//LPDIRECT3DTEXTURE9 boss_texture = textureBoss->loadTexture(d3ddv, BOSS_TEXTURE);
-	//if (boss_texture == NULL)
-	//	trace(L"Unable to load Boss Texture");
-	//kraid->InitSprites(d3ddv, boss_texture);
-	//ridley->InitSprites(d3ddv, boss_texture);
-
-	// Bomb Texture
-	Texture * textureBulletSkree = new Texture();
-	LPDIRECT3DTEXTURE9 bulletSkreeTexture = textureBulletSkree->loadTexture(d3ddv, SAMUS_BULLET_PATH);
-	if (bomb_texture == NULL)
-		trace(L"Unable to load Bomb Texture");
-	for (int i = 0; i < this->bulletSkree.size(); i++) {
-		this->bulletSkree[i]->InitSprites(d3ddv, bulletSkreeTexture);
-	}
+	// boss texture
+	LPDIRECT3DTEXTURE9 boss_texture = texture->loadTexture(d3ddv, BOSS_TEXTURE);
+	ridley->InitSprites(d3ddv, boss_texture);
+	kraid->InitSprites(d3ddv, boss_texture);
 }
 
 void World::loadEnemyPositions(string filePath) {
@@ -271,12 +322,6 @@ void World::loadEnemyPositions(string filePath) {
 		}
 		case SKREE_CASE: {
 			monster = new Skree(spriteHandler, this, SKREE);
-			break;
-		}
-		case BOSS1_CASE: {
-			break;
-		}
-		case BOSS2_CASE: {
 			break;
 		}
 		default:

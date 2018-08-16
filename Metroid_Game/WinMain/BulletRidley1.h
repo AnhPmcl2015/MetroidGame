@@ -5,7 +5,7 @@
 #include "Grid.h"
 
 
-class BulletKraidMissle : public GameObject
+class BulletRidley : public GameObject
 {
 private:
 
@@ -25,20 +25,29 @@ public:
 	void Render();
 	void InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture);
 	void Reset(float posX, float posY);
-	BulletKraidMissle();
-	BulletKraidMissle(LPD3DXSPRITE spriteHandler, Grid* grid);
-	~BulletKraidMissle();
+	BulletRidley();
+	BulletRidley(LPD3DXSPRITE spriteHandler, Grid* grid);
+	~BulletRidley();
 
 	void setIsRendered(bool isRendered);
 	bool getIsRendered();
 
 	Bullet_Enemy_Direction bulletDirection;
-	
-	float Kraid_posX;
-	float Kraid_posY;
+
+	float Ridley_posX;
+	float Ridley_posY;
 
 	float Samus_posX;
+
 	bool isCollided;
 
+	bool isUp;
+	bool isDown;
+
+	float collideDistanceY;
+	float collideDistanceX;
+
 	float liveTime = 0;
+	bool isWaiting = false;
+
 };

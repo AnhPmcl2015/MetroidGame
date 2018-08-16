@@ -97,13 +97,13 @@ void Skree::Update(float t)
 		liveTime += t * 75;
 		if (liveTime > SKREE_LIVE_TIME) {
 			this->health = 0.0f;
-			
-			for (int i = 0; i < manager->bulletSkree.size(); i++) {
+			this->Destroy(this->pos_x, this->pos_y);
+
+			/*for (int i = 0; i < manager->bulletSkree.size(); i++) {
 				manager->bulletSkree[i]->isActive = true;
 				manager->bulletSkree[i]->pos_x = this->pos_x;
 				manager->bulletSkree[i]->pos_y = this->pos_y + 32;
 			}
-			
 
 			manager->bulletSkree[0]->bulletDirection = BULLET_RIGHT;
 			manager->bulletSkree[1]->bulletDirection = BULLET_LEFT;
@@ -114,9 +114,7 @@ void Skree::Update(float t)
 			manager->bulletSkree[2]->setRange(this->pos_x + SKREE_BULLET_DISTANCE);
 
 			manager->bulletSkree[1]->setRange(this->pos_x - SKREE_BULLET_DISTANCE);
-			manager->bulletSkree[3]->setRange(this->pos_x - SKREE_BULLET_DISTANCE);
-
-			this->Destroy(this->pos_x, this->pos_y);
+			manager->bulletSkree[3]->setRange(this->pos_x - SKREE_BULLET_DISTANCE);*/
 		}
 		else {
 			DWORD now = GetTickCount();
@@ -173,13 +171,13 @@ void Skree::Destroy(float x, float y)
 {
 	if (this->health == 0)
 	{
-		//manager->explodeEffect->setTimeSurvive(EFFECT_TIME_SURVIVE);
-		//if (manager->explodeEffect->getTimeSurvive() > 0)
-		//{
-		//	manager->explodeEffect->setActive(true);
-		//	manager->explodeEffect->setPosX(x - 32);
-		//	manager->explodeEffect->setPosY(y - 32);
-		//}
+		manager->explodeEffect->setTimeSurvive(EFFECT_TIME_SURVIVE);
+		if (manager->explodeEffect->getTimeSurvive() > 0)
+		{
+			manager->explodeEffect->setActive(true);
+			manager->explodeEffect->setPosX(x - 32);
+			manager->explodeEffect->setPosY(y - 32);
+		}
 		this->isDeath = true;
 		this->isEnemyFreezed = false;
 

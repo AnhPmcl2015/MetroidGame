@@ -135,6 +135,19 @@ void Samus::setDimension()
 	}
 }
 
+void Samus::setRoomNum()
+{
+	if (pos_x >= 0 && pos_x <= WIDTH_ROOM1)
+		this->roomNum = ROOM1;
+	else if (pos_x >= WIDTH_ROOM1 && pos_x <= WIDTH_ROOM1 + WIDTH_ROOM2)
+		this->roomNum = ROOM2;
+	else if (pos_x >= WIDTH_ROOM1 + WIDTH_ROOM2 && pos_x <= WIDTH_ROOM1 + WIDTH_ROOM2 + WIDTH_ROOM_BOSS)
+		this->roomNum = BOSS1;
+	else if (pos_x >= WIDTH_ROOM1 + WIDTH_ROOM2 + WIDTH_ROOM_BOSS && pos_x <= WIDTH_ROOM1 + WIDTH_ROOM2 + 2 * WIDTH_ROOM_BOSS)
+		this->roomNum = BOSS2;
+	
+}
+
 Samus::Samus(LPD3DXSPRITE spriteHandler, World * manager, Grid* grid)
 {
 	this->grid = grid;
@@ -220,11 +233,10 @@ void Samus::InitSprites(LPDIRECT3DDEVICE9 d3ddv, LPDIRECT3DTEXTURE9 texture)
 
 void Samus::InitPostition()
 {
-	//--TO DO: This code will be edited soon
+
 	pos_x = 992;	
 	pos_y = 320;	
-	/*this->pos_x = 1140;
-	this->pos_y = 352;*/
+	//pos_x = WIDTH_ROOM1 + WIDTH_ROOM2 + WIDTH_ROOM_BOSS + 200;
 	//pos_y = 200;
 	vx = 0;
 	vx_last = 1.0f;
@@ -297,7 +309,10 @@ void Samus::Update(float t)
 {
 	if (!this->isActive || this->isChangingRoom) return;
 
-	if (WIDTH_ROOM1 >= this->pos_x && WIDTH_ROOM1 <= this->pos_x + this->width && !this->startMovingAfterRoomChanged) {
+	if ((WIDTH_ROOM1 >= this->pos_x && WIDTH_ROOM1 <= this->pos_x + this->width
+		|| WIDTH_ROOM1 + WIDTH_ROOM2 >= this->pos_x && WIDTH_ROOM1 + WIDTH_ROOM2 <= this->pos_x + this->width
+		|| WIDTH_ROOM1 + WIDTH_ROOM2 + WIDTH_ROOM_BOSS >= this->pos_x && WIDTH_ROOM1 + WIDTH_ROOM2 + WIDTH_ROOM_BOSS <= this->pos_x + this->width)
+		&& !this->startMovingAfterRoomChanged) {
 		if (this->posX_StartChangingRoom == 0.0f) {
 			this->posX_StartChangingRoom = this->pos_x;
 		}
@@ -305,9 +320,11 @@ void Samus::Update(float t)
 		return;
 	}
 
+	this->setRoomNum();
+
 	if (this->startMovingAfterRoomChanged) {
 		this->posX_EndChangingRoom = this->pos_x;
-		if (fabs(this->posX_EndChangingRoom - this->posX_StartChangingRoom) <= 160) {
+		if (fabs(this->posX_EndChangingRoom - this->posX_StartChangingRoom) <= 80) {
 			this->pos_x += this->vx *t;
 		}
 		else {
@@ -357,10 +374,9 @@ void Samus::Update(float t)
 
 				if (this->isCollideWithEnemy) {
 					if (vy < 0) {
-						if (this->startPosJump - this->endPosJump >= 64) {
+					if (this->startPosJump - this->endPosJump >= 64) {
 							this->vy = GRAVITY_VELOCITY;
 						}
-
 					}
 				}
 				else {
@@ -560,9 +576,11 @@ void Samus::collideEnemy()
 	this->canJump = false;
 	if (vx > 0 || this->state == STAND_RIGHT || this->state == JUMP_RIGHT || this->state == JUMP_SHOOT_UP_RIGHT || this->state == TRANSFORM_BALL_RIGHT || this->state == MORPH_RIGHT) {
 		this->vx = -SAMUS_SPEED;
+		this->state = JUMP_RIGHT;
 	}
 	else if (vx < 0 || this->state == STAND_LEFT || this->state == JUMP_LEFT || this->state == JUMP_SHOOT_UP_LEFT || this->state == TRANSFORM_BALL_LEFT || this->state == MORPH_LEFT) {
 		this->vx = SAMUS_SPEED;
+		this->state = JUMP_LEFT;
 	}
 
 }

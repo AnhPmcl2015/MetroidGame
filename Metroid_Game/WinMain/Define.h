@@ -31,7 +31,7 @@ class Ridley;
 #define JUMP_VELOCITY_BOOST_FIRST 28.0f
 #define FALLDOWN_VELOCITY_DECREASE 295.0f
 #define MAX_FALLING 600.0f
-#define GRAVITY_VELOCITY 180.0f
+#define GRAVITY_VELOCITY 250.0f
 #define ANIMATE_RATE 30
 #define LIVE_TIME 3000
 #define SAMUS_MAX_JUMP 182
@@ -116,7 +116,9 @@ enum OBJECT_TYPE
 	RIDLEY_BULLET,
 	KRAID_BOMERANG,
 	KRAID_BULLET,
-	BULLET_SKREE
+	BULLET_KRAID_MISSLE,
+	BULLET_KRAID,
+	BULLET_RIDLEY
 };
 //================= END OBJECT TYPE ============
 
@@ -339,8 +341,8 @@ enum SKREE_STATE
 
 #define ZOOMER_CASE 0
 #define SKREE_CASE 2
-#define BOSS1_CASE 3
-#define BOSS2_CASE 4
+#define RIDLEY_CASE 3
+#define KRAID_CASE 4
 
 #define SKREE_DISTANCE_TO_SAMUS  300.0f
 #define SKREE_SPEED 150.0f
@@ -369,7 +371,7 @@ enum SKREE_STATE
 #define GATE_BLOCK_WIDTH 64
 #define GATE_BLOCK_HEIGHT 96
 
-#define GATE_TIME_SURVIVE 3
+#define GATE_TIME_SURVIVE 3000
 //================= END GATE ===========
 
 //================== EXPLOSION =================
@@ -475,17 +477,13 @@ enum COLLISION_DIRECTION {
 };
 //================== END Grid ====================
 
-#define ZOOMER_YELLOW_CASE 0
-#define ZOOMER_PINK_CASE 1
-#define SKREE_CASE 2
-#define RIO_CASE 3
-
 //================== BOSS ====================
 #define BOSS_TEXTURE L"enemy\\boss_sheet.png"
 //---------RIDLEY------------
 #define WIDTH_RIDLEY 96
 #define HEIGHT_RIDLEY_SIT 120
 #define HEIGHT_RIDLEY_FLY 139
+#define RIDLEY_ANIMATE_RATE 15
 #define RIDLEY_COUNT 2
 #define RIDLEY_SIT_LEFT_PATH L"enemy\\RIDLEY_SIT_LEFT.txt"
 #define RIDLEY_SIT_RIGHT_PATH L"enemy\\RIDLEY_SIT_RIGHT.txt"
@@ -506,6 +504,11 @@ enum RIDLEY_STATE {
 //---------END RIDLEY--------
 
 //---------KRAID-------------
+enum KraidState {
+	KRAID_LEFT,
+	KRAID_RIGHT
+};
+#define KRAID_ANIMATE_RATE 15
 #define WIDTH_KRAID 70
 #define HEIGHT_KRAID 96
 #define KRAID_COUNT 2
@@ -530,4 +533,5 @@ enum Bullet_Enemy_Direction {
 	BULLET_TOPLEFT
 };
 
-#define BULLET_SKREE_PATH L"enemy\\BULLET_SKREE.txt"
+#define ENEMY_BULLET_DISTANCE 100.0f
+#define collideHeight 64
