@@ -18,7 +18,7 @@ void Metroid::_InitPositions()
 	world->samus->InitPostition();
 	this->grid->add(this->world->samus);
 
-	world->maruMari->Init(420, 352);
+	world->maruMari->Init(420, 288);
 	this->grid->add(this->world->maruMari);
 
 	world->bombWeapon->CreateBomb(0, 0);
